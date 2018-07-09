@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HCity">
+	<typeAlias alias="HCity" type="com.hxt.hCity.model.HCity"/>
+	
+    <sql id="getHCityList_body">
+        SELECT a.id,a.cityCode,a.cityName,a.provinceCode        FROM h_city a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="cityCode"> a.cityCode=#cityCode# </isNotNull>
+            <isNotNull prepend="AND" property="cityName"> a.cityName=#cityName# </isNotNull>
+            <isNotNull prepend="AND" property="provinceCode"> a.provinceCode=#provinceCode# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHCityListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHCityList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHCityList" parameterClass="HCity" resultClass="HCity">
+        SELECT * FROM (
+            <include refid="getHCityList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHCity" parameterClass="HCity" resultClass="HCity">
+       <include refid="getHCityList_body" />
+    </select>
+
+    <insert id="insertHCity">
+        INSERT INTO h_city ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="cityCode"> cityCode </isNotNull>
+			<isNotNull prepend="," property="cityName"> cityName </isNotNull>
+			<isNotNull prepend="," property="provinceCode"> provinceCode </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="cityCode"> #cityCode# </isNotNull>
+		    <isNotNull prepend="," property="cityName"> #cityName# </isNotNull>
+		    <isNotNull prepend="," property="provinceCode"> #provinceCode# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHCity">
+        UPDATE h_city
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="cityCode"> cityCode=#cityCode# </isNotNull>
+		    <isNotNull prepend="," property="cityName"> cityName=#cityName# </isNotNull>
+		    <isNotNull prepend="," property="provinceCode"> provinceCode=#provinceCode# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHCity">
+        delete from h_city where id = #id#
+    </delete>
+</sqlMap>

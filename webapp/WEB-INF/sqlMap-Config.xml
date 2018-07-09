@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+ "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<!--<sqlMap>元素用于包括SQL Map映射文件和其他的SQL Map配置文件。-->
+	<settings lazyLoadingEnabled="true" useStatementNamespaces="true" />
+		<!-- 系统配置 开始 -->
+		<sqlMap resource="com/sys/manageAdminUser/sql/ManageAdminUser.xml" /> <!-- 用户 -->
+		<sqlMap resource="com/sys/manageColumn/sql/ManageColumn.xml" /> <!-- 菜单 -->
+		<sqlMap resource="com/sys/columnMethod/sql/ColumnMethod.xml" /> <!-- 菜单-操作方法 -->
+		<sqlMap resource="com/sys/adminRole/sql/AdminRole.xml" /> <!-- 用户角色 -->
+		<sqlMap resource="com/sys/adminUserRole/sql/AdminUserRole.xml" /> <!-- 用户-角色-关系表 -->
+		<sqlMap resource="com/sys/adminRoleColumn/sql/AdminRoleColumn.xml" /> <!-- 角色-菜单-关系表 -->
+		<sqlMap resource="com/sys/adminRoleMethod/sql/AdminRoleMethod.xml" /> <!-- 角色-操作方法-关系表 -->
+		<sqlMap resource="com/sys/adminSkins/sql/AdminSkins.xml" /> <!-- 系统皮肤 -->
+		<!-- 系统配置 结束 -->
+		<sqlMap resource="com/hxt/hAbout/sql/HAbout.xml" /> <!-- 原柜台电费企业 -->
+		<sqlMap resource="com/hxt/hHelp/sql/HHelp.xml" /> <!-- 帮助中心 -->
+		<sqlMap resource="com/hxt/hFuwu/sql/HFuwu.xml" /> <!-- 原电费托收企业 -->
+		<sqlMap resource="com/hxt/hNews/sql/HNews.xml" /> <!-- 新闻 -->
+		<sqlMap resource="com/hxt/hNotice/sql/HNotice.xml" /> <!-- 公告 -->
+		<sqlMap resource="com/hxt/hLbImg/sql/HLbImg.xml" /> <!-- 轮播图 -->
+		<sqlMap resource="com/hxt/hCompany/sql/HCompany.xml" /> <!-- 公司客户信息-->
+		<sqlMap resource="com/hxt/hSubCompany/sql/HSubCompany.xml" /> <!-- 子公司信息-->
+		<sqlMap resource="com/hxt/hPayOrder/sql/HPayOrder.xml" /> <!-- 缴费订单信息-->
+		<sqlMap resource="com/hxt/hPayurlCheck/sql/HPayurlCheck.xml" /> <!-- 缴费url信息-->
+		<sqlMap resource="com/hxt/hSubOrder/sql/HSubOrder.xml" /> <!-- 子订单信息-->
+		<sqlMap resource="com/hxt/hAmmeterInfo/sql/HAmmeterInfo.xml" /> <!-- 电表信息-->
+		<sqlMap resource="com/hxt/hAddress/sql/HAddress.xml" /> <!-- 物业代收电费-->
+		<sqlMap resource="com/hxt/hFp/sql/HFp.xml" /> <!-- 物业代收电费-->
+		<sqlMap resource="com/hxt/wap/sql/Callprocedure-Mapper.xml" /> <!-- 物业代收电费-->
+		<sqlMap resource="com/hxt/hDispatchRecord/sql/HDispatchRecord.xml" /> <!-- 物业代收电费-->
+		<sqlMap resource="com/hxt/hFpOrder/sql/HFpOrder.xml" /> <!-- 物业代收电费-->
+		<sqlMap resource="com/hxt/hDispatchRecordC/sql/HDispatchRecordC.xml" /> <!-- 公司调单记录表-->
+		<sqlMap resource="com/hxt/hNewNews/sql/HNewNews.xml" /> <!-- 对公网站新闻-->
+		<sqlMap resource="com/hxt/hNewNotice/sql/HNewNotice.xml" /> <!-- 对公网站公告-->
+		<sqlMap resource="com/hxt/hReviewUser/sql/HReviewUser.xml" /> <!-- 对公网站公告-->
+		<sqlMap resource="com/hxt/hProvince/sql/HProvince.xml" /> <!-- 省-->
+		<sqlMap resource="com/hxt/hCity/sql/HCity.xml" /> <!-- 市-->
+		<sqlMap resource="com/hxt/hArea/sql/HArea.xml" /> <!-- 区-->
+		<sqlMap resource="com/hxt/hProfitRatio/sql/HProfitRatio.xml" /> <!-- 分润比例-->
+		<sqlMap resource="com/hxt/hOperator/sql/HOperator.xml" /> <!-- 运营商-->
+		<sqlMap resource="com/hxt/hPersonType/sql/HPersonType.xml" /> <!-- 服务人员类型-->
+		<sqlMap resource="com/hxt/hOperatorDot/sql/HOperatorDot.xml" /> <!-- 运营商线下网点-->
+		<sqlMap resource="com/hxt/hAgent/sql/HAgent.xml" /> <!-- 一级代理-->
+		<sqlMap resource="com/hxt/hAgentTwo/sql/HAgentTwo.xml" /> <!-- 二级代理-->
+		<sqlMap resource="com/hxt/hUserAccount/sql/HUserAccount.xml" /> <!-- 账户-->
+		<sqlMap resource="com/hxt/hUserAccountDetail/sql/HUserAccountDetail.xml" /> <!-- 账户详情-->
+		<sqlMap resource="com/hxt/hEvaluate/sql/HEvaluate.xml" /> <!-- 评价-->
+		<sqlMap resource="com/hxt/hMessageLog/sql/HMessageLog.xml" /> <!-- 发短信记录-->
+		<sqlMap resource="com/hxt/hAmmeterQueryLog/sql/HAmmeterQueryLog.xml" /> <!-- 发短信记录-->
+		<sqlMap resource="com/hxt/hEwm/sql/HEwm.xml" /> <!-- 发短信记录-->
+		<sqlMap resource="com/hxt/hReferee/sql/HReferee.xml" /> <!-- 二维码扫描记录表-->
+		<sqlMap resource="com/hxt/hVerificate/sql/HVerificate.xml" /> <!-- 机构验证表-->
+		<sqlMap resource="com/hxt/hXieyi/sql/HXieyi.xml" /> <!-- 协议-->
+		<sqlMap resource="com/hxt/hPresentApply/sql/HPresentApply.xml" /> <!-- 申请提现-->
+		<sqlMap resource="com/hxt/hBank/sql/HBank.xml" /> <!--银行-->
+		<sqlMap resource="com/hxt/hRecRecord/sql/HRecRecord.xml" /> <!--登记时错误推荐人手机号记录表-->
+		<sqlMap resource="com/hxt/hProxyMessage/sql/HProxyMessage.xml" /> <!--代扣信息表-->
+		<sqlMap resource="com/hxt/hProxySerial/sql/HProxySerial.xml" /> <!--用户号暂存表-->
+		<sqlMap resource="com/hxt/openingBank/sql/OpeningBank.xml" /> <!--开户行表-->
+		<sqlMap resource="com/hxt/hLoginLog/sql/HLoginLog.xml" /> <!--登录日志表-->
+		<sqlMap resource="com/hxt/hDiaodan/sql/HDiaodan.xml" /> <!--调单记录表-->
+		<sqlMap resource="com/hxt/hPay/sql/HPay.xml" /> <!--什么是手机支付表-->
+		<sqlMap resource="com/hxt/hBankInfo/sql/HBankInfo.xml" /> <!--新支付行表-->
+		<sqlMap resource="com/hxt/hProxyMessageLog/sql/HProxyMessageLog.xml" /> <!--代扣信息变更记录表-->
+		<sqlMap resource="com/hxt/hProxySendLog/sql/HProxySendLog.xml" /> <!--代扣报文记录表-->
+		<sqlMap resource="com/hxt/hKtPay/sql/HKtPay.xml" /> <!--如何开通手机缴费表-->
+		<sqlMap resource="com/hxt/hRegGuli/sql/HRegGuli.xml" /> <!--注册鼓励金表-->
+		<sqlMap resource="com/hxt/hRegGuliSend/sql/HRegGuliSend.xml" /> <!--注册鼓励金发放表-->
+		<sqlMap resource="com/hxt/hPayGuli/sql/HPayGuli.xml" /> <!--支付鼓励金表-->
+		<sqlMap resource="com/hxt/hMessagePhone/sql/HMessagePhone.xml" /> <!--手机支付失败通知表-->
+
+	</sqlMapConfig>

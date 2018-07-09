@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:annotation-config/>
+	
+	<mvc:annotation-driven/>
+	<mvc:default-servlet-handler/> 
+	<mvc:resources location="/images/" mapping="/images/**"/>
+	<mvc:resources location="/js/" mapping="/js/**"/>
+	<mvc:resources location="/css/" mapping="/css/**"/>
+
+	<!-- 拦截器 -->
+    <mvc:interceptors>  
+        <bean class="com.base.interceptor.SystemInterceptor">
+			<property name="paramList">
+				<list>
+					<value>/manageAdminUser/toLogin</value>
+					<value>/manageAdminUser/login</value>
+					<value>/manageAdminUser/pcrimg</value>
+					<value>/manageAdminUser/loginout</value>
+					<value>/manageAdminUser/toUpdatePasswd</value>
+					<value>/manageAdminUser/updateManageAdminUser</value>
+					<value>/api/getAbout</value>
+					<value>/index/loginR</value>
+					<value>/index/first</value>
+					<value>/hLbImg/getAllHLbImg</value>
+					<value>/hAbout/toAboutUs</value>
+					<value>/hHelp/toHelp</value>
+					<value>/hAddress/toWuYe</value>
+					<value>/hFuwu/toTuoShou</value>
+					<value>/index/pagelogin</value>
+					<value>/manageAdminUser/cloginout</value>
+					<value>/hCommon/getAmmeterInfo</value>
+					<value>/excle/exportExcle</value>
+					
+					<value>/index/toLogin</value>
+					<value>/index/toRegister</value>
+					<value>/index/toCustomer</value>
+					<value>/index/toZhiFu</value>
+					<value>/hCompany/vercode</value>
+					<value>/hCompany/addHCompany</value>
+					<value>/index/toMinfo</value>
+					<value>/hCompany/mp</value>
+					<value>/hCommon/test</value>
+					<value>/hCommon/frontRcvResponse</value>
+					<value>/hCommon/backRcvResponse</value>
+					<value>/pay/checkPayurl</value>
+					<value>/ammetermanager/toZhifu</value>
+					<value>/ammetermanager/getInvoceAmmeterInfoByCId</value>
+					<value>/pay/generatePayOrder</value>
+					<value>/pay/toMiddle</value>
+					<value>/pay/checkPayTime</value>
+					<value>/pay/toElectricPay</value>
+					<value>/index/goForget</value>
+					<value>/index/forget</value>
+					<value>/index/sendCode</value>
+					<value>/public/payFee/toQuery</value>
+					<value>/public/newslist</value>
+					<value>/hCommon/queryAmmeterInfo</value>
+					<value>/public/dot/map</value>
+					<value>/hProvince/getHProvinceJson</value>
+					<value>/hCity/getHCityJson</value>
+					<value>/hArea/getHAreaJson</value>
+					<value>/weixin/access</value>
+					<value>/hAgent/toIndex</value>
+					<value>/weixin/toIndex</value>
+					<value>/hAgent/verify</value>
+					<value>/weixin/toReg</value>
+					<value>/weixin/toQuestion</value>
+					<value>/weixin/toMyQRcode</value>
+					<value>/weixin/vercode</value>
+					<value>/weixin/checkVercode</value>
+					<value>/weixin/wxVercode</value>
+					<value>/weixin/getAmmeterInfo</value>
+					<value>/weixin/toAmmeter</value>
+					<value>/hCompany/wxReg</value>
+					<value>/public/xieyi</value>
+					<value>/hCompany/showChangePeopel</value>
+					<value>/hCompany/showCompanyMsg</value>
+					<value>/hBank/getHBankBaseList</value>
+					<value>/hReviewUser/getCompanReviewer</value>
+					<value>/public/noticelist</value>
+					<value>/index/sendVercode</value>
+					<value>/hMessageLog/getMessageLogCount</value>
+					<value>/weixin/payCheck</value>
+					<value>/weixin/payDetail</value>
+					<value>/index/toDownload</value>
+					<value>/hProxyMessage/proxyPay</value>
+					<value>/H5/whatPay</value>
+					<value>/H5/toForgetPwd</value>
+					<value>/H5/forgetPwd</value>
+					<value>/H5/sendCode</value>
+					<value>/H5/sendCode1</value>
+					<value>/H5/checkVercode</value>
+				</list>
+			</property>
+        </bean>  
+    </mvc:interceptors>  
+	<!-- 文件上传空值器 -->
+    <bean id="multipartResolver"
+           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+           <!-- 设置上传文件大小的参数 500M -->
+        <property name="maxUploadSize" value="524288000"/>
+    </bean>
+	<!-- 把标记了@Controller注解的类转换成bean -->
+	<context:component-scan base-package="com.**.controller" />
+	<!-- 启动springMvc注解功能，完成请求和注解POJO的映射 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	
+	<!-- InternalResourceViewResolver默认的就是JstlView所以这里就不用配置viewClass了 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/page" p:suffix=".jsp" />	
+</beans> 

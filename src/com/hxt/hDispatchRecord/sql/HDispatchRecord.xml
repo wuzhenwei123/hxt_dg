@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HDispatchRecord">
+	<typeAlias alias="HDispatchRecord" type="com.hxt.hDispatchRecord.model.HDispatchRecord"/>
+	
+    <sql id="getHDispatchRecordList_body">
+        SELECT a.id,a.ammeter_no,a.totalFee,a.accountName,a.address,a.status,a.createTime,a.updateTime,a.remark1,a.remark2,a.remark3,a.accountFee,a.lateFee,a.accountTime        FROM h_dispatch_record a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_no"> a.ammeter_no=#ammeter_no# </isNotNull>
+            <isNotNull prepend="AND" property="totalFee"> a.totalFee=#totalFee# </isNotNull>
+            <isNotNull prepend="AND" property="accountName"> a.accountName=#accountName# </isNotNull>
+            <isNotNull prepend="AND" property="address"> a.address=#address# </isNotNull>
+            <isNotNull prepend="AND" property="status"> a.status=#status# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="updateTime"> a.updateTime=#updateTime# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHDispatchRecordListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHDispatchRecordList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHDispatchRecordList" parameterClass="HDispatchRecord" resultClass="HDispatchRecord">
+        SELECT * FROM (
+            <include refid="getHDispatchRecordList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHDispatchRecord" parameterClass="HDispatchRecord" resultClass="HDispatchRecord">
+       <include refid="getHDispatchRecordList_body" />
+    </select>
+
+    <insert id="insertHDispatchRecord">
+        INSERT INTO h_dispatch_record ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="ammeter_no"> ammeter_no </isNotNull>
+			<isNotNull prepend="," property="totalFee"> totalFee </isNotNull>
+			<isNotNull prepend="," property="accountName"> accountName </isNotNull>
+			<isNotNull prepend="," property="address"> address </isNotNull>
+			<isNotNull prepend="," property="status"> status </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="updateTime"> updateTime </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+			<isNotNull prepend="," property="accountFee"> accountFee </isNotNull>
+			<isNotNull prepend="," property="lateFee"> lateFee </isNotNull>
+			<isNotNull prepend="," property="accountTime"> accountTime </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="ammeter_no"> #ammeter_no# </isNotNull>
+		    <isNotNull prepend="," property="totalFee"> #totalFee# </isNotNull>
+		    <isNotNull prepend="," property="accountName"> #accountName# </isNotNull>
+		    <isNotNull prepend="," property="address"> #address# </isNotNull>
+		    <isNotNull prepend="," property="status"> #status# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="updateTime"> #updateTime# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+		    <isNotNull prepend="," property="accountFee"> #accountFee# </isNotNull>
+		    <isNotNull prepend="," property="lateFee"> #lateFee# </isNotNull>
+		    <isNotNull prepend="," property="accountTime"> #accountTime# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHDispatchRecord">
+        UPDATE h_dispatch_record
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_no"> ammeter_no=#ammeter_no# </isNotNull>
+		    <isNotNull prepend="," property="totalFee"> totalFee=#totalFee# </isNotNull>
+		    <isNotNull prepend="," property="accountName"> accountName=#accountName# </isNotNull>
+		    <isNotNull prepend="," property="address"> address=#address# </isNotNull>
+		    <isNotNull prepend="," property="status"> status=#status# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="updateTime"> updateTime=#updateTime# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+		    <isNotNull prepend="," property="accountFee"> accountFee=#accountFee# </isNotNull>
+		    <isNotNull prepend="," property="lateFee"> lateFee=#lateFee# </isNotNull>
+		    <isNotNull prepend="," property="accountTime"> accountTime=#accountTime# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <update id="updateHDispatchRecordByNo" parameterClass="HDispatchRecord">
+    	UPDATE h_dispatch_record 
+		<dynamic prepend="SET">
+		    <isNotNull prepend="," property="status"> status=#status# </isNotNull>
+		    <isNotNull prepend="," property="updateTime"> updateTime=#updateTime# </isNotNull>
+        </dynamic> 
+        where ammeter_no=#ammeter_no# and remark1=#remark1#
+    </update>
+    
+    <delete id="removeHDispatchRecord">
+        delete from h_dispatch_record where id = #id#
+    </delete>
+</sqlMap>

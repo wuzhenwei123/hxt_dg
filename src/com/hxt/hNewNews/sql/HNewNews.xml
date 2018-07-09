@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HNewNews">
+	<typeAlias alias="HNewNews" type="com.hxt.hNewNews.model.HNewNews"/>
+	
+    <sql id="getHNewNewsList_body">
+        SELECT a.sortId,a.id,a.title,a.content,a.createTime,a.createId,a.state,a.source,a.imgUrl        FROM h_new_news a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="title"> a.title=#title# </isNotNull>
+            <isNotNull prepend="AND" property="content"> a.content=#content# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="createId"> a.createId=#createId# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="source"> a.source=#source# </isNotNull>
+            <isNotNull prepend="AND" property="source"> a.sortId=#sortId# </isNotNull>
+            <isNotNull prepend="AND" property="imgUrl"> a.imgUrl=#imgUrl# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHNewNewsListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHNewNewsList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHNewNewsList" parameterClass="HNewNews" resultClass="HNewNews">
+        SELECT * FROM (
+            <include refid="getHNewNewsList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHNewNews" parameterClass="HNewNews" resultClass="HNewNews">
+       <include refid="getHNewNewsList_body" />
+    </select>
+
+    <insert id="insertHNewNews">
+        INSERT INTO h_new_news ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="title"> title </isNotNull>
+			<isNotNull prepend="," property="content"> content </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="createId"> createId </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+			<isNotNull prepend="," property="source"> source </isNotNull>
+			<isNotNull prepend="," property="sortId"> sortId </isNotNull>
+			<isNotNull prepend="," property="imgUrl"> imgUrl </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="title"> #title# </isNotNull>
+		    <isNotNull prepend="," property="content"> #content# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="createId"> #createId# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+		    <isNotNull prepend="," property="source"> #source# </isNotNull>
+		    <isNotNull prepend="," property="sortId"> #sortId# </isNotNull>
+		    <isNotNull prepend="," property="imgUrl"> #imgUrl# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHNewNews">
+        UPDATE h_new_news
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="title"> title=#title# </isNotNull>
+		    <isNotNull prepend="," property="content"> content=#content# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="createId"> createId=#createId# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="source"> source=#source# </isNotNull>
+		    <isNotNull prepend="," property="sortId"> sortId=#sortId# </isNotNull>
+		    <isNotNull prepend="," property="imgUrl"> imgUrl=#imgUrl# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHNewNews">
+        delete from h_new_news where id = #id#
+    </delete>
+</sqlMap>

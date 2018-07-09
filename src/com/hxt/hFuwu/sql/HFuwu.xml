@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HFuwu">
+	<typeAlias alias="HFuwu" type="com.hxt.hFuwu.model.HFuwu"/>
+	
+    <sql id="getHFuwuList_body">
+        SELECT a.id,a.content,a.state,a.createTime,a.createId  ,b.adminName      FROM h_fuwu a
+        left join manage_admin_user b on a.createId = b.adminId
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="content"> a.content=#content# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="createId"> a.createId=#createId# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHFuwuListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHFuwuList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHFuwuList" parameterClass="HFuwu" resultClass="HFuwu">
+        SELECT * FROM (
+            <include refid="getHFuwuList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHFuwu" parameterClass="HFuwu" resultClass="HFuwu">
+       <include refid="getHFuwuList_body" />
+    </select>
+
+    <insert id="insertHFuwu">
+        INSERT INTO h_fuwu ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="content"> content </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="createId"> createId </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="content"> #content# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="createId"> #createId# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHFuwu">
+        UPDATE h_fuwu
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="content"> content=#content# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="createId"> createId=#createId# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHFuwu">
+        delete from h_fuwu where id = #id#
+    </delete>
+</sqlMap>

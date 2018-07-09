@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="ManageAdminUser">
+	<typeAlias alias="ManageAdminUser" type="com.sys.manageAdminUser.model.ManageAdminUser"/>
+	
+    <sql id="getManageAdminUserList_body">
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="adminId"> a.adminId=#adminId# </isNotNull>
+            <isNotNull prepend="AND" property="scanTime"> a.scanTime=#scanTime# </isNotNull>
+            <isNotNull prepend="AND" property="cancelTime"> a.cancelTime=#cancelTime# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenId"> a.twoAgentOpenId=#twoAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> a.servicerId=#servicerId# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentName"> a.oneAgentName like concat('%',#oneAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentName"> a.twoAgentName like concat('%',#twoAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="servicerName"> a.servicerName like concat('%',#servicerName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="adminName"> a.adminName=#adminName# </isNotNull>
+            <isNotNull prepend="AND" property="nickName"> a.nickName like '%$nickName$%' </isNotNull>
+            <isNotNull prepend="AND" property="passwd"> a.passwd=#passwd# </isNotNull>
+            <isNotNull prepend="AND" property="realName"> a.realName like '%$realName$%' </isNotNull>
+            <isNotNull prepend="AND" property="mobile"> a.mobile=#mobile# </isNotNull>
+            <isNotNull prepend="AND" property="phone"> a.phone=#phone# </isNotNull>
+            <isNotNull prepend="AND" property="lastLogin"> a.lastLogin like concat('%',#lastLogin#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="loginIP"> a.loginIP=#loginIP# </isNotNull>
+            <isNotNull prepend="AND" property="pwdModifyTime"> a.pwdModifyTime=#pwdModifyTime# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="createrId"> a.createrId=#createrId# </isNotNull>
+            <isNotNull prepend="AND" property="openId"> a.openId=#openId# </isNotNull>
+            <isNotNull prepend="AND" property="agentCode"> a.agentCode=#agentCode# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenId"> a.twoAgentOpenId=#twoAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="isFirst"> a.isFirst=#isFirst# </isNotNull>
+            <isNotNull prepend="AND" property="roleId"> b.roleId=#roleId# </isNotNull>
+            <isNotNull prepend="AND" property="companyId"> d.id=#companyId# </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> a.servicerId=#servicerId# </isNotNull>
+            <isNotNull prepend="AND" property="servicerCount"> a.servicerCount=#servicerCount# </isNotNull>
+            <isNotNull prepend="AND" property="startTime"> <![CDATA[ a.createTime>=#startTime# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="endTime"> <![CDATA[ a.createTime<=#endTime# ]]> </isNotNull>
+        </dynamic>
+  		<isNotNull prepend="" property="sortColumn">  order by $sortColumn$ </isNotNull>
+    </sql>
+    <sql id="getManageAdminUserList_body1">
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="adminId"> a.adminId=#adminId# </isNotNull>
+            <isNotNull prepend="AND" property="scanTime"> a.scanTime=#scanTime# </isNotNull>
+            <isNotNull prepend="AND" property="cancelTime"> a.cancelTime=#cancelTime# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenId"> a.twoAgentOpenId=#twoAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> a.servicerId=#servicerId# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentName"> a.oneAgentName like concat('%',#oneAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentName"> a.twoAgentName like concat('%',#twoAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="servicerName"> a.servicerName like concat('%',#servicerName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="adminName"> a.adminName=#adminName# </isNotNull>
+            <isNotNull prepend="AND" property="nickName"> a.nickName like '%$nickName$%' </isNotNull>
+            <isNotNull prepend="AND" property="passwd"> a.passwd=#passwd# </isNotNull>
+            <isNotNull prepend="AND" property="realName"> a.realName like '%$realName$%' </isNotNull>
+            <isNotNull prepend="AND" property="mobile"> a.mobile=#mobile# </isNotNull>
+            <isNotNull prepend="AND" property="phone"> a.phone=#phone# </isNotNull>
+            <isNotNull prepend="AND" property="lastLogin"> a.lastLogin >= #lastLogin# </isNotNull>
+            <isNotNull prepend="AND" property="loginIP"> a.loginIP=#loginIP# </isNotNull>
+            <isNotNull prepend="AND" property="pwdModifyTime"> a.pwdModifyTime=#pwdModifyTime# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="createrId"> a.createrId=#createrId# </isNotNull>
+            <isNotNull prepend="AND" property="openId"> a.openId=#openId# </isNotNull>
+            <isNotNull prepend="AND" property="agentCode"> a.agentCode=#agentCode# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenId"> a.twoAgentOpenId=#twoAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="isFirst"> a.isFirst=#isFirst# </isNotNull>
+            <isNotNull prepend="AND" property="roleId"> b.roleId=#roleId# </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> a.servicerId=#servicerId# </isNotNull>
+            <isNotNull prepend="AND" property="servicerCount"> a.servicerCount=#servicerCount# </isNotNull>
+            <isNotNull prepend="AND" property="startTime"> <![CDATA[ a.createTime>=#startTime# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="endTime"> <![CDATA[ a.createTime<=#endTime# ]]> </isNotNull>
+        </dynamic>
+  		<isNotNull prepend="" property="sortColumn">  order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getManageAdminUserListCount" resultClass="int">
+        SELECT count(*)
+        FROM manage_admin_user a 
+        left join manage_admin_user_role b on a.adminId = b.adminId 
+        left join manage_admin_role r on r.roleId = b.roleId 
+        left join manage_admin_user c on a.createrId = c.adminId
+        left join h_company d on a.adminId = d.user_id
+        <include refid="getManageAdminUserList_body" />
+    </select>
+    
+    <select id="getManageAdminUserListCount1" resultClass="int">
+        SELECT count(*)
+        FROM manage_admin_user a 
+        left join manage_admin_user_role b on a.adminId = b.adminId 
+        left join manage_admin_role r on r.roleId = b.roleId 
+        left join manage_admin_user c on a.createrId = c.adminId
+        <include refid="getManageAdminUserList_body1" />
+    </select>
+
+    <select id="getManageAdminUserList" parameterClass="ManageAdminUser" resultClass="ManageAdminUser">
+        SELECT a.loginIP,a.createTime,a.adminId,a.adminName,a.nickName,a.passwd,a.realName,a.mobile,a.phone,a.lastLogin,b.roleId ,c.adminName as createrName, r.roleName,r.roleType,d.name as companyName,d.id as companyId,
+        d.ywyId,a.state,a.oneAgentOpenId,a.oneAgentName,a.twoAgentOpenId,a.twoAgentName,a.servicerId,a.servicerName,a.scanTime,a.cancelTime,a.pwdModifyTime,a.openId,
+        a.gl_yl_id,a.gl_sj_id    
+        FROM manage_admin_user a 
+        left join manage_admin_user_role b on a.adminId = b.adminId 
+        left join manage_admin_role r on r.roleId = b.roleId 
+        left join manage_admin_user c on a.createrId = c.adminId
+        left join h_company d on a.adminId = d.user_id
+        <include refid="getManageAdminUserList_body" />
+        limit #rowStart# , #rowCount# 
+    </select>
+    <select id="getManageAdminUserList1" parameterClass="ManageAdminUser" resultClass="ManageAdminUser">
+        SELECT a.loginIP,a.createTime,a.adminId,a.adminName,a.nickName,a.passwd,a.realName,a.mobile,a.phone,a.lastLogin,b.roleId ,c.adminName as createrName, r.roleName,r.roleType,a.state,a.oneAgentOpenId,a.oneAgentName,a.twoAgentOpenId,a.twoAgentName,a.servicerId,a.servicerName,
+        a.scanTime,a.cancelTime,a.openId,a.gl_yl_id,a.gl_sj_id 
+        FROM manage_admin_user a 
+        left join manage_admin_user_role b on a.adminId = b.adminId 
+        left join manage_admin_role r on r.roleId = b.roleId 
+        left join manage_admin_user c on a.createrId = c.adminId
+        <include refid="getManageAdminUserList_body1" />
+        limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getManageAdminUser" parameterClass="ManageAdminUser" resultClass="ManageAdminUser">
+        SELECT a.loginIP,a.createTime,a.adminId,a.adminName,a.nickName,a.passwd,a.realName,a.mobile,a.phone,a.lastLogin,b.roleId ,c.adminName as createrName, r.roleName,r.roleType,d.name as companyName,d.id as companyId,
+        d.ywyId,a.state,a.oneAgentOpenId,a.oneAgentName,a.twoAgentOpenId,a.twoAgentName,a.servicerId,a.servicerName,a.scanTime,a.cancelTime,a.pwdModifyTime,a.openId,
+        a.gl_yl_id,a.gl_sj_id     
+        FROM manage_admin_user a 
+        left join manage_admin_user_role b on a.adminId = b.adminId 
+        left join manage_admin_role r on r.roleId = b.roleId 
+        left join manage_admin_user c on a.createrId = c.adminId
+        left join h_company d on a.adminId = d.user_id
+       <include refid="getManageAdminUserList_body" />
+    </select>
+    <select id="getManageAdminUser1" parameterClass="ManageAdminUser" resultClass="ManageAdminUser">
+    	SELECT a.loginIP,a.createTime,a.adminId,a.adminName,a.nickName,a.passwd,a.realName,a.mobile,a.phone,a.lastLogin,b.roleId ,c.adminName as createrName, r.roleName,r.roleType,a.state,a.oneAgentOpenId,a.oneAgentName,a.twoAgentOpenId,a.twoAgentName,a.servicerId,a.servicerName,
+        a.scanTime,a.cancelTime,a.openId,a.companyId,a.gl_yl_id,a.gl_sj_id 
+        FROM manage_admin_user a 
+        left join manage_admin_user_role b on a.adminId = b.adminId 
+        left join manage_admin_role r on r.roleId = b.roleId 
+        left join manage_admin_user c on a.createrId = c.adminId
+       <include refid="getManageAdminUserList_body1" />
+    </select>
+
+    <insert id="insertManageAdminUser">
+        INSERT INTO manage_admin_user ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="adminName"> adminName </isNotNull>
+			<isNotNull prepend="," property="nickName"> nickName </isNotNull>
+			<isNotNull prepend="," property="passwd"> passwd </isNotNull>
+			<isNotNull prepend="," property="realName"> realName </isNotNull>
+			<isNotNull prepend="," property="mobile"> mobile </isNotNull>
+			<isNotNull prepend="," property="phone"> phone </isNotNull>
+			<isNotNull prepend="," property="lastLogin"> lastLogin </isNotNull>
+			<isNotNull prepend="," property="loginIP"> loginIP </isNotNull>
+			<isNotNull prepend="," property="pwdModifyTime"> pwdModifyTime </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="createrId"> createrId </isNotNull>
+			<isNotNull prepend="," property="headImg"> headImg </isNotNull>
+			<isNotNull prepend="," property="openId"> openId </isNotNull>
+			<isNotNull prepend="," property="agentCode"> agentCode </isNotNull>
+			<isNotNull prepend="," property="oneAgentOpenId"> oneAgentOpenId </isNotNull>
+			<isNotNull prepend="," property="twoAgentOpenId"> twoAgentOpenId </isNotNull>
+			<isNotNull prepend="," property="isFirst"> isFirst </isNotNull>
+			<isNotNull prepend="," property="servicerId"> servicerId </isNotNull>
+			<isNotNull prepend="," property="servicerCount"> servicerCount </isNotNull>
+			<isNotNull prepend="," property="oneAgentName"> oneAgentName </isNotNull>
+			<isNotNull prepend="," property="twoAgentName"> twoAgentName </isNotNull>
+			<isNotNull prepend="," property="servicerName"> servicerName </isNotNull>
+			<isNotNull prepend="," property="scanTime"> scanTime </isNotNull>
+			<isNotNull prepend="," property="cancelTime"> cancelTime </isNotNull>
+			<isNotNull prepend="," property="companyId"> companyId </isNotNull>
+			<isNotNull prepend="," property="gl_yl_id"> gl_yl_id </isNotNull>
+			<isNotNull prepend="," property="gl_sj_id"> gl_sj_id </isNotNull>
+			<isNotNull prepend="," property="gl_sj_name"> gl_sj_name </isNotNull>
+			<isNotNull prepend="," property="gl_yl_name"> gl_yl_name </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="adminName"> #adminName# </isNotNull>
+		    <isNotNull prepend="," property="nickName"> #nickName# </isNotNull>
+		    <isNotNull prepend="," property="passwd"> #passwd# </isNotNull>
+		    <isNotNull prepend="," property="realName"> #realName# </isNotNull>
+		    <isNotNull prepend="," property="mobile"> #mobile# </isNotNull>
+		    <isNotNull prepend="," property="phone"> #phone# </isNotNull>
+		    <isNotNull prepend="," property="lastLogin"> #lastLogin# </isNotNull>
+		    <isNotNull prepend="," property="loginIP"> #loginIP# </isNotNull>
+		    <isNotNull prepend="," property="pwdModifyTime"> #pwdModifyTime# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="createrId"> #createrId# </isNotNull>
+		    <isNotNull prepend="," property="headImg"> #headImg# </isNotNull>
+		    <isNotNull prepend="," property="openId"> #openId# </isNotNull>
+		    <isNotNull prepend="," property="agentCode"> #agentCode# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentOpenId"> #oneAgentOpenId# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentOpenId"> #twoAgentOpenId# </isNotNull>
+		    <isNotNull prepend="," property="isFirst"> #isFirst# </isNotNull>
+		    <isNotNull prepend="," property="servicerId"> #servicerId# </isNotNull>
+		    <isNotNull prepend="," property="servicerCount"> #servicerCount# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentName"> #oneAgentName# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentName"> #twoAgentName# </isNotNull>
+		    <isNotNull prepend="," property="servicerName"> #servicerName# </isNotNull>
+		    <isNotNull prepend="," property="scanTime"> #scanTime# </isNotNull>
+		    <isNotNull prepend="," property="cancelTime"> #cancelTime# </isNotNull>
+		    <isNotNull prepend="," property="companyId"> #companyId# </isNotNull>
+		    <isNotNull prepend="," property="gl_yl_id"> #gl_yl_id# </isNotNull>
+		    <isNotNull prepend="," property="gl_sj_id"> #gl_sj_id# </isNotNull>
+		    <isNotNull prepend="," property="gl_sj_name"> #gl_sj_name# </isNotNull>
+		    <isNotNull prepend="," property="gl_yl_name"> #gl_yl_name# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="adminId" resultClass="int">
+			SELECT @@IDENTITY AS adminId 
+		</selectKey>
+    </insert>
+
+    <update id="updateManageAdminUser">
+        UPDATE manage_admin_user
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="adminId"> adminId=#adminId# </isNotNull>
+		    <isNotNull prepend="," property="adminName"> adminName=#adminName# </isNotNull>
+		    <isNotNull prepend="," property="nickName"> nickName=#nickName# </isNotNull>
+		    <isNotNull prepend="," property="passwd"> passwd=#passwd# </isNotNull>
+		    <isNotNull prepend="," property="realName"> realName=#realName# </isNotNull>
+		    <isNotNull prepend="," property="mobile"> mobile=#mobile# </isNotNull>
+		    <isNotNull prepend="," property="phone"> phone=#phone# </isNotNull>
+		    <isNotNull prepend="," property="lastLogin"> lastLogin=#lastLogin# </isNotNull>
+		    <isNotNull prepend="," property="loginIP"> loginIP=#loginIP# </isNotNull>
+		    <isNotNull prepend="," property="pwdModifyTime"> pwdModifyTime=#pwdModifyTime# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="createrId"> createrId=#createrId# </isNotNull>
+		    <isNotNull prepend="," property="headImg"> headImg=#headImg# </isNotNull>
+		    <isNotNull prepend="," property="openId"> openId=#openId# </isNotNull>
+		    <isNotNull prepend="," property="agentCode"> agentCode=#agentCode# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentOpenId"> oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentOpenId"> twoAgentOpenId=#twoAgentOpenId# </isNotNull>
+		    <isNotNull prepend="," property="isFirst"> isFirst=#isFirst# </isNotNull>
+		    <isNotNull prepend="," property="servicerId"> servicerId=#servicerId# </isNotNull>
+		    <isNotNull prepend="," property="servicerCount"> servicerCount=#servicerCount# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentName"> oneAgentName=#oneAgentName# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentName"> twoAgentName=#twoAgentName# </isNotNull>
+		    <isNotNull prepend="," property="servicerName"> servicerName=#servicerName# </isNotNull>
+		    <isNotNull prepend="," property="scanTime"> scanTime=#scanTime# </isNotNull>
+		    <isNotNull prepend="," property="cancelTime"> cancelTime=#cancelTime# </isNotNull>
+		    <isNotNull prepend="," property="companyId"> companyId=#companyId# </isNotNull>
+		    <isNotNull prepend="," property="gl_yl_id"> gl_yl_id=#gl_yl_id# </isNotNull>
+		    <isNotNull prepend="," property="gl_sj_id"> gl_sj_id=#gl_sj_id# </isNotNull>
+		    <isNotNull prepend="," property="gl_sj_name"> gl_sj_name=#gl_sj_name# </isNotNull>
+		    <isNotNull prepend="," property="gl_yl_name"> gl_yl_name=#gl_yl_name# </isNotNull>
+        </dynamic>
+
+        <dynamic prepend="WHERE">
+        	adminId = #adminId#
+        </dynamic>
+    </update>
+    
+    <delete id="removeManageAdminUser">
+        delete from manage_admin_user where adminId = #adminId#
+    </delete>
+    
+    <select id="getWxLoginNum" parameterClass="ManageAdminUser" resultClass="ManageAdminUser">
+        SELECT a.* FROM manage_admin_user a
+        left join manage_admin_user_role b on a.adminId = b.adminId 
+        where a.openId is not null and b.roleId=#roleId#   order by a.adminId desc limit 0,1
+    </select>
+    
+    <update id="unBindWx">
+       UPDATE manage_admin_user set openId=null,cancelTime=#cancelTime# where adminId = #adminId#
+    </update>
+    <update id="updateDefaultService">
+       UPDATE manage_admin_user SET servicerCount = servicerCount + 1 WHERE adminId = #adminId#
+    </update>
+    
+    <select id="getAdminUserByID" parameterClass="int" resultClass="ManageAdminUser">
+        SELECT * FROM manage_admin_user where adminId = #adminId#
+    </select>
+    <select id="getDefaultServicer" parameterClass="ManageAdminUser" resultClass="ManageAdminUser">
+        SELECT * FROM manage_admin_user a
+        left join manage_admin_user_role b on a.adminId = b.adminId 
+        where b.roleId = #roleId#
+         ORDER BY servicerCount LIMIT 0,1
+    </select>
+    
+    <select id="getAdminUserByLogin" parameterClass="ManageAdminUser" resultClass="ManageAdminUser">
+        SELECT a.*,b.roleId FROM manage_admin_user a
+        left join manage_admin_user_role b on a.adminId = b.adminId
+        <dynamic prepend="WHERE">
+        	<isNotNull prepend="AND" property="adminName"> a.adminName=#adminName# </isNotNull>
+        	<isNotNull prepend="AND" property="adminId"> a.adminId=#adminId# </isNotNull>
+            <isNotNull prepend="AND" property="passwd"> a.passwd=#passwd# </isNotNull>
+            <isNotNull prepend="AND" property="openId"> a.openId=#openId# </isNotNull>
+            <isNotNull prepend="AND" property="roleId"> b.roleId=#roleId# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="otherServicerId"> <![CDATA[ a.adminId<>#otherServicerId# ]]> </isNotNull>
+        </dynamic>
+    </select>
+    
+    <select id="checkAdminName" resultClass="int">
+    	select count(*) from manage_admin_user where adminName=#adminName# 
+    	<isNotNull prepend="AND" property="adminId"> <![CDATA[ adminId<>#adminId# ]]> </isNotNull>
+    </select>
+    
+    
+    <select id="getManageAdminUserPPCount" resultClass="int">
+        SELECT count(*)
+        FROM manage_admin_user a 
+        left join manage_admin_user_role b on a.adminId = b.adminId 
+        left join manage_admin_role r on r.roleId = b.roleId 
+        left join manage_admin_user c on a.createrId = c.adminId
+        left join h_company d on a.adminId = d.user_id
+        left join h_pay_guli f on a.gl_yl_id = f.id 
+        left join h_pay_guli g on a.gl_sj_id = g.id
+        <include refid="getManageAdminUserList_body" />
+    </select>
+    
+    <select id="getManageAdminUserPP" parameterClass="ManageAdminUser" resultClass="ManageAdminUser">
+        SELECT a.loginIP,a.createTime,a.adminId,a.adminName,a.nickName,a.passwd,a.realName,a.mobile,a.phone,a.lastLogin,b.roleId ,c.adminName as createrName, r.roleName,r.roleType,d.name as companyName,d.id as companyId,
+        d.ywyId,a.state,a.oneAgentOpenId,a.oneAgentName,a.twoAgentOpenId,a.twoAgentName,a.servicerId,a.servicerName,a.scanTime,a.cancelTime,a.pwdModifyTime,a.openId,
+        a.gl_yl_id,f.name as gl_yl_name,a.gl_sj_id,g.name as gl_sj_name,f.type as gl_yl_type,f.rate as gl_yl_rate,f.fee as gl_yl_fee,
+        g.type as gl_sj_type,g.rate as gl_sj_rate,g.fee as gl_sj_fee     
+        FROM manage_admin_user a 
+        left join manage_admin_user_role b on a.adminId = b.adminId 
+        left join manage_admin_role r on r.roleId = b.roleId 
+        left join manage_admin_user c on a.createrId = c.adminId
+        left join h_company d on a.adminId = d.user_id
+        left join h_pay_guli f on a.gl_yl_id = f.id 
+        left join h_pay_guli g on a.gl_sj_id = g.id
+        <include refid="getManageAdminUserList_body" />
+        limit #rowStart# , #rowCount# 
+    </select>
+    
+    <update id="updateDefaultYLGl">
+    	update manage_admin_user set gl_yl_id = #gl_yl_id# where gl_yl_id = #gl_yl_id1#;
+    </update>
+    <update id="updateDefaultSJGl">
+    	update manage_admin_user set gl_sj_id = #gl_sj_id# where gl_sj_id = #gl_sj_id1#;
+    </update>
+    
+    <select id="getServiceUser" parameterClass="ManageAdminUser" resultClass="ManageAdminUser">
+    	select min(a.adminId) as adminId FROM manage_admin_user a 
+        left join manage_admin_user_role b on a.adminId = b.adminId 
+        where a.state=#state# and b.roleId=#roleId# 
+        <isNotNull prepend="and" property="servicerId"> a.adminId>#servicerId# </isNotNull>
+    </select>
+</sqlMap>

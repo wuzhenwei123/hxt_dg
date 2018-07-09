@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="OpeningBank">
+	<typeAlias alias="OpeningBank" type="com.hxt.openingBank.model.OpeningBank"/>
+	
+    <sql id="getOpeningBankList_body">
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="NBKCODE"> a.NBKCODE=#NBKCODE# </isNotNull>
+            <isNotNull prepend="AND" property="SABKCODE"> a.SABKCODE=#SABKCODE# </isNotNull>
+            <isNotNull prepend="AND" property="BNKCITY"> a.BNKCITY=#BNKCITY# </isNotNull>
+            <isNotNull prepend="AND" property="NBKNAME"> a.NBKNAME=#NBKNAME# </isNotNull>
+            <isNotNull prepend="AND" property="NBKSNAME"> a.NBKSNAME=#NBKSNAME# </isNotNull>
+            <isNotNull prepend="AND" property="NBKADDRESS"> a.NBKADDRESS=#NBKADDRESS# </isNotNull>
+            <isNotNull prepend="AND" property="CNTTEL"> a.CNTTEL=#CNTTEL# </isNotNull>
+            <isNotNull prepend="AND" property="CNTPER"> a.CNTPER=#CNTPER# </isNotNull>
+            <isNotNull prepend="AND" property="POSTCODE"> a.POSTCODE=#POSTCODE# </isNotNull>
+            <isNotNull prepend="AND" property="NBKSTATE"> a.NBKSTATE=#NBKSTATE# </isNotNull>
+            <isNotNull prepend="AND" property="BKEMAIL"> a.BKEMAIL=#BKEMAIL# </isNotNull>
+            <isNotNull prepend="AND" property="CONTENT"> a.CONTENT=#CONTENT# </isNotNull>
+            <isNotNull prepend="AND" property="PARTTYPE"> a.PARTTYPE=#PARTTYPE# </isNotNull>
+            <isNotNull prepend="AND" property="BANKCATCODE"> a.BANKCATCODE=#BANKCATCODE# </isNotNull>
+            <isNotNull prepend="AND" property="HIGHPART"> a.HIGHPART=#HIGHPART# </isNotNull>
+            <isNotNull prepend="AND" property="BEARBANKCODE"> a.BEARBANKCODE=#BEARBANKCODE# </isNotNull>
+            <isNotNull prepend="AND" property="CHARGEBANKCODE"> a.CHARGEBANKCODE=#CHARGEBANKCODE# </isNotNull>
+            <isNotNull prepend="AND" property="NODECODE"> a.NODECODE=#NODECODE# </isNotNull>
+            <isNotNull prepend="AND" property="SIGN"> a.SIGN=#SIGN# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getOpeningBankListCount" resultClass="int">
+        SELECT COUNT(*) FROM opening_bank a 
+            <include refid="getOpeningBankList_body" />
+         
+    </select>
+
+    <select id="getOpeningBankList" parameterClass="OpeningBank" resultClass="OpeningBank">
+        SELECT a.id,a.NBKCODE,a.SABKCODE,a.BNKCITY,a.NBKNAME,a.NBKSNAME,a.NBKADDRESS,a.CNTTEL,a.CNTPER,a.POSTCODE,a.NBKSTATE,a.BKEMAIL,a.CONTENT,a.PARTTYPE,a.BANKCATCODE,a.HIGHPART,a.BEARBANKCODE,a.CHARGEBANKCODE,a.NODECODE,a.SIGN        FROM opening_bank a
+            <include refid="getOpeningBankList_body" />
+        limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getOpeningBank" parameterClass="OpeningBank" resultClass="OpeningBank">
+    	SELECT a.id,a.NBKCODE,a.SABKCODE,a.BNKCITY,a.NBKNAME,a.NBKSNAME,a.NBKADDRESS,a.CNTTEL,a.CNTPER,a.POSTCODE,a.NBKSTATE,a.BKEMAIL,a.CONTENT,a.PARTTYPE,a.BANKCATCODE,a.HIGHPART,a.BEARBANKCODE,a.CHARGEBANKCODE,a.NODECODE,a.SIGN        FROM opening_bank a
+       <include refid="getOpeningBankList_body" />
+    </select>
+
+    <insert id="insertOpeningBank">
+        INSERT INTO opening_bank ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="NBKCODE"> NBKCODE </isNotNull>
+			<isNotNull prepend="," property="SABKCODE"> SABKCODE </isNotNull>
+			<isNotNull prepend="," property="BNKCITY"> BNKCITY </isNotNull>
+			<isNotNull prepend="," property="NBKNAME"> NBKNAME </isNotNull>
+			<isNotNull prepend="," property="NBKSNAME"> NBKSNAME </isNotNull>
+			<isNotNull prepend="," property="NBKADDRESS"> NBKADDRESS </isNotNull>
+			<isNotNull prepend="," property="CNTTEL"> CNTTEL </isNotNull>
+			<isNotNull prepend="," property="CNTPER"> CNTPER </isNotNull>
+			<isNotNull prepend="," property="POSTCODE"> POSTCODE </isNotNull>
+			<isNotNull prepend="," property="NBKSTATE"> NBKSTATE </isNotNull>
+			<isNotNull prepend="," property="BKEMAIL"> BKEMAIL </isNotNull>
+			<isNotNull prepend="," property="CONTENT"> CONTENT </isNotNull>
+			<isNotNull prepend="," property="PARTTYPE"> PARTTYPE </isNotNull>
+			<isNotNull prepend="," property="BANKCATCODE"> BANKCATCODE </isNotNull>
+			<isNotNull prepend="," property="HIGHPART"> HIGHPART </isNotNull>
+			<isNotNull prepend="," property="BEARBANKCODE"> BEARBANKCODE </isNotNull>
+			<isNotNull prepend="," property="CHARGEBANKCODE"> CHARGEBANKCODE </isNotNull>
+			<isNotNull prepend="," property="NODECODE"> NODECODE </isNotNull>
+			<isNotNull prepend="," property="SIGN"> SIGN </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="NBKCODE"> #NBKCODE# </isNotNull>
+		    <isNotNull prepend="," property="SABKCODE"> #SABKCODE# </isNotNull>
+		    <isNotNull prepend="," property="BNKCITY"> #BNKCITY# </isNotNull>
+		    <isNotNull prepend="," property="NBKNAME"> #NBKNAME# </isNotNull>
+		    <isNotNull prepend="," property="NBKSNAME"> #NBKSNAME# </isNotNull>
+		    <isNotNull prepend="," property="NBKADDRESS"> #NBKADDRESS# </isNotNull>
+		    <isNotNull prepend="," property="CNTTEL"> #CNTTEL# </isNotNull>
+		    <isNotNull prepend="," property="CNTPER"> #CNTPER# </isNotNull>
+		    <isNotNull prepend="," property="POSTCODE"> #POSTCODE# </isNotNull>
+		    <isNotNull prepend="," property="NBKSTATE"> #NBKSTATE# </isNotNull>
+		    <isNotNull prepend="," property="BKEMAIL"> #BKEMAIL# </isNotNull>
+		    <isNotNull prepend="," property="CONTENT"> #CONTENT# </isNotNull>
+		    <isNotNull prepend="," property="PARTTYPE"> #PARTTYPE# </isNotNull>
+		    <isNotNull prepend="," property="BANKCATCODE"> #BANKCATCODE# </isNotNull>
+		    <isNotNull prepend="," property="HIGHPART"> #HIGHPART# </isNotNull>
+		    <isNotNull prepend="," property="BEARBANKCODE"> #BEARBANKCODE# </isNotNull>
+		    <isNotNull prepend="," property="CHARGEBANKCODE"> #CHARGEBANKCODE# </isNotNull>
+		    <isNotNull prepend="," property="NODECODE"> #NODECODE# </isNotNull>
+		    <isNotNull prepend="," property="SIGN"> #SIGN# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateOpeningBank">
+        UPDATE opening_bank
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="NBKCODE"> NBKCODE=#NBKCODE# </isNotNull>
+		    <isNotNull prepend="," property="SABKCODE"> SABKCODE=#SABKCODE# </isNotNull>
+		    <isNotNull prepend="," property="BNKCITY"> BNKCITY=#BNKCITY# </isNotNull>
+		    <isNotNull prepend="," property="NBKNAME"> NBKNAME=#NBKNAME# </isNotNull>
+		    <isNotNull prepend="," property="NBKSNAME"> NBKSNAME=#NBKSNAME# </isNotNull>
+		    <isNotNull prepend="," property="NBKADDRESS"> NBKADDRESS=#NBKADDRESS# </isNotNull>
+		    <isNotNull prepend="," property="CNTTEL"> CNTTEL=#CNTTEL# </isNotNull>
+		    <isNotNull prepend="," property="CNTPER"> CNTPER=#CNTPER# </isNotNull>
+		    <isNotNull prepend="," property="POSTCODE"> POSTCODE=#POSTCODE# </isNotNull>
+		    <isNotNull prepend="," property="NBKSTATE"> NBKSTATE=#NBKSTATE# </isNotNull>
+		    <isNotNull prepend="," property="BKEMAIL"> BKEMAIL=#BKEMAIL# </isNotNull>
+		    <isNotNull prepend="," property="CONTENT"> CONTENT=#CONTENT# </isNotNull>
+		    <isNotNull prepend="," property="PARTTYPE"> PARTTYPE=#PARTTYPE# </isNotNull>
+		    <isNotNull prepend="," property="BANKCATCODE"> BANKCATCODE=#BANKCATCODE# </isNotNull>
+		    <isNotNull prepend="," property="HIGHPART"> HIGHPART=#HIGHPART# </isNotNull>
+		    <isNotNull prepend="," property="BEARBANKCODE"> BEARBANKCODE=#BEARBANKCODE# </isNotNull>
+		    <isNotNull prepend="," property="CHARGEBANKCODE"> CHARGEBANKCODE=#CHARGEBANKCODE# </isNotNull>
+		    <isNotNull prepend="," property="NODECODE"> NODECODE=#NODECODE# </isNotNull>
+		    <isNotNull prepend="," property="SIGN"> SIGN=#SIGN# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeOpeningBank">
+        delete from opening_bank where id = #id#
+    </delete>
+</sqlMap>

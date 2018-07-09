@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HProxySerial">
+	<typeAlias alias="HProxySerial" type="com.hxt.hProxySerial.model.HProxySerial"/>
+	
+    <sql id="getHProxySerialList_body">
+        SELECT a.id,a.payBankNumber,a.userNumber,a.contractNumber,a.bank_number        FROM h_proxy_serial a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="payBankNumber"> a.payBankNumber=#payBankNumber# </isNotNull>
+            <isNotNull prepend="AND" property="userNumber"> a.userNumber=#userNumber# </isNotNull>
+            <isNotNull prepend="AND" property="contractNumber"> a.contractNumber=#contractNumber# </isNotNull>
+            <isNotNull prepend="AND" property="bank_number"> a.bank_number=#bank_number# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHProxySerialListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHProxySerialList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHProxySerialList" parameterClass="HProxySerial" resultClass="HProxySerial">
+        SELECT * FROM (
+            <include refid="getHProxySerialList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHProxySerial" parameterClass="HProxySerial" resultClass="HProxySerial">
+       <include refid="getHProxySerialList_body" />
+    </select>
+
+    <insert id="insertHProxySerial">
+        INSERT INTO h_proxy_serial ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="payBankNumber"> payBankNumber </isNotNull>
+			<isNotNull prepend="," property="userNumber"> userNumber </isNotNull>
+			<isNotNull prepend="," property="contractNumber"> contractNumber </isNotNull>
+			<isNotNull prepend="," property="bank_number"> bank_number </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="payBankNumber"> #payBankNumber# </isNotNull>
+		    <isNotNull prepend="," property="userNumber"> #userNumber# </isNotNull>
+		    <isNotNull prepend="," property="contractNumber"> #contractNumber# </isNotNull>
+		    <isNotNull prepend="," property="bank_number"> #bank_number# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHProxySerial">
+        UPDATE h_proxy_serial
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="payBankNumber"> payBankNumber=#payBankNumber# </isNotNull>
+		    <isNotNull prepend="," property="userNumber"> userNumber=#userNumber# </isNotNull>
+		    <isNotNull prepend="," property="contractNumber"> contractNumber=#contractNumber# </isNotNull>
+		    <isNotNull prepend="," property="bank_number"> bank_number=#bank_number# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHProxySerial">
+        delete from h_proxy_serial where id = #id#
+    </delete>
+</sqlMap>

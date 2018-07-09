@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HOperatorDot">
+	<typeAlias alias="HOperatorDot" type="com.hxt.hOperatorDot.model.HOperatorDot"/>
+	
+    <sql id="getHOperatorDotList_body">
+        SELECT a.lastAdminName,a.adminName,a.id,a.operator_name,a.operator_id,a.operator_level,a.window_name,a.name,a.province_name,a.province_code,a.city_code,a.city_name,a.area_code,a.area_name,a.state,a.createTime,a.full_invoice,a.add_invoice,a.adminId,a.lastTime,a.lastAdminId,a.mobile,a.phone,a.phone_post,a.work_start,a.work_end,a.address        FROM h_operator_dot a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="operator_name"> a.operator_name=#operator_name# </isNotNull>
+            <isNotNull prepend="AND" property="operator_id"> a.operator_id=#operator_id# </isNotNull>
+            <isNotNull prepend="AND" property="operator_level"> a.operator_level=#operator_level# </isNotNull>
+            <isNotNull prepend="AND" property="window_name"> a.window_name=#window_name# </isNotNull>
+            <isNotNull prepend="AND" property="name"> a.name like '%$name$%' </isNotNull>
+            <isNotNull prepend="AND" property="province_name"> a.province_name=#province_name# </isNotNull>
+            <isNotNull prepend="AND" property="province_code"> a.province_code=#province_code# </isNotNull>
+            <isNotNull prepend="AND" property="city_code"> a.city_code=#city_code# </isNotNull>
+            <isNotNull prepend="AND" property="city_name"> a.city_name=#city_name# </isNotNull>
+            <isNotNull prepend="AND" property="area_code"> a.area_code=#area_code# </isNotNull>
+            <isNotNull prepend="AND" property="area_name"> a.area_name=#area_name# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="full_invoice"> a.full_invoice=#full_invoice# </isNotNull>
+            <isNotNull prepend="AND" property="add_invoice"> a.add_invoice=#add_invoice# </isNotNull>
+            <isNotNull prepend="AND" property="adminId"> a.adminId=#adminId# </isNotNull>
+            <isNotNull prepend="AND" property="lastTime"> a.lastTime=#lastTime# </isNotNull>
+            <isNotNull prepend="AND" property="lastAdminId"> a.lastAdminId=#lastAdminId# </isNotNull>
+            <isNotNull prepend="AND" property="mobile"> a.mobile=#mobile# </isNotNull>
+            <isNotNull prepend="AND" property="phone"> a.phone=#phone# </isNotNull>
+            <isNotNull prepend="AND" property="phone_post"> a.phone_post=#phone_post# </isNotNull>
+            <isNotNull prepend="AND" property="work_start"> a.work_start=#work_start# </isNotNull>
+            <isNotNull prepend="AND" property="work_end"> a.work_end=#work_end# </isNotNull>
+            <isNotNull prepend="AND" property="address"> a.address=#address# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHOperatorDotListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHOperatorDotList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHOperatorDotList" parameterClass="HOperatorDot" resultClass="HOperatorDot">
+        SELECT * FROM (
+            <include refid="getHOperatorDotList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHOperatorDot" parameterClass="HOperatorDot" resultClass="HOperatorDot">
+       <include refid="getHOperatorDotList_body" />
+    </select>
+
+    <insert id="insertHOperatorDot">
+        INSERT INTO h_operator_dot ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="operator_name"> operator_name </isNotNull>
+			<isNotNull prepend="," property="operator_id"> operator_id </isNotNull>
+			<isNotNull prepend="," property="operator_level"> operator_level </isNotNull>
+			<isNotNull prepend="," property="window_name"> window_name </isNotNull>
+			<isNotNull prepend="," property="name"> name </isNotNull>
+			<isNotNull prepend="," property="province_name"> province_name </isNotNull>
+			<isNotNull prepend="," property="province_code"> province_code </isNotNull>
+			<isNotNull prepend="," property="city_code"> city_code </isNotNull>
+			<isNotNull prepend="," property="city_name"> city_name </isNotNull>
+			<isNotNull prepend="," property="area_code"> area_code </isNotNull>
+			<isNotNull prepend="," property="area_name"> area_name </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="full_invoice"> full_invoice </isNotNull>
+			<isNotNull prepend="," property="add_invoice"> add_invoice </isNotNull>
+			<isNotNull prepend="," property="adminId"> adminId </isNotNull>
+			<isNotNull prepend="," property="lastTime"> lastTime </isNotNull>
+			<isNotNull prepend="," property="lastAdminId"> lastAdminId </isNotNull>
+			<isNotNull prepend="," property="mobile"> mobile </isNotNull>
+			<isNotNull prepend="," property="phone"> phone </isNotNull>
+			<isNotNull prepend="," property="phone_post"> phone_post </isNotNull>
+			<isNotNull prepend="," property="work_start"> work_start </isNotNull>
+			<isNotNull prepend="," property="work_end"> work_end </isNotNull>
+			<isNotNull prepend="," property="address"> address </isNotNull>
+			<isNotNull prepend="," property="lastAdminName"> lastAdminName </isNotNull>
+			<isNotNull prepend="," property="adminName"> adminName </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="operator_name"> #operator_name# </isNotNull>
+		    <isNotNull prepend="," property="operator_id"> #operator_id# </isNotNull>
+		    <isNotNull prepend="," property="operator_level"> #operator_level# </isNotNull>
+		    <isNotNull prepend="," property="window_name"> #window_name# </isNotNull>
+		    <isNotNull prepend="," property="name"> #name# </isNotNull>
+		    <isNotNull prepend="," property="province_name"> #province_name# </isNotNull>
+		    <isNotNull prepend="," property="province_code"> #province_code# </isNotNull>
+		    <isNotNull prepend="," property="city_code"> #city_code# </isNotNull>
+		    <isNotNull prepend="," property="city_name"> #city_name# </isNotNull>
+		    <isNotNull prepend="," property="area_code"> #area_code# </isNotNull>
+		    <isNotNull prepend="," property="area_name"> #area_name# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="full_invoice"> #full_invoice# </isNotNull>
+		    <isNotNull prepend="," property="add_invoice"> #add_invoice# </isNotNull>
+		    <isNotNull prepend="," property="adminId"> #adminId# </isNotNull>
+		    <isNotNull prepend="," property="lastTime"> #lastTime# </isNotNull>
+		    <isNotNull prepend="," property="lastAdminId"> #lastAdminId# </isNotNull>
+		    <isNotNull prepend="," property="mobile"> #mobile# </isNotNull>
+		    <isNotNull prepend="," property="phone"> #phone# </isNotNull>
+		    <isNotNull prepend="," property="phone_post"> #phone_post# </isNotNull>
+		    <isNotNull prepend="," property="work_start"> #work_start# </isNotNull>
+		    <isNotNull prepend="," property="work_end"> #work_end# </isNotNull>
+		    <isNotNull prepend="," property="address"> #address# </isNotNull>
+		    <isNotNull prepend="," property="lastAdminName"> #lastAdminName# </isNotNull>
+		    <isNotNull prepend="," property="adminName"> #adminName# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHOperatorDot">
+        UPDATE h_operator_dot
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="operator_name"> operator_name=#operator_name# </isNotNull>
+		    <isNotNull prepend="," property="operator_id"> operator_id=#operator_id# </isNotNull>
+		    <isNotNull prepend="," property="operator_level"> operator_level=#operator_level# </isNotNull>
+		    <isNotNull prepend="," property="window_name"> window_name=#window_name# </isNotNull>
+		    <isNotNull prepend="," property="name"> name=#name# </isNotNull>
+		    <isNotNull prepend="," property="province_name"> province_name=#province_name# </isNotNull>
+		    <isNotNull prepend="," property="province_code"> province_code=#province_code# </isNotNull>
+		    <isNotNull prepend="," property="city_code"> city_code=#city_code# </isNotNull>
+		    <isNotNull prepend="," property="city_name"> city_name=#city_name# </isNotNull>
+		    <isNotNull prepend="," property="area_code"> area_code=#area_code# </isNotNull>
+		    <isNotNull prepend="," property="area_name"> area_name=#area_name# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="full_invoice"> full_invoice=#full_invoice# </isNotNull>
+		    <isNotNull prepend="," property="add_invoice"> add_invoice=#add_invoice# </isNotNull>
+		    <isNotNull prepend="," property="adminId"> adminId=#adminId# </isNotNull>
+		    <isNotNull prepend="," property="lastTime"> lastTime=#lastTime# </isNotNull>
+		    <isNotNull prepend="," property="lastAdminId"> lastAdminId=#lastAdminId# </isNotNull>
+		    <isNotNull prepend="," property="mobile"> mobile=#mobile# </isNotNull>
+		    <isNotNull prepend="," property="phone"> phone=#phone# </isNotNull>
+		    <isNotNull prepend="," property="phone_post"> phone_post=#phone_post# </isNotNull>
+		    <isNotNull prepend="," property="work_start"> work_start=#work_start# </isNotNull>
+		    <isNotNull prepend="," property="work_end"> work_end=#work_end# </isNotNull>
+		    <isNotNull prepend="," property="address"> address=#address# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHOperatorDot">
+        delete from h_operator_dot where id = #id#
+    </delete>
+</sqlMap>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HFp">
+	<typeAlias alias="HFp" type="com.hxt.hFp.model.HFp"/>
+	
+    <sql id="getHFpList_body">
+        SELECT a.id,a.orderNumber,a.money,a.title,a.userName,a.phone,a.address,a.createTime,a.express_no,a.express_status,a.express_name,a.mailType,a.remark1,a.remark2,a.remark3,a.comId,a.fp_style,
+        b.oneAgentOpenId,b.twoAgentOpenID,b.servicerId,b.oneAgentName,b.twoAgentName,b.servicerName
+        FROM h_fp a
+        left join h_company b on a.comId = b.id
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="orderNumber"> a.orderNumber=#orderNumber# </isNotNull>
+            <isNotNull prepend="AND" property="money"> a.money=#money# </isNotNull>
+            <isNotNull prepend="AND" property="totalFeeStr"> a.money=#totalFeeStr# </isNotNull>
+            <isNotNull prepend="AND" property="title"> a.title like concat('%', #title#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="userName"> a.userName like concat('%', #userName#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="phone"> a.phone like concat('%', #phone#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="address"> a.address like concat('%', #address#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="express_no"> a.express_no like concat('%', #express_no#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="express_status"> a.express_status=#express_status# </isNotNull>
+            <isNotNull prepend="AND" property="express_name"> a.express_name like concat('%', #express_name#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="mailType"> a.mailType=#mailType# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2 like concat('%', #remark2#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="comId"> a.comId=#comId# </isNotNull>
+            <isNotNull prepend="AND" property="fp_style"> a.fp_style=#fp_style# </isNotNull>
+            <isNotNull prepend="AND" property="ywyId"> b.ywyId=#ywyId# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> b.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenID"> b.twoAgentOpenID=#twoAgentOpenID# </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> b.servicerId=#servicerId# </isNotNull>
+<!--             <isNotNull prepend="AND" property="queryType">  -->
+<!-- 				<isEqual property="queryType" compareValue="1"> -->
+<!-- 				    a.remark3 is null  -->
+<!-- 				</isEqual> -->
+<!-- 				<isEqual property="queryType" compareValue="2"> -->
+<!-- 				     a.remark3 is not null  -->
+<!-- 				</isEqual> -->
+<!--             </isNotNull> -->
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+    <sql id="getHFpListTag_body">
+        SELECT a.id,a.orderNumber,a.money,a.title,a.userName,a.phone,a.address,a.createTime,a.express_no,a.express_status,a.express_name,a.mailType,a.remark1,a.remark2,a.remark3,a.comId,a.fp_style,b.name AS companyName,
+        c.area_name as areaName,f.fpCount,c.ammeter_no as ammeterNo,f.o_no as orderNo
+        FROM h_fp a
+        LEFT JOIN h_company b ON a.comId = b.id
+        LEFT JOIN h_ammeter_info c ON a.remark2 = c.ammeter_no
+        LEFT JOIN (SELECT COUNT(*) AS fpCount,d.o_no FROM h_pay_order d LEFT JOIN h_sub_order e ON d.o_no = e.o_id GROUP BY d.o_no) f ON f.o_no = a.orderNumber
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="orderNumber"> a.orderNumber=#orderNumber# </isNotNull>
+            <isNotNull prepend="AND" property="money"> a.money=#money# </isNotNull>
+            <isNotNull prepend="AND" property="totalFeeStr"> a.money=#totalFeeStr# </isNotNull>
+            <isNotNull prepend="AND" property="title"> a.title like concat('%', #title#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="userName"> a.userName like concat('%', #userName#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="phone"> a.phone like concat('%', #phone#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="address"> a.address like concat('%', #address#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="express_no"> a.express_no like concat('%', #express_no#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="express_status"> a.express_status=#express_status# </isNotNull>
+            <isNotNull prepend="AND" property="express_name"> a.express_name like concat('%', #express_name#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="mailType"> a.mailType=#mailType# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2 like concat('%', #remark2#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="comId"> a.comId=#comId# </isNotNull>
+            <isNotNull prepend="AND" property="fp_style"> a.fp_style=#fp_style# </isNotNull>
+            <isNotNull prepend="AND" property="ywyId"> b.ywyId=#ywyId# </isNotNull>
+<!--             <isNotNull prepend="AND" property="queryType">  -->
+<!-- 				<isEqual property="queryType" compareValue="1"> -->
+<!-- 				    a.remark3 is null  -->
+<!-- 				</isEqual> -->
+<!-- 				<isEqual property="queryType" compareValue="2"> -->
+<!-- 				     a.remark3 is not null  -->
+<!-- 				</isEqual> -->
+<!--             </isNotNull> -->
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHFpListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHFpList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHFpList" parameterClass="HFp" resultClass="HFp">
+        SELECT * FROM (
+            <include refid="getHFpList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHFp" parameterClass="HFp" resultClass="HFp">
+       <include refid="getHFpList_body" />
+    </select>
+    <select id="getHFpTag" parameterClass="HFp" resultClass="HFp">
+       <include refid="getHFpListTag_body" />
+    </select>
+
+    <insert id="insertHFp">
+        INSERT INTO h_fp ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="orderNumber"> orderNumber </isNotNull>
+			<isNotNull prepend="," property="money"> money </isNotNull>
+			<isNotNull prepend="," property="title"> title </isNotNull>
+			<isNotNull prepend="," property="userName"> userName </isNotNull>
+			<isNotNull prepend="," property="phone"> phone </isNotNull>
+			<isNotNull prepend="," property="address"> address </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="express_no"> express_no </isNotNull>
+			<isNotNull prepend="," property="express_status"> express_status </isNotNull>
+			<isNotNull prepend="," property="express_name"> express_name </isNotNull>
+			<isNotNull prepend="," property="mailType"> mailType </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+			<isNotNull prepend="," property="comId"> comId </isNotNull>
+			<isNotNull prepend="," property="fp_style"> fp_style </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="orderNumber"> #orderNumber# </isNotNull>
+		    <isNotNull prepend="," property="money"> #money# </isNotNull>
+		    <isNotNull prepend="," property="title"> #title# </isNotNull>
+		    <isNotNull prepend="," property="userName"> #userName# </isNotNull>
+		    <isNotNull prepend="," property="phone"> #phone# </isNotNull>
+		    <isNotNull prepend="," property="address"> #address# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="express_no"> #express_no# </isNotNull>
+		    <isNotNull prepend="," property="express_status"> #express_status# </isNotNull>
+		    <isNotNull prepend="," property="express_name"> #express_name# </isNotNull>
+		    <isNotNull prepend="," property="mailType"> #mailType# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+		    <isNotNull prepend="," property="comId"> #comId# </isNotNull>
+		    <isNotNull prepend="," property="fp_style"> #fp_style# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHFp">
+        UPDATE h_fp
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="orderNumber"> orderNumber=#orderNumber# </isNotNull>
+		    <isNotNull prepend="," property="money"> money=#money# </isNotNull>
+		    <isNotNull prepend="," property="title"> title=#title# </isNotNull>
+		    <isNotNull prepend="," property="userName"> userName=#userName# </isNotNull>
+		    <isNotNull prepend="," property="phone"> phone=#phone# </isNotNull>
+		    <isNotNull prepend="," property="address"> address=#address# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="express_no"> express_no=#express_no# </isNotNull>
+		    <isNotNull prepend="," property="express_status"> express_status=#express_status# </isNotNull>
+		    <isNotNull prepend="," property="express_name"> express_name=#express_name# </isNotNull>
+		    <isNotNull prepend="," property="mailType"> mailType=#mailType# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+		    <isNotNull prepend="," property="comId"> comId=#comId# </isNotNull>
+		    <isNotNull prepend="," property="fp_style"> fp_style=#fp_style# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHFp">
+        delete from h_fp where id = #id#
+    </delete>
+</sqlMap>

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HAgent">
+	<typeAlias alias="HAgent" type="com.hxt.hAgent.model.HAgent"/>
+	
+    <sql id="getHAgentList_body">
+        SELECT a.user_name,a.id,a.openId,a.name,a.licence_url,a.licence_code,a.tax_url,a.legal_person,a.card_style,a.card_no,a.sex,a.mobile1,a.mobile2,a.style,a.status,a.create_time,a.create_openId,a.check_status,a.contact_person,a.tax_code,a.bank_name,a.bank_number,a.bank_account,a.contract_number,a.contract_start_time,a.contract_end_time,a.remark1,a.remark2,a.remark3,a.gl_yl_id,a.gl_yl_name,a.gl_sj_id,a.gl_sj_name        FROM h_agent a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="openId"> a.openId=#openId# </isNotNull>
+            <isNotNull prepend="AND" property="name"> a.name like concat('%',#name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="licence_url"> a.licence_url=#licence_url# </isNotNull>
+            <isNotNull prepend="AND" property="licence_code"> a.licence_code=#licence_code# </isNotNull>
+            <isNotNull prepend="AND" property="tax_url"> a.tax_url=#tax_url# </isNotNull>
+            <isNotNull prepend="AND" property="legal_person"> a.legal_person=#legal_person# </isNotNull>
+            <isNotNull prepend="AND" property="card_style"> a.card_style=#card_style# </isNotNull>
+            <isNotNull prepend="AND" property="card_no"> a.card_no=#card_no# </isNotNull>
+            <isNotNull prepend="AND" property="sex"> a.sex=#sex# </isNotNull>
+            <isNotNull prepend="AND" property="mobile1"> a.mobile1=#mobile1# </isNotNull>
+            <isNotNull prepend="AND" property="mobile2"> a.mobile2=#mobile2# </isNotNull>
+            <isNotNull prepend="AND" property="style"> a.style=#style# </isNotNull>
+            <isNotNull prepend="AND" property="status"> a.status=#status# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="create_openId"> a.create_openId=#create_openId# </isNotNull>
+            <isNotNull prepend="AND" property="check_status"> a.check_status=#check_status# </isNotNull>
+            <isNotNull prepend="AND" property="contact_person"> a.contact_person=#contact_person# </isNotNull>
+            <isNotNull prepend="AND" property="tax_code"> a.tax_code=#tax_code# </isNotNull>
+            <isNotNull prepend="AND" property="bank_name"> a.bank_name=#bank_name# </isNotNull>
+            <isNotNull prepend="AND" property="bank_number"> a.bank_number=#bank_number# </isNotNull>
+            <isNotNull prepend="AND" property="bank_account"> a.bank_account=#bank_account# </isNotNull>
+            <isNotNull prepend="AND" property="contract_number"> a.contract_number=#contract_number# </isNotNull>
+            <isNotNull prepend="AND" property="contract_start_time"> a.contract_start_time=#contract_start_time# </isNotNull>
+            <isNotNull prepend="AND" property="contract_end_time"> a.contract_end_time=#contract_end_time# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="user_name"> a.user_name=#user_name# </isNotNull>
+            <isNotNull prepend="AND" property="gl_yl_id"> a.gl_yl_id=#gl_yl_id# </isNotNull>
+            <isNotNull prepend="AND" property="gl_sj_id"> a.gl_sj_id=#gl_sj_id# </isNotNull>
+            <isNotNull prepend="AND" property="gl_yl_name"> a.gl_yl_name like concat('%',#gl_yl_name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="gl_sj_name"> a.gl_sj_name like concat('%',#gl_sj_name#,'%') </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+    <select id="checkMobile1" parameterClass="HAgent" resultClass="int">
+        select count(*) from h_agent where status = 1 and (mobile1 like  concat('%',#mobile1#,'%') or mobile2 like  concat('%',#mobile2#,'%'))  
+         <isNotNull prepend="AND" property="id"> <![CDATA[ id <> #id# ]]> </isNotNull>
+    </select>
+    <select id="getHAgentListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHAgentList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHAgentList" parameterClass="HAgent" resultClass="HAgent">
+        SELECT * FROM (
+            <include refid="getHAgentList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHAgent" parameterClass="HAgent" resultClass="HAgent">
+       <include refid="getHAgentList_body" />
+    </select>
+
+    <insert id="insertHAgent">
+        INSERT INTO h_agent ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="openId"> openId </isNotNull>
+			<isNotNull prepend="," property="name"> name </isNotNull>
+			<isNotNull prepend="," property="licence_url"> licence_url </isNotNull>
+			<isNotNull prepend="," property="licence_code"> licence_code </isNotNull>
+			<isNotNull prepend="," property="tax_url"> tax_url </isNotNull>
+			<isNotNull prepend="," property="legal_person"> legal_person </isNotNull>
+			<isNotNull prepend="," property="card_style"> card_style </isNotNull>
+			<isNotNull prepend="," property="card_no"> card_no </isNotNull>
+			<isNotNull prepend="," property="sex"> sex </isNotNull>
+			<isNotNull prepend="," property="mobile1"> mobile1 </isNotNull>
+			<isNotNull prepend="," property="mobile2"> mobile2 </isNotNull>
+			<isNotNull prepend="," property="style"> style </isNotNull>
+			<isNotNull prepend="," property="status"> status </isNotNull>
+			<isNotNull prepend="," property="create_time"> create_time </isNotNull>
+			<isNotNull prepend="," property="create_openId"> create_openId </isNotNull>
+			<isNotNull prepend="," property="check_status"> check_status </isNotNull>
+			<isNotNull prepend="," property="contact_person"> contact_person </isNotNull>
+			<isNotNull prepend="," property="tax_code"> tax_code </isNotNull>
+			<isNotNull prepend="," property="bank_name"> bank_name </isNotNull>
+			<isNotNull prepend="," property="bank_number"> bank_number </isNotNull>
+			<isNotNull prepend="," property="bank_account"> bank_account </isNotNull>
+			<isNotNull prepend="," property="contract_number"> contract_number </isNotNull>
+			<isNotNull prepend="," property="contract_start_time"> contract_start_time </isNotNull>
+			<isNotNull prepend="," property="contract_end_time"> contract_end_time </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+			<isNotNull prepend="," property="user_name"> user_name </isNotNull>
+			<isNotNull prepend="," property="gl_yl_id"> gl_yl_id </isNotNull>
+			<isNotNull prepend="," property="gl_yl_name"> gl_yl_name </isNotNull>
+			<isNotNull prepend="," property="gl_sj_id"> gl_sj_id </isNotNull>
+			<isNotNull prepend="," property="gl_sj_name"> gl_sj_name </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="openId"> #openId# </isNotNull>
+		    <isNotNull prepend="," property="name"> #name# </isNotNull>
+		    <isNotNull prepend="," property="licence_url"> #licence_url# </isNotNull>
+		    <isNotNull prepend="," property="licence_code"> #licence_code# </isNotNull>
+		    <isNotNull prepend="," property="tax_url"> #tax_url# </isNotNull>
+		    <isNotNull prepend="," property="legal_person"> #legal_person# </isNotNull>
+		    <isNotNull prepend="," property="card_style"> #card_style# </isNotNull>
+		    <isNotNull prepend="," property="card_no"> #card_no# </isNotNull>
+		    <isNotNull prepend="," property="sex"> #sex# </isNotNull>
+		    <isNotNull prepend="," property="mobile1"> #mobile1# </isNotNull>
+		    <isNotNull prepend="," property="mobile2"> #mobile2# </isNotNull>
+		    <isNotNull prepend="," property="style"> #style# </isNotNull>
+		    <isNotNull prepend="," property="status"> #status# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> #create_time# </isNotNull>
+		    <isNotNull prepend="," property="create_openId"> #create_openId# </isNotNull>
+		    <isNotNull prepend="," property="check_status"> #check_status# </isNotNull>
+		    <isNotNull prepend="," property="contact_person"> #contact_person# </isNotNull>
+		    <isNotNull prepend="," property="tax_code"> #tax_code# </isNotNull>
+		    <isNotNull prepend="," property="bank_name"> #bank_name# </isNotNull>
+		    <isNotNull prepend="," property="bank_number"> #bank_number# </isNotNull>
+		    <isNotNull prepend="," property="bank_account"> #bank_account# </isNotNull>
+		    <isNotNull prepend="," property="contract_number"> #contract_number# </isNotNull>
+		    <isNotNull prepend="," property="contract_start_time"> #contract_start_time# </isNotNull>
+		    <isNotNull prepend="," property="contract_end_time"> #contract_end_time# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+		    <isNotNull prepend="," property="user_name"> #user_name# </isNotNull>
+		    <isNotNull prepend="," property="gl_yl_id"> #gl_yl_id# </isNotNull>
+		    <isNotNull prepend="," property="gl_yl_name"> #gl_yl_name# </isNotNull>
+		    <isNotNull prepend="," property="gl_sj_id"> #gl_sj_id# </isNotNull>
+		    <isNotNull prepend="," property="gl_sj_name"> #gl_sj_name# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHAgent">
+        UPDATE h_agent
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="openId"> openId=#openId# </isNotNull>
+		    <isNotNull prepend="," property="name"> name=#name# </isNotNull>
+		    <isNotNull prepend="," property="licence_url"> licence_url=#licence_url# </isNotNull>
+		    <isNotNull prepend="," property="licence_code"> licence_code=#licence_code# </isNotNull>
+		    <isNotNull prepend="," property="tax_url"> tax_url=#tax_url# </isNotNull>
+		    <isNotNull prepend="," property="legal_person"> legal_person=#legal_person# </isNotNull>
+		    <isNotNull prepend="," property="card_style"> card_style=#card_style# </isNotNull>
+		    <isNotNull prepend="," property="card_no"> card_no=#card_no# </isNotNull>
+		    <isNotNull prepend="," property="sex"> sex=#sex# </isNotNull>
+		    <isNotNull prepend="," property="mobile1"> mobile1=#mobile1# </isNotNull>
+		    <isNotNull prepend="," property="mobile2"> mobile2=#mobile2# </isNotNull>
+		    <isNotNull prepend="," property="style"> style=#style# </isNotNull>
+		    <isNotNull prepend="," property="status"> status=#status# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> create_time=#create_time# </isNotNull>
+		    <isNotNull prepend="," property="create_openId"> create_openId=#create_openId# </isNotNull>
+		    <isNotNull prepend="," property="check_status"> check_status=#check_status# </isNotNull>
+		    <isNotNull prepend="," property="contact_person"> contact_person=#contact_person# </isNotNull>
+		    <isNotNull prepend="," property="tax_code"> tax_code=#tax_code# </isNotNull>
+		    <isNotNull prepend="," property="bank_name"> bank_name=#bank_name# </isNotNull>
+		    <isNotNull prepend="," property="bank_number"> bank_number=#bank_number# </isNotNull>
+		    <isNotNull prepend="," property="bank_account"> bank_account=#bank_account# </isNotNull>
+		    <isNotNull prepend="," property="contract_number"> contract_number=#contract_number# </isNotNull>
+		    <isNotNull prepend="," property="contract_start_time"> contract_start_time=#contract_start_time# </isNotNull>
+		    <isNotNull prepend="," property="contract_end_time"> contract_end_time=#contract_end_time# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+		    <isNotNull prepend="," property="user_name"> user_name=#user_name# </isNotNull>
+		    <isNotNull prepend="," property="gl_yl_id"> gl_yl_id=#gl_yl_id# </isNotNull>
+		    <isNotNull prepend="," property="gl_yl_name"> gl_yl_name=#gl_yl_name# </isNotNull>
+		    <isNotNull prepend="," property="gl_sj_id"> gl_sj_id=#gl_sj_id# </isNotNull>
+		    <isNotNull prepend="," property="gl_sj_name"> gl_sj_name=#gl_sj_name# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHAgent">
+        delete from h_agent where id = #id#
+    </delete>
+    <!-- 设置默认 -->
+    <update id="isDefault1">
+    	update h_agent set remark3 = '0';
+    </update>
+    <update id="isDefault2">
+    	update h_agent set remark3 = '1' where id = #id#;
+    </update>
+    <update id="updateGlYL">
+    	update h_agent set gl_yl_name = #gl_yl_name# where gl_yl_id = #gl_yl_id#;
+    </update>
+    <update id="updateGlSJ">
+    	update h_agent set gl_sj_name = #gl_sj_name# where gl_sj_id = #gl_sj_id#;
+    </update>
+    
+    <select id="checkUseAgent" resultClass="int">
+        SELECT COUNT(*) FROM h_agent where status = 1 
+        <isNotNull prepend="AND" property="id"> <![CDATA[ id <> #id# ]]> </isNotNull>
+    </select>
+    
+    <select id="getAgentPP" parameterClass="HAgent" resultClass="HAgent">
+        SELECT a.user_name,a.id,a.openId,a.name,a.licence_url,a.licence_code,a.tax_url,a.legal_person,a.card_style,a.card_no,a.sex,a.mobile1,a.mobile2,a.style,a.status,a.create_time,a.create_openId,a.check_status,a.contact_person,a.tax_code,a.bank_name,a.bank_number,a.bank_account,a.contract_number,a.contract_start_time,a.contract_end_time,a.remark1,a.remark2,a.remark3,
+        a.gl_yl_id,b.name as gl_yl_name,a.gl_sj_id,c.name as gl_sj_name,b.type as gl_yl_type,b.rate as gl_yl_rate,b.fee as gl_yl_fee,
+        c.type as gl_sj_type,c.rate as gl_sj_rate,c.fee as gl_sj_fee        
+        FROM h_agent a
+        left join h_pay_guli b on a.gl_yl_id = b.id 
+        left join h_pay_guli c on a.gl_sj_id = c.id 
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="openId"> a.openId=#openId# </isNotNull>
+            <isNotNull prepend="AND" property="name"> a.name like concat('%',#name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="licence_url"> a.licence_url=#licence_url# </isNotNull>
+            <isNotNull prepend="AND" property="licence_code"> a.licence_code=#licence_code# </isNotNull>
+            <isNotNull prepend="AND" property="tax_url"> a.tax_url=#tax_url# </isNotNull>
+            <isNotNull prepend="AND" property="legal_person"> a.legal_person=#legal_person# </isNotNull>
+            <isNotNull prepend="AND" property="card_style"> a.card_style=#card_style# </isNotNull>
+            <isNotNull prepend="AND" property="card_no"> a.card_no=#card_no# </isNotNull>
+            <isNotNull prepend="AND" property="sex"> a.sex=#sex# </isNotNull>
+            <isNotNull prepend="AND" property="mobile1"> a.mobile1=#mobile1# </isNotNull>
+            <isNotNull prepend="AND" property="mobile2"> a.mobile2=#mobile2# </isNotNull>
+            <isNotNull prepend="AND" property="style"> a.style=#style# </isNotNull>
+            <isNotNull prepend="AND" property="status"> a.status=#status# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="create_openId"> a.create_openId=#create_openId# </isNotNull>
+            <isNotNull prepend="AND" property="check_status"> a.check_status=#check_status# </isNotNull>
+            <isNotNull prepend="AND" property="contact_person"> a.contact_person=#contact_person# </isNotNull>
+            <isNotNull prepend="AND" property="tax_code"> a.tax_code=#tax_code# </isNotNull>
+            <isNotNull prepend="AND" property="bank_name"> a.bank_name=#bank_name# </isNotNull>
+            <isNotNull prepend="AND" property="bank_number"> a.bank_number=#bank_number# </isNotNull>
+            <isNotNull prepend="AND" property="bank_account"> a.bank_account=#bank_account# </isNotNull>
+            <isNotNull prepend="AND" property="contract_number"> a.contract_number=#contract_number# </isNotNull>
+            <isNotNull prepend="AND" property="contract_start_time"> a.contract_start_time=#contract_start_time# </isNotNull>
+            <isNotNull prepend="AND" property="contract_end_time"> a.contract_end_time=#contract_end_time# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="user_name"> a.user_name=#user_name# </isNotNull>
+            <isNotNull prepend="AND" property="gl_yl_id"> a.gl_yl_id=#gl_yl_id# </isNotNull>
+            <isNotNull prepend="AND" property="gl_sj_id"> a.gl_sj_id=#gl_sj_id# </isNotNull>
+            <isNotNull prepend="AND" property="gl_yl_name"> a.gl_yl_name like concat('%',#gl_yl_name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="gl_sj_name"> a.gl_sj_name like concat('%',#gl_sj_name#,'%') </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+        <isNotNull prepend="" property="rowStart"> limit #rowStart# , #rowCount# </isNotNull>
+    </select>
+    <select id="getAgentPPCount" parameterClass="HAgent" resultClass="int">
+        SELECT count(*)      
+        FROM h_agent a
+        left join h_pay_guli b on a.gl_yl_id = b.id 
+        left join h_pay_guli c on a.gl_sj_id = c.id 
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="openId"> a.openId=#openId# </isNotNull>
+            <isNotNull prepend="AND" property="name"> a.name like concat('%',#name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="licence_url"> a.licence_url=#licence_url# </isNotNull>
+            <isNotNull prepend="AND" property="licence_code"> a.licence_code=#licence_code# </isNotNull>
+            <isNotNull prepend="AND" property="tax_url"> a.tax_url=#tax_url# </isNotNull>
+            <isNotNull prepend="AND" property="legal_person"> a.legal_person=#legal_person# </isNotNull>
+            <isNotNull prepend="AND" property="card_style"> a.card_style=#card_style# </isNotNull>
+            <isNotNull prepend="AND" property="card_no"> a.card_no=#card_no# </isNotNull>
+            <isNotNull prepend="AND" property="sex"> a.sex=#sex# </isNotNull>
+            <isNotNull prepend="AND" property="mobile1"> a.mobile1=#mobile1# </isNotNull>
+            <isNotNull prepend="AND" property="mobile2"> a.mobile2=#mobile2# </isNotNull>
+            <isNotNull prepend="AND" property="style"> a.style=#style# </isNotNull>
+            <isNotNull prepend="AND" property="status"> a.status=#status# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="create_openId"> a.create_openId=#create_openId# </isNotNull>
+            <isNotNull prepend="AND" property="check_status"> a.check_status=#check_status# </isNotNull>
+            <isNotNull prepend="AND" property="contact_person"> a.contact_person=#contact_person# </isNotNull>
+            <isNotNull prepend="AND" property="tax_code"> a.tax_code=#tax_code# </isNotNull>
+            <isNotNull prepend="AND" property="bank_name"> a.bank_name=#bank_name# </isNotNull>
+            <isNotNull prepend="AND" property="bank_number"> a.bank_number=#bank_number# </isNotNull>
+            <isNotNull prepend="AND" property="bank_account"> a.bank_account=#bank_account# </isNotNull>
+            <isNotNull prepend="AND" property="contract_number"> a.contract_number=#contract_number# </isNotNull>
+            <isNotNull prepend="AND" property="contract_start_time"> a.contract_start_time=#contract_start_time# </isNotNull>
+            <isNotNull prepend="AND" property="contract_end_time"> a.contract_end_time=#contract_end_time# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="user_name"> a.user_name=#user_name# </isNotNull>
+            <isNotNull prepend="AND" property="gl_yl_id"> a.gl_yl_id=#gl_yl_id# </isNotNull>
+            <isNotNull prepend="AND" property="gl_sj_id"> a.gl_sj_id=#gl_sj_id# </isNotNull>
+            <isNotNull prepend="AND" property="gl_yl_name"> a.gl_yl_name like concat('%',#gl_yl_name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="gl_sj_name"> a.gl_sj_name like concat('%',#gl_sj_name#,'%') </isNotNull>
+        </dynamic>
+    </select>
+    
+    <update id="updateDefaultYLGl">
+    	update h_agent set gl_yl_id = #gl_yl_id# where gl_yl_id = #gl_yl_id1#;
+    </update>
+    <update id="updateDefaultSJGl">
+    	update h_agent set gl_sj_id = #gl_sj_id# where gl_sj_id = #gl_sj_id1#;
+    </update>
+</sqlMap>

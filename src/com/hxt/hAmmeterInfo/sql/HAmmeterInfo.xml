@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HAmmeterInfo">
+	<typeAlias alias="HAmmeterInfo" type="com.hxt.hAmmeterInfo.model.HAmmeterInfo"/>
+	
+    <sql id="getHAmmeterInfoList_body">
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="a_id"> a.a_id=#a_id# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+            <isNotNull prepend="AND" property="s_id"> a.s_id=#s_id# </isNotNull>
+            <isNotNull prepend="AND" property="adminName"> d.adminName like concat('%',#adminName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_no"> a.ammeter_no=#ammeter_no# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_name"> a.ammeter_name like concat('%',#ammeter_name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_type"> a.ammeter_type=#ammeter_type# </isNotNull>
+            <isNotNull prepend="AND" property="last_pay_day"> a.last_pay_day=#last_pay_day# </isNotNull>
+            <isNotNull prepend="AND" property="pay_status"> a.pay_status=#pay_status# </isNotNull>
+            <isNotNull prepend="AND" property="operator_id"> a.operator_id=#operator_id# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="update_time"> a.update_time=#update_time# </isNotNull>
+            <isNotNull prepend="AND" property="fp_style"> a.fp_style=#fp_style# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_address"> a.ammeter_address like concat('%',#ammeter_address#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="province_code"> a.province_code=#province_code# </isNotNull>
+            <isNotNull prepend="AND" property="city_code"> a.city_code=#city_code# </isNotNull>
+            <isNotNull prepend="AND" property="area_code"> a.area_code=#area_code# </isNotNull>
+            <isNotNull prepend="AND" property="province_name"> a.province_name=#province_name# </isNotNull>
+            <isNotNull prepend="AND" property="city_name"> a.city_name=#city_name# </isNotNull>
+            <isNotNull prepend="AND" property="area_name"> a.area_name=#area_name# </isNotNull>
+            <isNotNull prepend="AND" property="profit_id"> a.profit_id=#profit_id# </isNotNull>
+            <isNotNull prepend="AND" property="is_payed"> a.is_payed=#is_payed# </isNotNull>
+            <isNotNull prepend="AND" property="delete_state"> a.delete_state=#delete_state# </isNotNull>
+            <isNotNull prepend="AND" property="ammeterinfo_type"> a.ammeterinfo_type=#ammeterinfo_type# </isNotNull>
+            <isNotNull prepend="AND" property="proxy_flag"> a.proxy_flag=#proxy_flag# </isNotNull>
+            <isNotNull prepend="AND" property="contact_phone"> c.contact_phone=#contact_phone# </isNotNull>
+            <isNotNull prepend="AND" property="bill_img"> a.bill_img=#bill_img# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHAmmeterInfoListCount" resultClass="int">
+        SELECT count(*)
+        FROM h_ammeter_info a
+        left join h_profit_ratio b on b.id = a.profit_id
+        left join h_company c on a.c_id = c.id
+        left join manage_admin_user d on c.user_id = d.adminId
+        <include refid="getHAmmeterInfoList_body" />
+        
+    </select>
+    
+    <select id="getHAmmeterInfoListCount1" resultClass="int">
+        SELECT count(*)
+        FROM h_ammeter_info a
+        left join h_profit_ratio b on b.id = a.profit_id
+        left join h_company c on a.c_id = c.id
+        left join manage_admin_user d on c.user_id = d.adminId
+        left join (select * from h_proxy_message where <![CDATA[ checkState<>-1 ]]>) e on c.id = e.cId
+        <include refid="getHAmmeterInfoList_body" />
+        
+    </select>
+
+    <select id="getHAmmeterInfoList" parameterClass="HAmmeterInfo" resultClass="HAmmeterInfo">
+        SELECT a.a_id,a.c_id,a.s_id,a.ammeter_no,a.ammeter_name,a.ammeter_type,a.last_pay_day,a.pay_status,a.operator_id,a.create_time,a.update_time,a.fp_style,a.ammeter_address,a.province_code,a.city_code,a.area_code,a.province_name,a.city_name,a.area_name,a.profit_id,a.is_payed,a.delete_state,
+        b.name as profit_name,b.ont_agent_ratio as profit_one,b.two_agent_ratio as profit_two,b.personal_ratio as profit_servicer,a.ammeterinfo_type,a.proxy_flag,
+        c.name as companyName,d.adminName,c.contact_phone,c.contact_name,a.bill_img,c.oneAgentName,c.twoAgentName,c.servicerName
+        FROM h_ammeter_info a
+        left join h_profit_ratio b on b.id = a.profit_id
+        left join h_company c on a.c_id = c.id
+        left join manage_admin_user d on c.user_id = d.adminId
+        <include refid="getHAmmeterInfoList_body" />
+        limit #rowStart# , #rowCount# 
+    </select>
+    
+    <select id="getHAmmeterInfoList1" parameterClass="HAmmeterInfo" resultClass="HAmmeterInfo">
+        SELECT a.a_id,a.c_id,a.s_id,a.ammeter_no,a.ammeter_name,a.ammeter_type,a.last_pay_day,a.pay_status,a.operator_id,a.create_time,a.update_time,a.fp_style,a.ammeter_address,a.province_code,a.city_code,a.area_code,a.province_name,a.city_name,a.area_name,a.profit_id,a.is_payed,a.delete_state,
+        b.name as profit_name,b.ont_agent_ratio as profit_one,b.two_agent_ratio as profit_two,b.personal_ratio as profit_servicer,a.ammeterinfo_type,a.proxy_flag,
+        c.name as companyName,d.adminName,c.contact_phone,c.contact_name,a.bill_img,c.oneAgentName,c.twoAgentName,c.servicerName,e.payName as proxyName,e.payPhoneNumber as proxyPhone           
+        FROM h_ammeter_info a
+        left join h_profit_ratio b on b.id = a.profit_id
+        left join h_company c on a.c_id = c.id
+        left join manage_admin_user d on c.user_id = d.adminId
+        left join (select * from h_proxy_message where <![CDATA[ checkState<>-1 ]]>) e on c.id = e.cId
+        <include refid="getHAmmeterInfoList_body" />
+        limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHAmmeterInfo" parameterClass="HAmmeterInfo" resultClass="HAmmeterInfo">
+    	SELECT a.a_id,a.c_id,a.s_id,a.ammeter_no,a.ammeter_name,a.ammeter_type,a.last_pay_day,a.pay_status,a.operator_id,a.create_time,a.update_time,a.fp_style,a.ammeter_address,a.province_code,a.city_code,a.area_code,a.province_name,a.city_name,a.area_name,a.profit_id,a.is_payed,a.delete_state,
+        b.name as profit_name,b.ont_agent_ratio as profit_one,b.two_agent_ratio as profit_two,b.personal_ratio as profit_servicer,a.ammeterinfo_type,a.proxy_flag,
+        c.name as companyName,d.adminName,c.contact_phone,c.contact_name,a.bill_img,c.oneAgentName,c.twoAgentName,c.servicerName
+        FROM h_ammeter_info a
+        left join h_profit_ratio b on b.id = a.profit_id
+        left join h_company c on a.c_id = c.id
+        left join manage_admin_user d on c.user_id = d.adminId
+       <include refid="getHAmmeterInfoList_body" />
+    </select>
+    
+    <select id="getHAmmeterInfo1" parameterClass="HAmmeterInfo" resultClass="HAmmeterInfo">
+    	SELECT a.a_id,a.c_id,a.s_id,a.ammeter_no,a.ammeter_name,a.ammeter_type,a.last_pay_day,a.pay_status,a.operator_id,a.create_time,a.update_time,a.fp_style,a.ammeter_address,a.province_code,a.city_code,a.area_code,a.province_name,a.city_name,a.area_name,a.profit_id,a.is_payed,a.delete_state,
+        b.name as profit_name,b.ont_agent_ratio as profit_one,b.two_agent_ratio as profit_two,b.personal_ratio as profit_servicer,a.ammeterinfo_type,a.proxy_flag,
+        c.name as companyName,d.adminName,c.contact_phone,c.contact_name,a.bill_img,c.oneAgentName,c.twoAgentName,c.servicerName,e.payName as proxyName,e.payPhoneNumber as proxyPhone           
+        FROM h_ammeter_info a
+        left join h_profit_ratio b on b.id = a.profit_id
+        left join h_company c on a.c_id = c.id
+        left join manage_admin_user d on c.user_id = d.adminId
+        left join (select * from h_proxy_message where <![CDATA[ checkState<>-1 ]]>) e on c.id = e.cId
+       <include refid="getHAmmeterInfoList_body" />
+    </select>
+
+    <insert id="insertHAmmeterInfo">
+        INSERT INTO h_ammeter_info ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="c_id"> c_id </isNotNull>
+			<isNotNull prepend="," property="s_id"> s_id </isNotNull>
+			<isNotNull prepend="," property="ammeter_no"> ammeter_no </isNotNull>
+			<isNotNull prepend="," property="ammeter_name"> ammeter_name </isNotNull>
+			<isNotNull prepend="," property="ammeter_type"> ammeter_type </isNotNull>
+			<isNotNull prepend="," property="last_pay_day"> last_pay_day </isNotNull>
+			<isNotNull prepend="," property="pay_status"> pay_status </isNotNull>
+			<isNotNull prepend="," property="operator_id"> operator_id </isNotNull>
+			<isNotNull prepend="," property="create_time"> create_time </isNotNull>
+			<isNotNull prepend="," property="update_time"> update_time </isNotNull>
+			<isNotNull prepend="," property="fp_style"> fp_style </isNotNull>
+			<isNotNull prepend="," property="ammeter_address"> ammeter_address </isNotNull>
+			<isNotNull prepend="," property="province_code"> province_code </isNotNull>
+			<isNotNull prepend="," property="city_code"> city_code </isNotNull>
+			<isNotNull prepend="," property="area_code"> area_code </isNotNull>
+			<isNotNull prepend="," property="province_name"> province_name </isNotNull>
+			<isNotNull prepend="," property="city_name"> city_name </isNotNull>
+			<isNotNull prepend="," property="area_name"> area_name </isNotNull>
+			<isNotNull prepend="," property="profit_id"> profit_id </isNotNull>
+			<isNotNull prepend="," property="is_payed"> is_payed </isNotNull>
+			<isNotNull prepend="," property="delete_state"> delete_state </isNotNull>
+			<isNotNull prepend="," property="ammeterinfo_type"> ammeterinfo_type </isNotNull>
+			<isNotNull prepend="," property="proxy_flag"> proxy_flag </isNotNull>
+			<isNotNull prepend="," property="bill_img"> bill_img </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="c_id"> #c_id# </isNotNull>
+		    <isNotNull prepend="," property="s_id"> #s_id# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_no"> #ammeter_no# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_name"> #ammeter_name# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_type"> #ammeter_type# </isNotNull>
+		    <isNotNull prepend="," property="last_pay_day"> #last_pay_day# </isNotNull>
+		    <isNotNull prepend="," property="pay_status"> #pay_status# </isNotNull>
+		    <isNotNull prepend="," property="operator_id"> #operator_id# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> #create_time# </isNotNull>
+		    <isNotNull prepend="," property="update_time"> #update_time# </isNotNull>
+		    <isNotNull prepend="," property="fp_style"> #fp_style# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_address"> #ammeter_address# </isNotNull>
+		    <isNotNull prepend="," property="province_code"> #province_code# </isNotNull>
+		    <isNotNull prepend="," property="city_code"> #city_code# </isNotNull>
+		    <isNotNull prepend="," property="area_code"> #area_code# </isNotNull>
+		    <isNotNull prepend="," property="province_name"> #province_name# </isNotNull>
+		    <isNotNull prepend="," property="city_name"> #city_name# </isNotNull>
+		    <isNotNull prepend="," property="area_name"> #area_name# </isNotNull>
+		    <isNotNull prepend="," property="profit_id"> #profit_id# </isNotNull>
+		    <isNotNull prepend="," property="is_payed"> #is_payed# </isNotNull>
+		    <isNotNull prepend="," property="delete_state"> #delete_state# </isNotNull>
+		    <isNotNull prepend="," property="ammeterinfo_type"> #ammeterinfo_type# </isNotNull>
+		    <isNotNull prepend="," property="proxy_flag"> #proxy_flag# </isNotNull>
+		    <isNotNull prepend="," property="bill_img"> #bill_img# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="a_id" resultClass="int">
+			SELECT @@IDENTITY AS a_id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHAmmeterInfo">
+        UPDATE h_ammeter_info
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="a_id"> a_id=#a_id# </isNotNull>
+		    <isNotNull prepend="," property="c_id"> c_id=#c_id# </isNotNull>
+		    <isNotNull prepend="," property="s_id"> s_id=#s_id# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_no"> ammeter_no=#ammeter_no# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_name"> ammeter_name=#ammeter_name# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_type"> ammeter_type=#ammeter_type# </isNotNull>
+		    <isNotNull prepend="," property="last_pay_day"> last_pay_day=#last_pay_day# </isNotNull>
+		    <isNotNull prepend="," property="pay_status"> pay_status=#pay_status# </isNotNull>
+		    <isNotNull prepend="," property="operator_id"> operator_id=#operator_id# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> create_time=#create_time# </isNotNull>
+		    <isNotNull prepend="," property="update_time"> update_time=#update_time# </isNotNull>
+		    <isNotNull prepend="," property="fp_style"> fp_style=#fp_style# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_address"> ammeter_address=#ammeter_address# </isNotNull>
+		    <isNotNull prepend="," property="province_code"> province_code=#province_code# </isNotNull>
+		    <isNotNull prepend="," property="city_code"> city_code=#city_code# </isNotNull>
+		    <isNotNull prepend="," property="area_code"> area_code=#area_code# </isNotNull>
+		    <isNotNull prepend="," property="province_name"> province_name=#province_name# </isNotNull>
+		    <isNotNull prepend="," property="city_name"> city_name=#city_name# </isNotNull>
+		    <isNotNull prepend="," property="area_name"> area_name=#area_name# </isNotNull>
+		    <isNotNull prepend="," property="profit_id"> profit_id=#profit_id# </isNotNull>
+		    <isNotNull prepend="," property="is_payed"> is_payed=#is_payed# </isNotNull>
+		    <isNotNull prepend="," property="delete_state"> delete_state=#delete_state# </isNotNull>
+		    <isNotNull prepend="," property="ammeterinfo_type"> ammeterinfo_type=#ammeterinfo_type# </isNotNull>
+		    <isNotNull prepend="," property="proxy_flag"> proxy_flag=#proxy_flag# </isNotNull>
+		    <isNotNull prepend="," property="bill_img"> bill_img=#bill_img# </isNotNull>
+        </dynamic>
+    	where a_id = #a_id#
+    </update>
+    
+    <delete id="removeHAmmeterInfo">
+        update h_ammeter_info set delete_state = 0 where a_id = #a_id#
+    </delete>
+    
+    <sql id="getHAmmeterInfoSql">
+        SELECT a.a_id,a.c_id,a.s_id,a.ammeter_no,a.ammeter_type,a.last_pay_day,a.pay_status,a.create_time,a.update_time,c.totalFee,c.createTime as dispatch_create_time,        
+        b.name as c_name,d.sub_name,b.contact_phone,a.ammeter_name,a.operator_id,a.fp_style,c.dispatch_id ,a.ammeter_address ,e.name as profit_name,a.profit_id,a.province_code,a.province_name,a.city_code,a.city_name,a.area_code,a.area_name,a.proxy_flag,a.bill_img
+        FROM h_ammeter_info a
+        left join h_company b on a.c_id = b.id
+        left join (select id as dispatch_id ,ammeter_no,totalFee,createTime from h_dispatch_record where status = 0 and remark1=#c_id#) c on a.ammeter_no = c.ammeter_no
+        left join h_sub_company d on a.s_id = d.s_id
+        left join h_profit_ratio e on a.profit_id = e.id
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="a_id"> a.a_id=#a_id# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+            <isNotNull prepend="AND" property="s_id"> a.s_id=#s_id# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_no"> a.ammeter_no=#ammeter_no# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_type"> a.ammeter_type=#ammeter_type# </isNotNull>
+            <isNotNull prepend="AND" property="last_pay_day"> a.last_pay_day=#last_pay_day# </isNotNull>
+            <isNotNull prepend="AND" property="pay_status"> a.pay_status=#pay_status# </isNotNull>
+            <isNotNull prepend="AND" property="operator_id"> a.operator_id=#operator_id# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="update_time"> a.update_time=#update_time# </isNotNull>
+            <isNotNull prepend="AND" property="fp_style"> a.fp_style=#fp_style# </isNotNull>
+            <isNotNull prepend="AND" property="c_status"> b.status=#c_status# </isNotNull>
+            <isNotNull prepend="AND" property="c_verify_status"> b.verify_status=#c_verify_status# </isNotNull>
+            <isNotNull prepend="AND" property="proxy_flag"> b.proxy_flag=#proxy_flag# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+    
+    <select id="getHAmmeterInfoListCountSql" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHAmmeterInfoSql" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHAmmeterInfoListSql" parameterClass="HAmmeterInfo" resultClass="HAmmeterInfo">
+        SELECT * FROM (
+            <include refid="getHAmmeterInfoSql" />
+        ) AS myTable
+    </select>
+    
+    
+    <select id="getHAmmeterInfoListToExport" parameterClass="HAmmeterInfo" resultClass="HAmmeterInfo">
+        SELECT a.a_id,a.c_id,a.s_id,a.ammeter_no,a.ammeter_name,
+        case when a.ammeter_type = 'A' then '抄表电'
+		else '智能电' END as ammeter_type
+        ,a.last_pay_day,
+        case when a.pay_status = '0' then '暂停'
+		else '正常' END as pay_status_str
+        ,a.operator_id,a.create_time,a.update_time,a.fp_style,a.ammeter_address,a.province_code,a.city_code,a.area_code,a.province_name,a.city_name,a.area_name,a.profit_id,a.is_payed,
+        case when a.delete_state = '0' then '已删除'
+		else '正常' END as delete_state_str
+        ,
+        b.name as profit_name,b.ont_agent_ratio as profit_one,b.two_agent_ratio as profit_two,b.personal_ratio as profit_servicer,a.ammeterinfo_type,a.proxy_flag,
+        c.name as companyName,d.adminName,c.contact_phone,a.bill_img,c.oneAgentName,c.twoAgentName,c.servicerName          
+        FROM h_ammeter_info a
+        left join h_profit_ratio b on b.id = a.profit_id
+        left join h_company c on a.c_id = c.id
+        left join manage_admin_user d on c.user_id = d.adminId
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="a_id"> a.a_id=#a_id# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+            <isNotNull prepend="AND" property="s_id"> a.s_id=#s_id# </isNotNull>
+            <isNotNull prepend="AND" property="adminName"> d.adminName like concat('%',#adminName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_no"> a.ammeter_no=#ammeter_no# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_name"> a.ammeter_name like concat('%',#ammeter_name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_type"> a.ammeter_type=#ammeter_type# </isNotNull>
+            <isNotNull prepend="AND" property="last_pay_day"> a.last_pay_day=#last_pay_day# </isNotNull>
+            <isNotNull prepend="AND" property="pay_status"> a.pay_status=#pay_status# </isNotNull>
+            <isNotNull prepend="AND" property="operator_id"> a.operator_id=#operator_id# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="update_time"> a.update_time=#update_time# </isNotNull>
+            <isNotNull prepend="AND" property="fp_style"> a.fp_style=#fp_style# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_address"> a.ammeter_address like concat('%',#ammeter_address#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="province_code"> a.province_code=#province_code# </isNotNull>
+            <isNotNull prepend="AND" property="city_code"> a.city_code=#city_code# </isNotNull>
+            <isNotNull prepend="AND" property="area_code"> a.area_code=#area_code# </isNotNull>
+            <isNotNull prepend="AND" property="province_name"> a.province_name=#province_name# </isNotNull>
+            <isNotNull prepend="AND" property="city_name"> a.city_name=#city_name# </isNotNull>
+            <isNotNull prepend="AND" property="area_name"> a.area_name=#area_name# </isNotNull>
+            <isNotNull prepend="AND" property="profit_id"> a.profit_id=#profit_id# </isNotNull>
+            <isNotNull prepend="AND" property="is_payed"> a.is_payed=#is_payed# </isNotNull>
+            <isNotNull prepend="AND" property="delete_state"> a.delete_state=#delete_state# </isNotNull>
+            <isNotNull prepend="AND" property="ammeterinfo_type"> a.ammeterinfo_type=#ammeterinfo_type# </isNotNull>
+            <isNotNull prepend="AND" property="proxy_flag"> a.proxy_flag=#proxy_flag# </isNotNull>
+            <isNotNull prepend="AND" property="contact_phone"> c.contact_phone=#contact_phone# </isNotNull>
+            <isNotNull prepend="AND" property="bill_img"> a.bill_img=#bill_img# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </select>
+    
+    <select id="getHAmmeterInfoListToExportCount" parameterClass="HAmmeterInfo" resultClass="int">
+        SELECT count(*)          
+        FROM h_ammeter_info a
+        left join h_profit_ratio b on b.id = a.profit_id
+        left join h_company c on a.c_id = c.id
+        left join manage_admin_user d on c.user_id = d.adminId
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="a_id"> a.a_id=#a_id# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+            <isNotNull prepend="AND" property="s_id"> a.s_id=#s_id# </isNotNull>
+            <isNotNull prepend="AND" property="adminName"> d.adminName like concat('%',#adminName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_no"> a.ammeter_no=#ammeter_no# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_name"> a.ammeter_name like concat('%',#ammeter_name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_type"> a.ammeter_type=#ammeter_type# </isNotNull>
+            <isNotNull prepend="AND" property="last_pay_day"> a.last_pay_day=#last_pay_day# </isNotNull>
+            <isNotNull prepend="AND" property="pay_status"> a.pay_status=#pay_status# </isNotNull>
+            <isNotNull prepend="AND" property="operator_id"> a.operator_id=#operator_id# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="update_time"> a.update_time=#update_time# </isNotNull>
+            <isNotNull prepend="AND" property="fp_style"> a.fp_style=#fp_style# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_address"> a.ammeter_address like concat('%',#ammeter_address#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="province_code"> a.province_code=#province_code# </isNotNull>
+            <isNotNull prepend="AND" property="city_code"> a.city_code=#city_code# </isNotNull>
+            <isNotNull prepend="AND" property="area_code"> a.area_code=#area_code# </isNotNull>
+            <isNotNull prepend="AND" property="province_name"> a.province_name=#province_name# </isNotNull>
+            <isNotNull prepend="AND" property="city_name"> a.city_name=#city_name# </isNotNull>
+            <isNotNull prepend="AND" property="area_name"> a.area_name=#area_name# </isNotNull>
+            <isNotNull prepend="AND" property="profit_id"> a.profit_id=#profit_id# </isNotNull>
+            <isNotNull prepend="AND" property="is_payed"> a.is_payed=#is_payed# </isNotNull>
+            <isNotNull prepend="AND" property="delete_state"> a.delete_state=#delete_state# </isNotNull>
+            <isNotNull prepend="AND" property="ammeterinfo_type"> a.ammeterinfo_type=#ammeterinfo_type# </isNotNull>
+            <isNotNull prepend="AND" property="proxy_flag"> a.proxy_flag=#proxy_flag# </isNotNull>
+            <isNotNull prepend="AND" property="contact_phone"> c.contact_phone=#contact_phone# </isNotNull>
+            <isNotNull prepend="AND" property="bill_img"> a.bill_img=#bill_img# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </select>
+    
+</sqlMap>

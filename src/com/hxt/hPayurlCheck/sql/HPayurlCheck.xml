@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HPayurlCheck">
+	<typeAlias alias="HPayurlCheck" type="com.hxt.hPayurlCheck.model.HPayurlCheck"/>
+	
+    <sql id="getHPayurlCheckList_body">
+        SELECT a.id,a.c_id,a.check_no,a.check_url,a.pay_url,a.status,a.create_date,a.create_time,a.check_time,a.open_ip        FROM h_payurl_check a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+            <isNotNull prepend="AND" property="check_no"> a.check_no=#check_no# </isNotNull>
+            <isNotNull prepend="AND" property="check_url"> a.check_url=#check_url# </isNotNull>
+            <isNotNull prepend="AND" property="pay_url"> a.pay_url=#pay_url# </isNotNull>
+            <isNotNull prepend="AND" property="status"> a.status=#status# </isNotNull>
+            <isNotNull prepend="AND" property="create_date"> a.create_date=#create_date# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="check_time"> a.check_time=#check_time# </isNotNull>
+            <isNotNull prepend="AND" property="open_ip"> a.open_ip=#open_ip# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+
+    <select id="findNowHPayurlCheck" parameterClass="HPayurlCheck" resultClass="HPayurlCheck">
+        SELECT a.id,a.c_id,a.check_no,a.check_url,a.pay_url,a.status,a.create_date,a.create_time,a.check_time,a.open_ip        FROM h_payurl_check a
+        where to_days(a.create_time) = to_days(now()) and a.c_id=#c_id#
+    </select>
+
+    <select id="getHPayurlCheckListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHPayurlCheckList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHPayurlCheckList" parameterClass="HPayurlCheck" resultClass="HPayurlCheck">
+        SELECT * FROM (
+            <include refid="getHPayurlCheckList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHPayurlCheck" parameterClass="HPayurlCheck" resultClass="HPayurlCheck">
+       <include refid="getHPayurlCheckList_body" />
+    </select>
+
+    <insert id="insertHPayurlCheck">
+        INSERT INTO h_payurl_check ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="c_id"> c_id </isNotNull>
+			<isNotNull prepend="," property="check_no"> check_no </isNotNull>
+			<isNotNull prepend="," property="check_url"> check_url </isNotNull>
+			<isNotNull prepend="," property="pay_url"> pay_url </isNotNull>
+			<isNotNull prepend="," property="status"> status </isNotNull>
+			<isNotNull prepend="," property="create_date"> create_date </isNotNull>
+			<isNotNull prepend="," property="create_time"> create_time </isNotNull>
+			<isNotNull prepend="," property="check_time"> check_time </isNotNull>
+			<isNotNull prepend="," property="open_ip"> open_ip </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="c_id"> #c_id# </isNotNull>
+		    <isNotNull prepend="," property="check_no"> #check_no# </isNotNull>
+		    <isNotNull prepend="," property="check_url"> #check_url# </isNotNull>
+		    <isNotNull prepend="," property="pay_url"> #pay_url# </isNotNull>
+		    <isNotNull prepend="," property="status"> #status# </isNotNull>
+		    <isNotNull prepend="," property="create_date"> #create_date# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> #create_time# </isNotNull>
+		    <isNotNull prepend="," property="check_time"> #check_time# </isNotNull>
+		    <isNotNull prepend="," property="open_ip"> #open_ip# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHPayurlCheck">
+        UPDATE h_payurl_check
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="c_id"> c_id=#c_id# </isNotNull>
+		    <isNotNull prepend="," property="check_no"> check_no=#check_no# </isNotNull>
+		    <isNotNull prepend="," property="check_url"> check_url=#check_url# </isNotNull>
+		    <isNotNull prepend="," property="pay_url"> pay_url=#pay_url# </isNotNull>
+		    <isNotNull prepend="," property="status"> status=#status# </isNotNull>
+		    <isNotNull prepend="," property="create_date"> create_date=#create_date# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> create_time=#create_time# </isNotNull>
+		    <isNotNull prepend="," property="check_time"> check_time=#check_time# </isNotNull>
+		    <isNotNull prepend="," property="open_ip"> open_ip=#open_ip# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHPayurlCheck">
+        delete from h_payurl_check where id = #id#
+    </delete>
+</sqlMap>

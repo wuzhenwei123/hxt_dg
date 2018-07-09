@@ -1,0 +1,170 @@
+/*垂直居中*/
+.verticalAlign{ vertical-align:middle; display:inline-block; height:100%; margin-left:-1px;}
+
+.xcConfirm .xc_layer{position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #666666; opacity: 0.5;filter:alpha(opacity=50); z-index: 10000;}
+.xcConfirm .popBox{position: fixed; left: 50%; top: 50%; background-color: #ffffff; z-index: 10002; width: 854px; height: 420px; margin-left: -427px; margin-top: -210px; font-weight: bold; color: #535e66;}
+.xcConfirm .popBox .ttBox{padding: 14px 30px; border-bottom: solid 1px #eef0f1;}
+.xcConfirm .popBox .ttBox .tt{font-size: 16px; display: block; position: relative;text-align: center;}
+.xcConfirm .popBox .ttBox .clsBtn{display: block; cursor: pointer; width: 16px; height: 16px; position: absolute; top: 15px; right: 17px; background: url(../img/wClose.png) 0px 0px no-repeat;}
+.xcConfirm .popBox .txtBox{margin: 40px 100px;}
+.xcConfirm .popBox .txtBox .bigIcon{float: left; margin-right: 20px; width: 48px; height: 48px; background-image: url(../img/icons.png); background-repeat: no-repeat; background-position: 48px 0;}
+.xcConfirm .popBox .txtBox p{ height: 84px; margin-top: 16px; line-height: 26px; overflow-x: hidden; overflow-y: auto;}
+.xcConfirm .popBox .txtBox p input{width: 364px; height: 30px; border: solid 1px #eef0f1; font-size: 18px; margin-top: 6px;}
+.xcConfirm .popBox .btnArea{border-top: solid 1px #eef0f1;}
+.xcConfirm .popBox .btnGroup{ text-align:center;}
+.xcConfirm .popBox .btnGroup .sgBtn{margin-top: 23px; margin-right: 10px;}
+.xcConfirm .popBox .sgBtn{display: block; cursor: pointer; display:inline-block; *display:inline;*zoom:1; width: 95px; height: 35px; line-height: 35px; text-align: center; color: #FFFFFF; border-radius: 5px;}
+.xcConfirm .popBox .sgBtn.ok{background-color: #0095d9; color: #FFFFFF;}
+.xcConfirm .popBox .sgBtn.cancel{background-color: #546a79; color: #FFFFFF;}
+.ttBox{
+	overflow:hidden;
+	clear:both;
+}
+.okAddressBox .popBox{
+	width:580px;
+	height:420px;
+	margin-top:-210px;
+	margin-left:-295px;
+}
+.labelW{
+	width:69px;
+}
+.wItemBox{
+	margin-left:20px;
+	margin-right:20px;
+	margin-bottom:20px;
+	padding-bottom:20px;
+	background-color:#ffffff;
+}
+.okAddressBox .popBox .sgBtn.ok{
+	width:300px;
+	background-color:#01a796;
+	margin-bottom:20px;
+}
+.okAddressBox .popBox .sgBtn.ok:hover{
+	background-color:#1bb0a1;
+}
+.okAddressBox.on .popBox .btnArea {
+	border-top:0 none;
+}
+.okAddressBox.on .popBox{
+	height:450px;
+	margin-top:-225px;
+}
+.okColseBox .ttBox{
+	background-color:#01a796;
+}
+.okColseBox .tt{
+	font-size:14px;
+	color:#ffffff;
+}
+.okColseBox .tt font{
+	color:#ffff00;
+}
+.okColseBox .popBox{
+	width:668px;
+	margin-left:-334px;
+}
+.okColseBox .popBox .ttBox{
+	padding-top:23px;
+	padding-bottom:23px;
+}
+.okColseBox .btnGroup .sgBtn{
+	width:180px !important;
+}
+.okColseBox .custom-checkbox label{
+	background-position:-10px -17px;
+}
+.okColseBox .in-checkbox label.checked{
+	background-position:-11px -216px;
+}
+.okColseBox .popBox .sgBtn.ok{
+	background-color:#ffffff;
+	border:1px solid #cccccc;
+	color:#01a796;
+}
+.okColseBox .popBox .sgBtn.ok:hover{
+	background-color:#ffffff;
+	border:1px solid #cccccc;
+	color:#01a796;
+}
+.okColseBox .popBox .sgBtn.cancel{
+	background-color:#01a796;
+}
+.okColseBox .popBox a.sgBtn.cancel:hover{
+	background-color:#01a796;
+}
+.okColseBox .btnArea,.okAddressBox .btnArea{
+	margin-left:20px;
+	margin-right:20px;
+}
+.reBoxMsg{
+	height:285px;
+	padding:20px  40px; 
+}
+.reBoxMsg i{
+	width:16px;
+	height:16px;
+	background:url(../img/msg_ok.png) 0 0 no-repeat scroll;
+	vertical-align:middle;
+	margin-right:5px;
+}
+.re .popBox{
+	font-weight:normal;
+}
+.ddbh{
+	margin-left:50px;
+}
+.pjBox .codeTitle{
+	width:80px;
+	text-align:right;
+}
+.on.pjBox .popBox{
+	height:334px;
+	margin-top:-167px;
+}
+.on.pjBox .popBox .btnGroup a{
+	margin-top:0;
+	margin-bottom:0;
+}
+.reJiaofei .popBox .ttBox .tt{
+	float:none;
+	color:#01a796;
+	text-align:center;
+}
+.reJiaofei .popBox .txtBox p{
+	height:26px !important;
+	color:#01a796;
+	font-size:14px;
+	margin-top:0;
+	font-weight:normal;
+}
+.reJiaofei .wInfoBox_p{
+	padding-left:20px;
+	padding-right:20px;
+	padding-top:20px;
+	padding-bottom:10px;
+	overflow:hidden;
+}
+.re_RH_IMGbOX{
+	padding-top:10px;
+	padding-bottom:10px;
+	overflow:hidden;
+}
+.re_RH_IMGbOX img{
+	display:block;
+	overflow:hidden;
+}
+.okAddressBox.on.bgPeo .popBox{
+	width:500px;
+	height:212px;
+	margin-top:-106px;
+	margin-left:-250px;
+}
+.bgPeo .txtBox{
+	padding:20px;
+	text-align:center;
+	color:#01a796;
+	font-size:16px;
+	font-weight:normal;
+}

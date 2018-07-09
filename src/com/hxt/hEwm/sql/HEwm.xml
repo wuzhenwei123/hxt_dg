@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HEwm">
+	<typeAlias alias="HEwm" type="com.hxt.hEwm.model.HEwm"/>
+	
+    <sql id="getHEwmList_body">
+        SELECT a.id,a.scene_id,a.imgUrl,a.userId,a.remark1,a.remark2,a.remark3,a.createTime,a.style,a.openId        
+        FROM h_ewm a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="scene_id"> a.scene_id=#scene_id# </isNotNull>
+            <isNotNull prepend="AND" property="imgUrl"> a.imgUrl=#imgUrl# </isNotNull>
+            <isNotNull prepend="AND" property="userId"> a.userId=#userId# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="style"> a.style=#style# </isNotNull>
+            <isNotNull prepend="AND" property="openId"> a.openId=#openId# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHEwmListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHEwmList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHEwmList" parameterClass="HEwm" resultClass="HEwm">
+        SELECT * FROM (
+            <include refid="getHEwmList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHEwm" parameterClass="HEwm" resultClass="HEwm">
+       <include refid="getHEwmList_body" />
+    </select>
+
+    <insert id="insertHEwm">
+        INSERT INTO h_ewm ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="scene_id"> scene_id </isNotNull>
+			<isNotNull prepend="," property="imgUrl"> imgUrl </isNotNull>
+			<isNotNull prepend="," property="userId"> userId </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="style"> style </isNotNull>
+			<isNotNull prepend="," property="openId"> openId </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="scene_id"> #scene_id# </isNotNull>
+		    <isNotNull prepend="," property="imgUrl"> #imgUrl# </isNotNull>
+		    <isNotNull prepend="," property="userId"> #userId# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="style"> #style# </isNotNull>
+		    <isNotNull prepend="," property="openId"> #openId# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHEwm">
+        UPDATE h_ewm
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="scene_id"> scene_id=#scene_id# </isNotNull>
+		    <isNotNull prepend="," property="imgUrl"> imgUrl=#imgUrl# </isNotNull>
+		    <isNotNull prepend="," property="userId"> userId=#userId# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="style"> style=#style# </isNotNull>
+		    <isNotNull prepend="," property="openId"> openId=#openId# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHEwm">
+        delete from h_ewm where id = #id#
+    </delete>
+</sqlMap>

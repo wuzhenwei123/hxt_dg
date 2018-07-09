@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HProxySendLog">
+	<typeAlias alias="HProxySendLog" type="com.hxt.hProxySendLog.model.HProxySendLog"/>
+	
+    <sql id="getHProxySendLogList_body">
+        SELECT a.id,a.style,a.contractNumber,a.userNumber,a.content,a.bank_number,a.payBankNumber,a.remark1,a.remark2,a.remark3,a.sendStyle,a.createTime        FROM h_proxy_send_log a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="style"> a.style=#style# </isNotNull>
+            <isNotNull prepend="AND" property="contractNumber"> a.contractNumber like concat('%',#contractNumber#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="userNumber"> a.userNumber like concat('%',#userNumber#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="content"> a.content=#content# </isNotNull>
+            <isNotNull prepend="AND" property="bank_number"> a.bank_number like concat('%',#bank_number#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="payBankNumber"> a.payBankNumber like concat('%',#payBankNumber#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1 like concat('%',#remark1#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2 like concat('%',#remark2#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="sendStyle"> a.sendStyle=#sendStyle# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHProxySendLogListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHProxySendLogList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHProxySendLogList" parameterClass="HProxySendLog" resultClass="HProxySendLog">
+        SELECT * FROM (
+            <include refid="getHProxySendLogList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHProxySendLog" parameterClass="HProxySendLog" resultClass="HProxySendLog">
+       <include refid="getHProxySendLogList_body" />
+    </select>
+
+    <insert id="insertHProxySendLog">
+        INSERT INTO h_proxy_send_log ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="style"> style </isNotNull>
+			<isNotNull prepend="," property="contractNumber"> contractNumber </isNotNull>
+			<isNotNull prepend="," property="userNumber"> userNumber </isNotNull>
+			<isNotNull prepend="," property="content"> content </isNotNull>
+			<isNotNull prepend="," property="bank_number"> bank_number </isNotNull>
+			<isNotNull prepend="," property="payBankNumber"> payBankNumber </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+			<isNotNull prepend="," property="sendStyle"> sendStyle </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="style"> #style# </isNotNull>
+		    <isNotNull prepend="," property="contractNumber"> #contractNumber# </isNotNull>
+		    <isNotNull prepend="," property="userNumber"> #userNumber# </isNotNull>
+		    <isNotNull prepend="," property="content"> #content# </isNotNull>
+		    <isNotNull prepend="," property="bank_number"> #bank_number# </isNotNull>
+		    <isNotNull prepend="," property="payBankNumber"> #payBankNumber# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+		    <isNotNull prepend="," property="sendStyle"> #sendStyle# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHProxySendLog">
+        UPDATE h_proxy_send_log
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="style"> style=#style# </isNotNull>
+		    <isNotNull prepend="," property="contractNumber"> contractNumber=#contractNumber# </isNotNull>
+		    <isNotNull prepend="," property="userNumber"> userNumber=#userNumber# </isNotNull>
+		    <isNotNull prepend="," property="content"> content=#content# </isNotNull>
+		    <isNotNull prepend="," property="bank_number"> bank_number=#bank_number# </isNotNull>
+		    <isNotNull prepend="," property="payBankNumber"> payBankNumber=#payBankNumber# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+		    <isNotNull prepend="," property="sendStyle"> sendStyle=#sendStyle# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHProxySendLog">
+        delete from h_proxy_send_log where id = #id#
+    </delete>
+</sqlMap>

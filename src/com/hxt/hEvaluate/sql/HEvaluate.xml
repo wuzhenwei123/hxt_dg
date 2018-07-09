@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HEvaluate">
+	<typeAlias alias="HEvaluate" type="com.hxt.hEvaluate.model.HEvaluate"/>
+	
+    <sql id="getHEvaluateList_body">
+        SELECT a.id,a.orderNo,a.star,a.content,a.createTime,b.electric_number,b.oneAgentName,b.twoAgentName,b.servicerName,
+        c.contact_name,c.contact_phone,c.name as c_name,b.amount        
+        
+        FROM h_evaluate a
+        left join h_pay_order b on a.orderNo = b.o_no
+        left join h_company c on b.c_id = c.id 
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="orderNo"> a.orderNo=#orderNo# </isNotNull>
+            <isNotNull prepend="AND" property="star"> a.star=#star# </isNotNull>
+            <isNotNull prepend="AND" property="content"> a.content like '%$content$%' </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHEvaluateListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHEvaluateList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHEvaluateList" parameterClass="HEvaluate" resultClass="HEvaluate">
+        SELECT * FROM (
+            <include refid="getHEvaluateList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHEvaluate" parameterClass="HEvaluate" resultClass="HEvaluate">
+       <include refid="getHEvaluateList_body" />
+    </select>
+
+    <insert id="insertHEvaluate">
+        INSERT INTO h_evaluate ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="orderNo"> orderNo </isNotNull>
+			<isNotNull prepend="," property="star"> star </isNotNull>
+			<isNotNull prepend="," property="content"> content </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="orderNo"> #orderNo# </isNotNull>
+		    <isNotNull prepend="," property="star"> #star# </isNotNull>
+		    <isNotNull prepend="," property="content"> #content# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHEvaluate">
+        UPDATE h_evaluate
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="orderNo"> orderNo=#orderNo# </isNotNull>
+		    <isNotNull prepend="," property="star"> star=#star# </isNotNull>
+		    <isNotNull prepend="," property="content"> content=#content# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHEvaluate">
+        delete from h_evaluate where id = #id#
+    </delete>
+</sqlMap>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HSubOrder">
+	<typeAlias alias="HSubOrder" type="com.hxt.hSubOrder.model.HSubOrder"/>
+	
+    <sql id="getHSubOrderList_body">
+        SELECT DISTINCT(a.o_sub_id),a.o_id,a.c_id,a.sub_id,a.amount,a.electric,a.pay_status,a.pay_time,a.tick_off_status,a.tick_off_time,a.create_time,a.oneRate,a.twoRate,a.personalRate,a.oneFee,a.twoFee,a.personalFee,
+        a.sub_name,c.ammeter_name,d.name as c_name,g.id as fp_order_id,a.consignee,a.consignee_phone,a.consignee_address,b.invoice_title,c.fp_style            
+        FROM h_sub_order a
+        left join h_sub_company b on  a.sub_id = b.s_id
+        left join h_ammeter_info c on  a.electric = c.ammeter_no and a.sub_id=c.s_id and c.delete_state = 1
+        left join h_company d on a.c_id=d.id
+        left join h_fp_order g on a.o_sub_id=g.orderId
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="o_sub_id"> a.o_sub_id=#o_sub_id# </isNotNull>
+            <isNotNull prepend="AND" property="o_id"> a.o_id=#o_id# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+            <isNotNull prepend="AND" property="sub_id"> a.sub_id=#sub_id# </isNotNull>
+            <isNotNull prepend="AND" property="amount"> a.amount=#amount# </isNotNull>
+            <isNotNull prepend="AND" property="electric"> a.electric=#electric# </isNotNull>
+            <isNotNull prepend="AND" property="pay_status"> a.pay_status=#pay_status# </isNotNull>
+            <isNotNull prepend="AND" property="pay_time"> a.pay_time=#pay_time# </isNotNull>
+            <isNotNull prepend="AND" property="tick_off_status"> a.tick_off_status=#tick_off_status# </isNotNull>
+            <isNotNull prepend="AND" property="tick_off_time"> a.tick_off_time=#tick_off_time# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHSubOrderListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHSubOrderList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHSubOrderList" parameterClass="HSubOrder" resultClass="HSubOrder">
+        SELECT * FROM (
+            <include refid="getHSubOrderList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHSubOrder" parameterClass="HSubOrder" resultClass="HSubOrder">
+       <include refid="getHSubOrderList_body" />
+    </select>
+
+    <insert id="insertHSubOrder">
+        INSERT INTO h_sub_order ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="o_id"> o_id </isNotNull>
+			<isNotNull prepend="," property="c_id"> c_id </isNotNull>
+			<isNotNull prepend="," property="sub_id"> sub_id </isNotNull>
+			<isNotNull prepend="," property="amount"> amount </isNotNull>
+			<isNotNull prepend="," property="electric"> electric </isNotNull>
+			<isNotNull prepend="," property="pay_status"> pay_status </isNotNull>
+			<isNotNull prepend="," property="pay_time"> pay_time </isNotNull>
+			<isNotNull prepend="," property="tick_off_status"> tick_off_status </isNotNull>
+			<isNotNull prepend="," property="tick_off_time"> tick_off_time </isNotNull>
+			<isNotNull prepend="," property="create_time"> create_time </isNotNull>
+			<isNotNull prepend="," property="oneRate"> oneRate </isNotNull>
+			<isNotNull prepend="," property="twoRate"> twoRate </isNotNull>
+			<isNotNull prepend="," property="personalRate"> personalRate </isNotNull>
+			<isNotNull prepend="," property="oneFee"> oneFee </isNotNull>
+			<isNotNull prepend="," property="twoFee"> twoFee </isNotNull>
+			<isNotNull prepend="," property="personalFee"> personalFee </isNotNull>
+			<isNotNull prepend="," property="sub_name"> sub_name </isNotNull>
+			<isNotNull prepend="," property="consignee"> consignee </isNotNull>
+			<isNotNull prepend="," property="consignee_phone"> consignee_phone </isNotNull>
+			<isNotNull prepend="," property="consignee_address"> consignee_address </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="o_id"> #o_id# </isNotNull>
+		    <isNotNull prepend="," property="c_id"> #c_id# </isNotNull>
+		    <isNotNull prepend="," property="sub_id"> #sub_id# </isNotNull>
+		    <isNotNull prepend="," property="amount"> #amount# </isNotNull>
+		    <isNotNull prepend="," property="electric"> #electric# </isNotNull>
+		    <isNotNull prepend="," property="pay_status"> #pay_status# </isNotNull>
+		    <isNotNull prepend="," property="pay_time"> #pay_time# </isNotNull>
+		    <isNotNull prepend="," property="tick_off_status"> #tick_off_status# </isNotNull>
+		    <isNotNull prepend="," property="tick_off_time"> #tick_off_time# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> #create_time# </isNotNull>
+		    <isNotNull prepend="," property="oneRate"> #oneRate# </isNotNull>
+		    <isNotNull prepend="," property="twoRate"> #twoRate# </isNotNull>
+		    <isNotNull prepend="," property="personalRate"> #personalRate# </isNotNull>
+		    <isNotNull prepend="," property="oneFee"> #oneFee# </isNotNull>
+		    <isNotNull prepend="," property="twoFee"> #twoFee# </isNotNull>
+		    <isNotNull prepend="," property="personalFee"> #personalFee# </isNotNull>
+		    <isNotNull prepend="," property="sub_name"> #sub_name# </isNotNull>
+		    <isNotNull prepend="," property="consignee"> #consignee# </isNotNull>
+		    <isNotNull prepend="," property="consignee_phone"> #consignee_phone# </isNotNull>
+		    <isNotNull prepend="," property="consignee_address"> #consignee_address# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="o_sub_id" resultClass="int">
+			SELECT @@IDENTITY AS o_sub_id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHSubOrder">
+        UPDATE h_sub_order
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="o_sub_id"> o_sub_id=#o_sub_id# </isNotNull>
+		    <isNotNull prepend="," property="o_id"> o_id=#o_id# </isNotNull>
+		    <isNotNull prepend="," property="c_id"> c_id=#c_id# </isNotNull>
+		    <isNotNull prepend="," property="sub_id"> sub_id=#sub_id# </isNotNull>
+		    <isNotNull prepend="," property="amount"> amount=#amount# </isNotNull>
+		    <isNotNull prepend="," property="electric"> electric=#electric# </isNotNull>
+		    <isNotNull prepend="," property="pay_status"> pay_status=#pay_status# </isNotNull>
+		    <isNotNull prepend="," property="pay_time"> pay_time=#pay_time# </isNotNull>
+		    <isNotNull prepend="," property="tick_off_status"> tick_off_status=#tick_off_status# </isNotNull>
+		    <isNotNull prepend="," property="tick_off_time"> tick_off_time=#tick_off_time# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> create_time=#create_time# </isNotNull>
+		    <isNotNull prepend="," property="oneRate"> oneRate=#oneRate# </isNotNull>
+		    <isNotNull prepend="," property="twoRate"> twoRate=#twoRate# </isNotNull>
+		    <isNotNull prepend="," property="personalRate"> personalRate=#personalRate# </isNotNull>
+		    <isNotNull prepend="," property="oneFee"> oneFee=#oneFee# </isNotNull>
+		    <isNotNull prepend="," property="twoFee"> twoFee=#twoFee# </isNotNull>
+		    <isNotNull prepend="," property="personalFee"> personalFee=#personalFee# </isNotNull>
+		    <isNotNull prepend="," property="sub_name"> sub_name=#sub_name# </isNotNull>
+		    <isNotNull prepend="," property="consignee"> consignee=#consignee# </isNotNull>
+		    <isNotNull prepend="," property="consignee_phone"> consignee_phone=#consignee_phone# </isNotNull>
+		    <isNotNull prepend="," property="consignee_address"> consignee_address=#consignee_address# </isNotNull>
+        </dynamic>
+    	where o_sub_id = #o_sub_id#
+    </update>
+    
+    <update id="updateHSubOrder1">
+        UPDATE h_sub_order
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="o_sub_id"> o_sub_id=#o_sub_id# </isNotNull>
+		    <isNotNull prepend="," property="o_id"> o_id=#o_id# </isNotNull>
+		    <isNotNull prepend="," property="c_id"> c_id=#c_id# </isNotNull>
+		    <isNotNull prepend="," property="sub_id"> sub_id=#sub_id# </isNotNull>
+		    <isNotNull prepend="," property="amount"> amount=#amount# </isNotNull>
+		    <isNotNull prepend="," property="electric"> electric=#electric# </isNotNull>
+		    <isNotNull prepend="," property="pay_status"> pay_status=#pay_status# </isNotNull>
+		    <isNotNull prepend="," property="pay_time"> pay_time=#pay_time# </isNotNull>
+		    <isNotNull prepend="," property="tick_off_status"> tick_off_status=#tick_off_status# </isNotNull>
+		    <isNull prepend="," property="tick_off_status"> tick_off_status=#tick_off_status# </isNull>
+		    <isNotNull prepend="," property="tick_off_time"> tick_off_time=#tick_off_time# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> create_time=#create_time# </isNotNull>
+		    <isNotNull prepend="," property="oneRate"> oneRate=#oneRate# </isNotNull>
+		    <isNotNull prepend="," property="twoRate"> twoRate=#twoRate# </isNotNull>
+		    <isNotNull prepend="," property="personalRate"> personalRate=#personalRate# </isNotNull>
+		    <isNotNull prepend="," property="oneFee"> oneFee=#oneFee# </isNotNull>
+		    <isNotNull prepend="," property="twoFee"> twoFee=#twoFee# </isNotNull>
+		    <isNotNull prepend="," property="personalFee"> personalFee=#personalFee# </isNotNull>
+		    <isNotNull prepend="," property="sub_name"> sub_name=#sub_name# </isNotNull>
+		    <isNotNull prepend="," property="consignee"> consignee=#consignee# </isNotNull>
+		    <isNotNull prepend="," property="consignee_phone"> consignee_phone=#consignee_phone# </isNotNull>
+		    <isNotNull prepend="," property="consignee_address"> consignee_address=#consignee_address# </isNotNull>
+        </dynamic>
+    	where o_sub_id = #o_sub_id#
+    </update>
+    
+    <delete id="removeHSubOrder">
+        delete from h_sub_order where o_sub_id = #o_sub_id#
+    </delete>
+</sqlMap>

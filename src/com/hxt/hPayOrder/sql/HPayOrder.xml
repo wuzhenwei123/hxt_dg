@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HPayOrder">
+	<typeAlias alias="HPayOrder" type="com.hxt.hPayOrder.model.HPayOrder"/>
+	
+    <sql id="getHPayOrderList_body">
+        SELECT DISTINCT(a.o_id),a.o_no,a.query_id,a.pay_ip,a.c_id,a.o_sub_id,if(a.amount is null,0,a.amount) as amount,a.actual_payment,a.account_payment,a.pay_type,a.pay_account,a.operator_id,a.payee,a.create_time,a.pay_time,a.pay_status,a.tick_off_status,a.tick_off_time,a.back_fee_status,a.back_time,
+        a.c_name,a.is_fp,a.order_type,a.apply_id,
+        a.yw_id,a.electric_number,a.respMsg,a.is_zz,a.sub_id,a.oneAgentOpenId,a.oneAgentName,a.twoAgentOpenID,a.twoAgentName,a.trans_count,
+        a.servicerId,a.servicerName,
+        b.contact_name,b.contact_phone,a.oneRate,a.twoRate,a.serverRate
+        FROM h_pay_order a
+        left join h_company b on a.c_id = b.id 
+        left join h_sub_order f on f.o_id=a.o_no
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="o_id"> a.o_id=#o_id# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenID"> a.twoAgentOpenID=#twoAgentOpenID# </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> a.servicerId=#servicerId# </isNotNull>
+            <isNotNull prepend="AND" property="o_no"> a.o_no like concat('%',#o_no#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentName"> a.oneAgentName like concat('%',#oneAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentName"> a.twoAgentName like concat('%',#twoAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="servicerName"> a.servicerName like concat('%',#servicerName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="query_id"> a.query_id like concat('%',#query_id#,'%') </isNotNull> 
+            <isNotNull prepend="AND" property="pay_ip"> a.pay_ip=#pay_ip# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+            <isNotNull prepend="AND" property="is_fp"> a.is_fp=#is_fp# </isNotNull>
+            <isNotNull prepend="AND" property="o_sub_id"> f.sub_id=#o_sub_id# </isNotNull>
+            <isNotNull prepend="AND" property="amount"> a.amount=#amount# </isNotNull>
+            <isNotNull prepend="AND" property="actual_payment"> a.actual_payment=#actual_payment# </isNotNull>
+            <isNotNull prepend="AND" property="account_payment"> a.account_payment=#account_payment# </isNotNull>
+            <isNotNull prepend="AND" property="pay_type"> a.pay_type=#pay_type# </isNotNull>
+            <isNotNull prepend="AND" property="pay_account"> a.pay_account=#pay_account# </isNotNull>
+            <isNotNull prepend="AND" property="operator_id"> a.operator_id=#operator_id# </isNotNull>
+            <isNotNull prepend="AND" property="payee"> a.payee=#payee# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="pay_time"> a.pay_time=#pay_time# </isNotNull>
+            <isNotNull prepend="AND" property="is_zz"> a.is_zz=#is_zz# </isNotNull>
+            <isNotNull prepend="AND" property="pay_status"> 
+	            <isEqual property="pay_status" compareValue="1">a.pay_status=#pay_status#</isEqual>
+	            <isEqual property="pay_status" compareValue="0">a.pay_status=#pay_status#</isEqual>
+	            <isEqual property="pay_status" compareValue="2"><![CDATA[ a.pay_status>1 ]]></isEqual>
+            </isNotNull>
+            <isNotNull prepend="AND" property="tick_off_status"> a.tick_off_status=#tick_off_status# </isNotNull>
+            <isNotNull prepend="AND" property="tick_off_time"> a.tick_off_time=#tick_off_time# </isNotNull>
+            <isNotNull prepend="AND" property="back_fee_status"> a.back_fee_status=#back_fee_status# </isNotNull>
+            <isNotNull prepend="AND" property="back_time"> a.back_time=#back_time# </isNotNull>
+            <isNotNull prepend="AND" property="yw_id"> a.yw_id=#yw_id# </isNotNull>
+            <isNotNull prepend="AND" property="c_name"> a.c_name like concat('%', #c_name#, '%') </isNotNull>
+<!--             <isNotNull prepend="AND" property="yw_name"> e.adminName like concat('%', #yw_name#, '%') </isNotNull> -->
+            <isNotNull prepend="AND" property="electric_number"> f.electric like concat('%', #electric_number#, '%') </isNotNull>
+            
+            <isNotNull prepend="AND" property="pay_start_time"> <![CDATA[ a.pay_time >= #pay_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="pay_end_time"> <![CDATA[ a.pay_time <= #pay_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="back_start_time"> <![CDATA[ a.back_time >= #back_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="back_end_time"> <![CDATA[ a.back_time <= #back_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="tick_start_time"> <![CDATA[ a.tick_off_time >= #tick_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="tick_end_time"> <![CDATA[ a.tick_off_time <= #tick_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="create_start_time"> <![CDATA[ a.create_time >= #create_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="create_end_time"> <![CDATA[ a.create_time <= #create_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="sub_id"> a.sub_id=#sub_id# </isNotNull>
+            <isNotNull prepend="AND" property="trans_count"> a.trans_count=#trans_count# </isNotNull>
+            <isNotNull prepend="AND" property="order_type"> a.order_type=#order_type# </isNotNull>
+            <isNotNull prepend="AND" property="apply_id"> a.apply_id=#apply_id# </isNotNull>
+            <isNotNull prepend="AND" property="fr"> b.rateFlag=#fr# </isNotNull>
+            <isNotNull prepend="AND" property="contact_phone"> b.contact_phone=#contact_phone# </isNotNull>
+            <isNotNull prepend="AND" property="startTotalFee">
+        		<![CDATA[ a.amount >= #startTotalFee#]]>
+        	</isNotNull>
+        	<isNotNull prepend="AND" property="endTotalFee">
+        		<![CDATA[ a.amount <= #endTotalFee#]]>
+        	</isNotNull>
+            
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+    
+    <sql id="getHPayOrderList_bodyNew">
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="o_id"> a.o_id=#o_id# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenID"> a.twoAgentOpenID=#twoAgentOpenID# </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> a.servicerId=#servicerId# </isNotNull>
+            <isNotNull prepend="AND" property="o_no"> a.o_no like concat('%',#o_no#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentName"> a.oneAgentName like concat('%',#oneAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentName"> a.twoAgentName like concat('%',#twoAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="servicerName"> a.servicerName like concat('%',#servicerName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="query_id"> a.query_id like concat('%',#query_id#,'%') </isNotNull> 
+            <isNotNull prepend="AND" property="pay_ip"> a.pay_ip=#pay_ip# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+            <isNotNull prepend="AND" property="is_fp"> a.is_fp=#is_fp# </isNotNull>
+            <isNotNull prepend="AND" property="amount"> a.amount=#amount# </isNotNull>
+            <isNotNull prepend="AND" property="actual_payment"> a.actual_payment=#actual_payment# </isNotNull>
+            <isNotNull prepend="AND" property="account_payment"> a.account_payment=#account_payment# </isNotNull>
+            <isNotNull prepend="AND" property="pay_type"> a.pay_type=#pay_type# </isNotNull>
+            <isNotNull prepend="AND" property="pay_account"> a.pay_account=#pay_account# </isNotNull>
+            <isNotNull prepend="AND" property="operator_id"> a.operator_id=#operator_id# </isNotNull>
+            <isNotNull prepend="AND" property="payee"> a.payee=#payee# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="pay_time"> a.pay_time=#pay_time# </isNotNull>
+            <isNotNull prepend="AND" property="is_zz"> a.is_zz=#is_zz# </isNotNull>
+            <isNotNull prepend="AND" property="pay_status"> 
+	            <isEqual property="pay_status" compareValue="1">a.pay_status=#pay_status#</isEqual>
+	            <isEqual property="pay_status" compareValue="0">a.pay_status=#pay_status#</isEqual>
+	            <isEqual property="pay_status" compareValue="2"><![CDATA[ a.pay_status>1 ]]></isEqual>
+            </isNotNull>
+            <isNotNull prepend="AND" property="tick_off_status"> a.tick_off_status=#tick_off_status# </isNotNull>
+            <isNotNull prepend="AND" property="tick_off_time"> a.tick_off_time=#tick_off_time# </isNotNull>
+            <isNotNull prepend="AND" property="back_fee_status"> a.back_fee_status=#back_fee_status# </isNotNull>
+            <isNotNull prepend="AND" property="back_time"> a.back_time=#back_time# </isNotNull>
+            <isNotNull prepend="AND" property="yw_id"> a.yw_id=#yw_id# </isNotNull>
+            <isNotNull prepend="AND" property="c_name"> a.c_name like concat('%', #c_name#, '%') </isNotNull>
+<!--             <isNotNull prepend="AND" property="yw_name"> e.adminName like concat('%', #yw_name#, '%') </isNotNull> -->
+            <isNotNull prepend="AND" property="electric_number"> a.electric like concat('%', #electric_number#, '%') </isNotNull>
+            
+            <isNotNull prepend="AND" property="pay_start_time"> <![CDATA[ a.pay_time >= #pay_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="pay_end_time"> <![CDATA[ a.pay_time <= #pay_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="back_start_time"> <![CDATA[ a.back_time >= #back_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="back_end_time"> <![CDATA[ a.back_time <= #back_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="tick_start_time"> <![CDATA[ a.tick_off_time >= #tick_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="tick_end_time"> <![CDATA[ a.tick_off_time <= #tick_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="create_start_time"> <![CDATA[ a.create_time >= #create_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="create_end_time"> <![CDATA[ a.create_time <= #create_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="sub_id"> a.sub_id=#sub_id# </isNotNull>
+            <isNotNull prepend="AND" property="trans_count"> a.trans_count=#trans_count# </isNotNull>
+            <isNotNull prepend="AND" property="order_type"> a.order_type=#order_type# </isNotNull>
+            <isNotNull prepend="AND" property="apply_id"> a.apply_id=#apply_id# </isNotNull>
+            <isNotNull prepend="AND" property="fr"> b.rateFlag=#fr# </isNotNull>
+            <isNotNull prepend="AND" property="contact_phone"> b.contact_phone=#contact_phone# </isNotNull>
+            <isNotNull prepend="AND" property="startTotalFee">
+        		<![CDATA[ a.amount >= #startTotalFee#]]>
+        	</isNotNull>
+        	<isNotNull prepend="AND" property="endTotalFee">
+        		<![CDATA[ a.amount <= #endTotalFee#]]>
+        	</isNotNull>
+            
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+	<select id="findTodayHPayOrder" parameterClass="HPayOrder" resultClass="HPayOrder">
+		SELECT a.o_id,a.o_no,a.c_id,a.amount
+		FROM h_pay_order a
+		where to_days(a.create_time) = to_days(now())  
+		<isNotNull prepend="AND" property="c_id"> a.c_id=#c_id#</isNotNull>
+		<isNotNull prepend="AND" property="sub_id"> a.sub_id=#sub_id#</isNotNull>
+		<isNotNull prepend="AND" property="pay_status"> a.pay_status=#pay_status#</isNotNull>
+		<isNotNull prepend="AND" property="order_type"> a.order_type=#order_type#</isNotNull>
+		order by a.create_time desc limit 0 , 1
+	</select>
+
+    <select id="getHPayOrderListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHPayOrderList_body" />
+        ) AS myTable 
+    </select>
+    
+    <select id="getHPayOrderListCountNew" resultClass="int">
+        SELECT count(a.o_id)
+        FROM h_pay_order a
+        left join h_company b on a.c_id = b.id 
+        <include refid="getHPayOrderList_bodyNew" />
+    </select>
+
+    <select id="getHPayOrderList" parameterClass="HPayOrder" resultClass="HPayOrder">
+        SELECT * FROM (
+            <include refid="getHPayOrderList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+    
+    <select id="getHPayOrderListNew" parameterClass="HPayOrder" resultClass="HPayOrder">
+        SELECT a.o_id,a.o_no,a.query_id,a.pay_ip,a.c_id,a.o_sub_id,if(a.amount is null,0,a.amount) as amount,a.actual_payment,a.account_payment,a.pay_type,a.pay_account,a.operator_id,a.payee,a.create_time,a.pay_time,a.pay_status,a.tick_off_status,a.tick_off_time,a.back_fee_status,a.back_time,
+        a.c_name,a.is_fp,a.order_type,a.apply_id,
+        a.yw_id,a.electric_number,a.respMsg,a.is_zz,a.sub_id,a.oneAgentOpenId,a.oneAgentName,a.twoAgentOpenID,a.twoAgentName,a.trans_count,
+        a.servicerId,a.servicerName,
+        b.contact_name,b.contact_phone,a.oneRate,a.twoRate,a.serverRate
+        FROM h_pay_order a
+        left join h_company b on a.c_id = b.id 
+        <include refid="getHPayOrderList_bodyNew" />
+        limit #rowStart# , #rowCount# 
+    </select>
+    
+    <select id="getHPayOrderList1111" parameterClass="HPayOrder" resultClass="HPayOrder">
+            <include refid="getHPayOrderList_body" />
+    </select>
+    
+    <select id="getHPayOrderListSum" parameterClass="HPayOrder" resultClass="Long">
+        SELECT sum(amount) FROM (
+            <include refid="getHPayOrderList_body" />
+        ) AS myTable
+    </select>
+    
+    <select id="getHPayOrderTotal" parameterClass="HPayOrder" resultClass="Long">
+        SELECT sum(a.amount)
+        FROM h_pay_order a
+        left join h_company b on a.c_id = b.id 
+        <include refid="getHPayOrderList_bodyNew" />
+    </select>
+
+    <select id="getHPayOrder" parameterClass="HPayOrder" resultClass="HPayOrder">
+       <include refid="getHPayOrderList_body" />
+    </select>
+    
+    <select id="getHPayOrderNew" parameterClass="HPayOrder" resultClass="HPayOrder">
+    	SELECT a.o_id,a.o_no,a.query_id,a.pay_ip,a.c_id,a.o_sub_id,if(a.amount is null,0,a.amount) as amount,a.actual_payment,a.account_payment,a.pay_type,a.pay_account,a.operator_id,a.payee,a.create_time,a.pay_time,a.pay_status,a.tick_off_status,a.tick_off_time,a.back_fee_status,a.back_time,
+        a.c_name,a.is_fp,a.order_type,a.apply_id,
+        a.yw_id,a.electric_number,a.respMsg,a.is_zz,a.sub_id,a.oneAgentOpenId,a.oneAgentName,a.twoAgentOpenID,a.twoAgentName,a.trans_count,
+        a.servicerId,a.servicerName,
+        b.contact_name,b.contact_phone,a.oneRate,a.twoRate,a.serverRate
+        FROM h_pay_order a
+        left join h_company b on a.c_id = b.id 
+       <include refid="getHPayOrderList_bodyNew" />
+    </select>
+    <select id="getTransCountByCompany" parameterClass="int" resultClass="int">
+       select count(*) from h_pay_order where tick_off_status = 1 and c_id = #id# and pay_status = 1
+    </select>
+
+    <insert id="insertHPayOrder">
+        INSERT INTO h_pay_order ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="o_no"> o_no </isNotNull>
+			<isNotNull prepend="," property="query_id"> query_id </isNotNull>
+			<isNotNull prepend="," property="pay_ip"> pay_ip </isNotNull>
+			<isNotNull prepend="," property="c_id"> c_id </isNotNull>
+			<isNotNull prepend="," property="o_sub_id"> o_sub_id </isNotNull>
+			<isNotNull prepend="," property="amount"> amount </isNotNull>
+			<isNotNull prepend="," property="actual_payment"> actual_payment </isNotNull>
+			<isNotNull prepend="," property="account_payment"> account_payment </isNotNull>
+			<isNotNull prepend="," property="pay_type"> pay_type </isNotNull>
+			<isNotNull prepend="," property="pay_account"> pay_account </isNotNull>
+			<isNotNull prepend="," property="operator_id"> operator_id </isNotNull>
+			<isNotNull prepend="," property="payee"> payee </isNotNull>
+			<isNotNull prepend="," property="create_time"> create_time </isNotNull>
+			<isNotNull prepend="," property="pay_time"> pay_time </isNotNull>
+			<isNotNull prepend="," property="pay_status"> pay_status </isNotNull>
+			<isNotNull prepend="," property="tick_off_status"> tick_off_status </isNotNull>
+			<isNotNull prepend="," property="tick_off_time"> tick_off_time </isNotNull>
+			<isNotNull prepend="," property="back_fee_status"> back_fee_status </isNotNull>
+			<isNotNull prepend="," property="back_time"> back_time </isNotNull>
+			<isNotNull prepend="," property="yw_id"> yw_id </isNotNull>
+			<isNotNull prepend="," property="electric_number"> electric_number </isNotNull>
+			<isNotNull prepend="," property="respMsg"> respMsg </isNotNull>
+			<isNotNull prepend="," property="is_zz"> is_zz </isNotNull>
+			<isNotNull prepend="," property="sub_id"> sub_id </isNotNull>
+			<isNotNull prepend="," property="oneAgentOpenId"> oneAgentOpenId </isNotNull>
+			<isNotNull prepend="," property="oneAgentName"> oneAgentName </isNotNull>
+			<isNotNull prepend="," property="twoAgentOpenID"> twoAgentOpenID </isNotNull>
+			<isNotNull prepend="," property="twoAgentName"> twoAgentName </isNotNull>
+			<isNotNull prepend="," property="servicerId"> servicerId </isNotNull>
+			<isNotNull prepend="," property="servicerName"> servicerName </isNotNull>
+			<isNotNull prepend="," property="c_name"> c_name </isNotNull>
+			<isNotNull prepend="," property="trans_count"> trans_count </isNotNull>
+			<isNotNull prepend="," property="is_fp"> is_fp </isNotNull>
+			<isNotNull prepend="," property="oneRate"> oneRate </isNotNull>
+			<isNotNull prepend="," property="twoRate"> twoRate </isNotNull>
+			<isNotNull prepend="," property="serverRate"> serverRate </isNotNull>
+			<isNotNull prepend="," property="order_type"> order_type </isNotNull>
+			<isNotNull prepend="," property="apply_id"> apply_id </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="o_no"> #o_no# </isNotNull>
+		    <isNotNull prepend="," property="query_id"> #query_id# </isNotNull>
+		    <isNotNull prepend="," property="pay_ip"> #pay_ip# </isNotNull>
+		    <isNotNull prepend="," property="c_id"> #c_id# </isNotNull>
+		    <isNotNull prepend="," property="o_sub_id"> #o_sub_id# </isNotNull>
+		    <isNotNull prepend="," property="amount"> #amount# </isNotNull>
+		    <isNotNull prepend="," property="actual_payment"> #actual_payment# </isNotNull>
+		    <isNotNull prepend="," property="account_payment"> #account_payment# </isNotNull>
+		    <isNotNull prepend="," property="pay_type"> #pay_type# </isNotNull>
+		    <isNotNull prepend="," property="pay_account"> #pay_account# </isNotNull>
+		    <isNotNull prepend="," property="operator_id"> #operator_id# </isNotNull>
+		    <isNotNull prepend="," property="payee"> #payee# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> #create_time# </isNotNull>
+		    <isNotNull prepend="," property="pay_time"> #pay_time# </isNotNull>
+		    <isNotNull prepend="," property="pay_status"> #pay_status# </isNotNull>
+		    <isNotNull prepend="," property="tick_off_status"> #tick_off_status# </isNotNull>
+		    <isNotNull prepend="," property="tick_off_time"> #tick_off_time# </isNotNull>
+		    <isNotNull prepend="," property="back_fee_status"> #back_fee_status# </isNotNull>
+		    <isNotNull prepend="," property="back_time"> #back_time# </isNotNull>
+		    <isNotNull prepend="," property="yw_id"> #yw_id# </isNotNull>
+		    <isNotNull prepend="," property="electric_number"> #electric_number# </isNotNull>
+		    <isNotNull prepend="," property="respMsg"> #respMsg# </isNotNull>
+		    <isNotNull prepend="," property="is_zz"> #is_zz# </isNotNull>
+		    <isNotNull prepend="," property="sub_id"> #sub_id# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentOpenId"> #oneAgentOpenId# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentName"> #oneAgentName# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentOpenID"> #twoAgentOpenID# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentName"> #twoAgentName# </isNotNull>
+		    <isNotNull prepend="," property="servicerId"> #servicerId# </isNotNull>
+		    <isNotNull prepend="," property="servicerName"> #servicerName# </isNotNull>
+		    <isNotNull prepend="," property="c_name"> #c_name# </isNotNull>
+		    <isNotNull prepend="," property="trans_count"> #trans_count# </isNotNull>
+		    <isNotNull prepend="," property="is_fp"> #is_fp# </isNotNull>
+		    <isNotNull prepend="," property="oneRate"> #oneRate# </isNotNull>
+		    <isNotNull prepend="," property="twoRate"> #twoRate# </isNotNull>
+		    <isNotNull prepend="," property="serverRate"> #serverRate# </isNotNull>
+		    <isNotNull prepend="," property="order_type"> #order_type# </isNotNull>
+		    <isNotNull prepend="," property="apply_id"> #apply_id# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="o_id" resultClass="int">
+			SELECT @@IDENTITY AS o_id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHPayOrder">
+        UPDATE h_pay_order
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="o_id"> o_id=#o_id# </isNotNull>
+		    <isNotNull prepend="," property="o_no"> o_no=#o_no# </isNotNull>
+		    <isNotNull prepend="," property="query_id"> query_id=#query_id# </isNotNull>
+		    <isNotNull prepend="," property="pay_ip"> pay_ip=#pay_ip# </isNotNull>
+		    <isNotNull prepend="," property="c_id"> c_id=#c_id# </isNotNull>
+		    <isNotNull prepend="," property="o_sub_id"> o_sub_id=#o_sub_id# </isNotNull>
+		    <isNotNull prepend="," property="amount"> amount=#amount# </isNotNull>
+		    <isNotNull prepend="," property="actual_payment"> actual_payment=#actual_payment# </isNotNull>
+		    <isNotNull prepend="," property="account_payment"> account_payment=#account_payment# </isNotNull>
+		    <isNotNull prepend="," property="pay_type"> pay_type=#pay_type# </isNotNull>
+		    <isNotNull prepend="," property="pay_account"> pay_account=#pay_account# </isNotNull>
+		    <isNotNull prepend="," property="operator_id"> operator_id=#operator_id# </isNotNull>
+		    <isNotNull prepend="," property="payee"> payee=#payee# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> create_time=#create_time# </isNotNull>
+		    <isNotNull prepend="," property="pay_time"> pay_time=#pay_time# </isNotNull>
+		    <isNotNull prepend="," property="pay_status"> pay_status=#pay_status# </isNotNull>
+		    <isNotNull prepend="," property="tick_off_status"> tick_off_status=#tick_off_status# </isNotNull>
+		    <isNotNull prepend="," property="tick_off_time"> tick_off_time=#tick_off_time# </isNotNull>
+		    <isNotNull prepend="," property="back_fee_status"> back_fee_status=#back_fee_status# </isNotNull>
+		    <isNotNull prepend="," property="back_time"> back_time=#back_time# </isNotNull>
+		    <isNotNull prepend="," property="yw_id"> yw_id=#yw_id# </isNotNull>
+		    <isNotNull prepend="," property="electric_number"> electric_number=#electric_number# </isNotNull>
+		    <isNotNull prepend="," property="respMsg"> respMsg=#respMsg# </isNotNull>
+		    <isNotNull prepend="," property="is_zz"> is_zz=#is_zz# </isNotNull>
+		    <isNotNull prepend="," property="is_zz"> sub_id=#sub_id# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentOpenId"> oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentName"> oneAgentName=#oneAgentName# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentOpenID"> twoAgentOpenID=#twoAgentOpenID# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentName"> twoAgentName=#twoAgentName# </isNotNull>
+		    <isNotNull prepend="," property="servicerId"> servicerId=#servicerId# </isNotNull>
+		    <isNotNull prepend="," property="servicerName"> servicerName=#servicerName# </isNotNull>
+		    <isNotNull prepend="," property="trans_count"> trans_count=#trans_count# </isNotNull>
+		    <isNotNull prepend="," property="is_fp"> is_fp=#is_fp# </isNotNull>
+		    <isNotNull prepend="," property="oneRate"> oneRate=#oneRate# </isNotNull>
+		    <isNotNull prepend="," property="twoRate"> twoRate=#twoRate# </isNotNull>
+		    <isNotNull prepend="," property="serverRate"> serverRate=#serverRate# </isNotNull>
+		    <isNotNull prepend="," property="order_type"> order_type=#order_type# </isNotNull>
+		    <isNotNull prepend="," property="apply_id"> apply_id=#apply_id# </isNotNull>
+		    <isNotNull prepend="," property="c_name"> c_name=#c_name# </isNotNull>
+        </dynamic>
+    	where o_id = #o_id#
+    </update>
+    
+    <delete id="removeHPayOrder">
+        delete from h_pay_order where o_id = #o_id#
+    </delete>
+    
+    <select id="getPayTotalFee" parameterClass="HPayOrder" resultClass="HPayOrder">
+		select sum(amount) as totalFee from (SELECT DISTINCT(a.o_id),a.order_type,a.apply_id,a.o_no,a.query_id,a.pay_ip,a.c_id,a.o_sub_id,a.amount,a.actual_payment,a.account_payment,a.pay_type,a.pay_account,a.operator_id,a.payee,a.create_time,a.pay_time,a.pay_status,a.tick_off_status,a.tick_off_time,a.back_fee_status,a.back_time,
+        a.c_name,a.is_fp,
+<!--         e.nickName as yw_name, -->
+        a.yw_id,a.electric_number,a.respMsg,a.is_zz,a.sub_id,a.oneAgentOpenId,a.oneAgentName,a.twoAgentOpenID,a.twoAgentName,
+        a.servicerId,a.servicerName              
+        FROM h_pay_order a
+         left join h_company c on a.c_id=c.id 
+<!--         left join manage_admin_user e on a.yw_id=e.adminId -->
+        left join h_sub_order f on f.o_id=a.o_no
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="o_id"> a.o_id=#o_id# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenID"> a.twoAgentOpenID=#twoAgentOpenID# </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> a.servicerId=#servicerId# </isNotNull>
+            <isNotNull prepend="AND" property="o_no"> a.o_no like concat('%',#o_no#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentName"> a.oneAgentName like concat('%',#oneAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentName"> a.twoAgentName like concat('%',#twoAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="query_id"> a.query_id like concat('%',#query_id#,'%') </isNotNull> 
+            <isNotNull prepend="AND" property="pay_ip"> a.pay_ip=#pay_ip# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+            <isNotNull prepend="AND" property="o_sub_id"> f.sub_id=#o_sub_id# </isNotNull>
+            <isNotNull prepend="AND" property="is_fp"> a.is_fp=#is_fp# </isNotNull>
+            <isNotNull prepend="AND" property="amount"> a.amount=#amount# </isNotNull>
+            <isNotNull prepend="AND" property="actual_payment"> a.actual_payment=#actual_payment# </isNotNull>
+            <isNotNull prepend="AND" property="account_payment"> a.account_payment=#account_payment# </isNotNull>
+            <isNotNull prepend="AND" property="pay_type"> a.pay_type=#pay_type# </isNotNull>
+            <isNotNull prepend="AND" property="pay_account"> a.pay_account=#pay_account# </isNotNull>
+            <isNotNull prepend="AND" property="operator_id"> a.operator_id=#operator_id# </isNotNull>
+            <isNotNull prepend="AND" property="payee"> a.payee=#payee# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="pay_time"> a.pay_time=#pay_time# </isNotNull>
+            <isNotNull prepend="AND" property="is_zz"> a.is_zz=#is_zz# </isNotNull>
+            <isNotNull prepend="AND" property="pay_status"> 
+	            <isEqual property="pay_status" compareValue="1">a.pay_status=#pay_status#</isEqual>
+	            <isEqual property="pay_status" compareValue="0">a.pay_status=#pay_status#</isEqual>
+	            <isEqual property="pay_status" compareValue="2"><![CDATA[ a.pay_status>1 ]]></isEqual>
+            </isNotNull>
+            <isNotNull prepend="AND" property="tick_off_status"> a.tick_off_status=#tick_off_status# </isNotNull>
+            <isNotNull prepend="AND" property="tick_off_time"> a.tick_off_time=#tick_off_time# </isNotNull>
+            <isNotNull prepend="AND" property="back_fee_status"> a.back_fee_status=#back_fee_status# </isNotNull>
+            <isNotNull prepend="AND" property="back_time"> a.back_time=#back_time# </isNotNull>
+            <isNotNull prepend="AND" property="yw_id"> a.yw_id=#yw_id# </isNotNull>
+            <isNotNull prepend="AND" property="c_name"> a.c_name like concat('%', #c_name#, '%') </isNotNull>
+<!--             <isNotNull prepend="AND" property="yw_name"> e.adminName like concat('%', #yw_name#, '%') </isNotNull> -->
+            <isNotNull prepend="AND" property="electric_number"> f.electric like concat('%', #electric_number#, '%') </isNotNull>
+            
+            <isNotNull prepend="AND" property="pay_start_time"> <![CDATA[ a.pay_time >= #pay_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="pay_end_time"> <![CDATA[ a.pay_time <= #pay_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="back_start_time"> <![CDATA[ a.back_time >= #back_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="back_end_time"> <![CDATA[ a.back_time <= #back_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="tick_start_time"> <![CDATA[ a.tick_off_time >= #tick_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="tick_end_time"> <![CDATA[ a.tick_off_time <= #tick_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="create_start_time"> <![CDATA[ a.create_time >= #create_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="create_end_time"> <![CDATA[ a.create_time <= #create_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="sub_id"> a.sub_id=#sub_id# </isNotNull>
+            <isNotNull prepend="AND" property="order_type"> a.order_type=#order_type# </isNotNull>
+            <isNotNull prepend="AND" property="apply_id"> a.apply_id=#apply_id# </isNotNull>
+            <isNotNull prepend="AND" property="contact_phone"> c.contact_phone=#contact_phone# </isNotNull>
+            <isNotNull prepend="AND" property="startTotalFee">
+       			<![CDATA[ a.amount >= #startTotalFee#]]>
+	       	</isNotNull>
+	       	<isNotNull prepend="AND" property="endTotalFee">
+	       		<![CDATA[ a.amount <= #endTotalFee#]]>
+	       	</isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+        ) as ta
+	</select>
+	
+	<select id="getHPayOrderCompany" parameterClass="HPayOrder" resultClass="HPayOrder">
+		select DISTINCT(c_id) from h_pay_order where <![CDATA[ pay_status>=1 ]]> and  date_format(create_time,'%Y-%m')=date_format(now(),'%Y-%m') 
+    </select>
+    
+    <select id="getNoPayOrderCompanyCount" parameterClass="HPayOrder" resultClass="int">
+		select count(*) from h_pay_order where <![CDATA[ pay_status>=1 ]]> and c_id=#c_id# and <![CDATA[ date_format(create_time,'%Y-%m-%d') < DATE_ADD(curdate(),interval -day(curdate())+1 day) ]]>  
+    </select>
+    <sql id="getHPayOrderList_body_ForWX">
+        SELECT DISTINCT(a.o_id),a.o_no,a.query_id,a.pay_ip,a.c_id,a.o_sub_id,a.amount,a.actual_payment,a.account_payment,a.pay_type,a.pay_account,a.operator_id,a.payee,a.create_time,a.pay_time,a.pay_status,a.tick_off_status,a.tick_off_time,a.back_fee_status,a.back_time,
+        a.c_name,a.is_fp,a.order_type,a.apply_id,
+        a.yw_id,a.electric_number,a.respMsg,a.is_zz,a.sub_id,a.oneAgentOpenId,a.oneAgentName,a.twoAgentOpenID,a.twoAgentName,a.trans_count,
+        a.servicerId,a.servicerName,
+        b.contact_name,b.contact_phone,a.oneRate,a.twoRate,a.serverRate
+        FROM h_pay_order a
+        left join h_company b on a.c_id = b.id 
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="o_id"> a.o_id=#o_id# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenID"> a.twoAgentOpenID=#twoAgentOpenID# </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> a.servicerId=#servicerId# </isNotNull>
+            <isNotNull prepend="AND" property="o_no"> a.o_no like concat('%',#o_no#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentName"> a.oneAgentName like concat('%',#oneAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentName"> a.twoAgentName like concat('%',#twoAgentName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="servicerName"> a.servicerName like concat('%',#servicerName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="query_id"> a.query_id like concat('%',#query_id#,'%') </isNotNull> 
+            <isNotNull prepend="AND" property="pay_ip"> a.pay_ip=#pay_ip# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+            <isNotNull prepend="AND" property="is_fp"> a.is_fp=#is_fp# </isNotNull>
+            <isNotNull prepend="AND" property="amount"> a.amount=#amount# </isNotNull>
+            <isNotNull prepend="AND" property="actual_payment"> a.actual_payment=#actual_payment# </isNotNull>
+            <isNotNull prepend="AND" property="account_payment"> a.account_payment=#account_payment# </isNotNull>
+            <isNotNull prepend="AND" property="pay_type"> a.pay_type=#pay_type# </isNotNull>
+            <isNotNull prepend="AND" property="pay_account"> a.pay_account=#pay_account# </isNotNull>
+            <isNotNull prepend="AND" property="operator_id"> a.operator_id=#operator_id# </isNotNull>
+            <isNotNull prepend="AND" property="payee"> a.payee=#payee# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="pay_time"> a.pay_time=#pay_time# </isNotNull>
+            <isNotNull prepend="AND" property="is_zz"> a.is_zz=#is_zz# </isNotNull>
+            <isNotNull prepend="AND" property="pay_status"> 
+	            <isEqual property="pay_status" compareValue="1">a.pay_status=#pay_status#</isEqual>
+	            <isEqual property="pay_status" compareValue="0">a.pay_status=#pay_status#</isEqual>
+	            <isEqual property="pay_status" compareValue="2"><![CDATA[ a.pay_status>1 ]]></isEqual>
+            </isNotNull>
+            <isNotNull prepend="AND" property="tick_off_status"> a.tick_off_status=#tick_off_status# </isNotNull>
+            <isNotNull prepend="AND" property="tick_off_time"> a.tick_off_time=#tick_off_time# </isNotNull>
+            <isNotNull prepend="AND" property="back_fee_status"> a.back_fee_status=#back_fee_status# </isNotNull>
+            <isNotNull prepend="AND" property="back_time"> a.back_time=#back_time# </isNotNull>
+            <isNotNull prepend="AND" property="yw_id"> a.yw_id=#yw_id# </isNotNull>
+            <isNotNull prepend="AND" property="c_name"> a.c_name like concat('%', #c_name#, '%') </isNotNull>
+            <isNotNull prepend="AND" property="pay_start_time"> <![CDATA[ a.pay_time >= #pay_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="pay_end_time"> <![CDATA[ a.pay_time <= #pay_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="back_start_time"> <![CDATA[ a.back_time >= #back_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="back_end_time"> <![CDATA[ a.back_time <= #back_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="tick_start_time"> <![CDATA[ a.tick_off_time >= #tick_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="tick_end_time"> <![CDATA[ a.tick_off_time <= #tick_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="create_start_time"> <![CDATA[ a.create_time >= #create_start_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="create_end_time"> <![CDATA[ a.create_time <= #create_end_time# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="sub_id"> a.sub_id=#sub_id# </isNotNull>
+            <isNotNull prepend="AND" property="trans_count"> a.trans_count=#trans_count# </isNotNull>
+            <isNotNull prepend="AND" property="order_type"> a.order_type=#order_type# </isNotNull>
+            <isNotNull prepend="AND" property="apply_id"> a.apply_id=#apply_id# </isNotNull>
+            
+            <isNotNull prepend="AND" property="startTime"> <![CDATA[ a.pay_time>=#startTime# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="endTime"> <![CDATA[ a.pay_time<=#endTime# ]]> </isNotNull>
+            
+             <isNotNull property="queryType">
+            	<isEqual property="queryType" compareValue="1">
+            	    <isNotNull property="roleType">
+	            		<isEqual property="roleType" compareValue="1"><!-- 一级查自己 -->
+	            			<isNotNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+	            			<isNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId='-1' </isNull>
+	            			and a.twoAgentOpenID is null 
+	            		</isEqual>
+	            		<isEqual property="roleType" compareValue="2"><!-- 二级查自己 -->
+	            			<isNotNull prepend="AND" property="twoAgentOpenID"> a.twoAgentOpenID=#twoAgentOpenID# </isNotNull>
+	            			<isNull prepend="AND" property="twoAgentOpenID"> a.twoAgentOpenID='-1' </isNull>
+	            		</isEqual>
+	            		<isEqual property="roleType" compareValue="3"><!-- 服务员查自己 -->
+	            			<isNotNull prepend="AND" property="servicerId"> a.servicerId=#servicerId# </isNotNull>
+	            			<isNull prepend="AND" property="servicerId"> a.servicerId='-1' </isNull>
+	            		</isEqual>
+            		</isNotNull>
+            		<!-- 如果查询角色为空 则以此方式返回空结果 -->
+            		<isNull property="roleType">
+            			 and a.servicerId='-1'
+            		</isNull>
+				</isEqual>
+            	<isEqual property="queryType" compareValue="2">
+            		<isNotNull property="roleType">
+	            		<isEqual property="roleType" compareValue="1"><!-- 一级查代理 -->
+	            			<isNotNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+	            			<isNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId='-1' </isNull>
+	            			and a.twoAgentOpenID is not null and (order_type=1 or order_type is null)
+	            		</isEqual>
+	            		<isEqual property="roleType" compareValue="2"><!-- 二级查代理 以此方式返回空结果 -->
+	            		 	and a.twoAgentOpenID='-1'
+	            		</isEqual>
+	            		<isEqual property="roleType" compareValue="3"><!-- 服务员查代理 以此方式返回空结果 -->
+	            		and a.servicerId='-1'
+	            		</isEqual>
+            		</isNotNull>
+            		<isNull property="roleType">
+            			and a.servicerId='-1'
+            		</isNull>
+				</isEqual>
+            </isNotNull>
+            <isNull property="queryType"><!-- 查询类型为空 为查全部 -->
+ 				<isEqual property="roleType" compareValue="1"><!-- 一级代理查全部 -->
+         			<isNotNull prepend="AND" property="oneAgentOpenId"> ((a.oneAgentOpenId=#oneAgentOpenId# and (order_type=1 or order_type = 2) and a.twoAgentOpenID is null) or (a.oneAgentOpenId=#oneAgentOpenId# and a.twoAgentOpenID is not null)) </isNotNull>
+         			<isNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId='-1' </isNull>
+         		</isEqual>
+         		<isEqual property="roleType" compareValue="2"><!-- 二级代理查全部  等同于查自己-->
+        		 	<isNotNull prepend="AND" property="twoAgentOpenID"> a.twoAgentOpenID=#twoAgentOpenID# </isNotNull>
+            		<isNull prepend="AND" property="twoAgentOpenID"> a.twoAgentOpenID='-1' </isNull>
+         		</isEqual>
+         		<isEqual property="roleType" compareValue="3"><!-- 服务员查全部 等同于查自己 -->
+        			<isNotNull prepend="AND" property="servicerId"> a.servicerId=#servicerId# </isNotNull>
+           			<isNull prepend="AND" property="servicerId"> a.servicerId='-1' </isNull>
+         		</isEqual>
+            </isNull>
+        </dynamic>
+    </sql>
+        <select id="getHPayOrderListCount_ForWX" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHPayOrderList_body_ForWX" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHPayOrderList_ForWX" parameterClass="HPayOrder" resultClass="HPayOrder">
+        SELECT * FROM (
+            <include refid="getHPayOrderList_body_ForWX" />
+        ) AS myTable 
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+        limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHPayOrder_ForWX" parameterClass="HPayOrder" resultClass="HPayOrder">
+       <include refid="getHPayOrderList_body_ForWX" />
+       <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </select>
+       <select id="getAllDetailFee" parameterClass="HPayOrder" resultClass="HPayOrder">
+       SELECT sum(amount) as allOrderFee FROM (
+           <include refid="getHPayOrderList_body_ForWX" />
+       ) AS myTable 
+   		</select>
+    <select id="getAllRateMoney" parameterClass="HPayOrder" resultClass="HPayOrder">
+   		<isNotNull prepend="" property="role_id"> 
+        SELECT
+         <isEqual property="roleType" compareValue="1">
+        	sum(oneRate)
+        </isEqual>
+         <isEqual property="roleType" compareValue="2">
+        	sum(twoRate)
+        </isEqual>
+         <isEqual property="roleType" compareValue="3">
+        	sum(serverRate)
+        </isEqual>
+         as allRateFee FROM (
+            <include refid="getHPayOrderList_body_ForWX" />
+        ) AS myTable 
+        </isNotNull>
+    </select>
+</sqlMap>

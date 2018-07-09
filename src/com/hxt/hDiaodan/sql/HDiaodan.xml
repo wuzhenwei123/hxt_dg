@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HDiaodan">
+	<typeAlias alias="HDiaodan" type="com.hxt.hDiaodan.model.HDiaodan"/>
+	
+    <sql id="getHDiaodanList_body">
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="electricNum"> a.electricNum=#electricNum# </isNotNull>
+            <isNotNull prepend="AND" property="style"> a.style=#style# </isNotNull>
+            <isNotNull prepend="AND" property="content"> a.content=#content# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="remark4"> a.remark4=#remark4# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+        </dynamic>
+    </sql>
+
+    <select id="getHDiaodanListCount" resultClass="int">
+        SELECT COUNT(*) FROM h_diaodan a 
+        <include refid="getHDiaodanList_body" />
+    </select>
+
+    <select id="getHDiaodanList" parameterClass="HDiaodan" resultClass="HDiaodan">
+        SELECT a.id,a.electricNum,a.style,a.content,a.remark1,a.remark2,a.remark3,a.remark4,a.createTime        FROM h_diaodan a
+            <include refid="getHDiaodanList_body" />
+            <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+         limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHDiaodan" parameterClass="HDiaodan" resultClass="HDiaodan">
+    	SELECT a.id,a.electricNum,a.style,a.content,a.remark1,a.remark2,a.remark3,a.remark4,a.createTime        FROM h_diaodan a
+       <include refid="getHDiaodanList_body" />
+       <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </select>
+
+    <insert id="insertHDiaodan">
+        INSERT INTO h_diaodan ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="electricNum"> electricNum </isNotNull>
+			<isNotNull prepend="," property="style"> style </isNotNull>
+			<isNotNull prepend="," property="content"> content </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+			<isNotNull prepend="," property="remark4"> remark4 </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="electricNum"> #electricNum# </isNotNull>
+		    <isNotNull prepend="," property="style"> #style# </isNotNull>
+		    <isNotNull prepend="," property="content"> #content# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+		    <isNotNull prepend="," property="remark4"> #remark4# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHDiaodan">
+        UPDATE h_diaodan
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="electricNum"> electricNum=#electricNum# </isNotNull>
+		    <isNotNull prepend="," property="style"> style=#style# </isNotNull>
+		    <isNotNull prepend="," property="content"> content=#content# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+		    <isNotNull prepend="," property="remark4"> remark4=#remark4# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHDiaodan">
+        delete from h_diaodan where id = #id#
+    </delete>
+</sqlMap>

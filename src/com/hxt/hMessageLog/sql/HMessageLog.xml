@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HMessageLog">
+	<typeAlias alias="HMessageLog" type="com.hxt.hMessageLog.model.HMessageLog"/>
+	
+    <sql id="getHMessageLogList_body">
+        SELECT a.id,a.phone,a.content,a.ip,a.createTime        FROM h_message_log a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="phone"> a.phone=#phone# </isNotNull>
+            <isNotNull prepend="AND" property="content"> a.content=#content# </isNotNull>
+            <isNotNull prepend="AND" property="ip"> a.ip=#ip# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHMessageLogListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHMessageLogList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHMessageLogList" parameterClass="HMessageLog" resultClass="HMessageLog">
+        SELECT * FROM (
+            <include refid="getHMessageLogList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHMessageLog" parameterClass="HMessageLog" resultClass="HMessageLog">
+       <include refid="getHMessageLogList_body" />
+    </select>
+
+    <insert id="insertHMessageLog">
+        INSERT INTO h_message_log ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="phone"> phone </isNotNull>
+			<isNotNull prepend="," property="content"> content </isNotNull>
+			<isNotNull prepend="," property="ip"> ip </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="phone"> #phone# </isNotNull>
+		    <isNotNull prepend="," property="content"> #content# </isNotNull>
+		    <isNotNull prepend="," property="ip"> #ip# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHMessageLog">
+        UPDATE h_message_log
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="phone"> phone=#phone# </isNotNull>
+		    <isNotNull prepend="," property="content"> content=#content# </isNotNull>
+		    <isNotNull prepend="," property="ip"> ip=#ip# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHMessageLog">
+        delete from h_message_log where id = #id#
+    </delete>
+    
+    <select id="getMessageLogCount" resultClass="int">
+        SELECT count(*)       FROM h_message_log a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="phone"> a.phone=#phone# </isNotNull>
+            <isNotNull prepend="AND" property="content"> a.content=#content# </isNotNull>
+            <isNotNull prepend="AND" property="ip"> a.ip=#ip# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="startTime"> <![CDATA[ a.createTime>=#startTime# and a.createTime<=#endTime# ]]> </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </select>
+</sqlMap>

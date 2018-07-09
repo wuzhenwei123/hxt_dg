@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HPayGuli">
+	<typeAlias alias="HPayGuli" type="com.hxt.hPayGuli.model.HPayGuli"/>
+	
+    <sql id="getHPayGuliList_body">
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="trade_code"> a.trade_code=#trade_code# </isNotNull>
+            <isNotNull prepend="AND" property="name"> a.name like concat('%',#name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="style"> a.style=#style# </isNotNull>
+<!--             <isNotNull prepend="AND" property="startTime"> a.startTime=#startTime# </isNotNull> -->
+<!--             <isNotNull prepend="AND" property="endTime"> a.endTime=#endTime# </isNotNull> -->
+			
+			<isNotNull prepend="AND" property="flag"> 
+	            <isEqual property="flag" compareValue="1"><![CDATA[ a.startTime <= #startTime# and a.endTime >= #startTime#]]></isEqual>
+	            <isEqual property="flag" compareValue="2"><![CDATA[ a.endTime <= #endTime# ]]></isEqual>
+	            <isEqual property="flag" compareValue="3"><![CDATA[ a.startTime <= #startTime# and a.endTime >= #endTime#]]></isEqual>
+            </isNotNull>
+
+            <isNotNull prepend="AND" property="type"> a.type=#type# </isNotNull>
+            <isNotNull prepend="AND" property="fee"> a.fee=#fee# </isNotNull>
+            <isNotNull prepend="AND" property="rate"> a.rate=#rate# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="is_default"> a.is_default=#is_default# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="createId"> a.createId=#createId# </isNotNull>
+            <isNotNull prepend="AND" property="updateTime"> a.updateTime=#updateTime# </isNotNull>
+            <isNotNull prepend="AND" property="updateId"> a.updateId=#updateId# </isNotNull>
+            <isNotNull prepend="AND" property="stopTime"> a.stopTime=#stopTime# </isNotNull>
+            <isNotNull prepend="AND" property="info"> a.info=#info# </isNotNull>
+            <isNotNull prepend="AND" property="createName"> a.createName=#createName# </isNotNull>
+            <isNotNull prepend="AND" property="updateName"> a.updateName=#updateName# </isNotNull>
+            <isNotNull prepend="AND" property="opObject"> a.opObject=#opObject# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHPayGuliListCount" resultClass="int">
+        SELECT COUNT(*) FROM h_pay_guli a
+        <include refid="getHPayGuliList_body" />
+    </select>
+
+    <select id="getHPayGuliList" parameterClass="HPayGuli" resultClass="HPayGuli">
+        SELECT a.id,a.trade_code,a.name,a.style,a.startTime,a.endTime,a.type,a.fee,a.rate,a.state,a.is_default,a.createTime,a.createId,a.updateTime,a.updateId,a.stopTime,a.info,a.createName,a.opObject,a.updateName        
+        FROM h_pay_guli a
+        <include refid="getHPayGuliList_body" />
+        limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHPayGuli" parameterClass="HPayGuli" resultClass="HPayGuli">
+       SELECT a.id,a.trade_code,a.name,a.style,a.startTime,a.endTime,a.type,a.fee,a.rate,a.state,a.is_default,a.createTime,a.createId,a.updateTime,a.updateId,a.stopTime,a.info,a.createName,a.opObject,a.updateName        
+       FROM h_pay_guli a
+       <include refid="getHPayGuliList_body" />
+    </select>
+
+    <insert id="insertHPayGuli">
+        INSERT INTO h_pay_guli ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="trade_code"> trade_code </isNotNull>
+			<isNotNull prepend="," property="name"> name </isNotNull>
+			<isNotNull prepend="," property="style"> style </isNotNull>
+			<isNotNull prepend="," property="startTime"> startTime </isNotNull>
+			<isNotNull prepend="," property="endTime"> endTime </isNotNull>
+			<isNotNull prepend="," property="type"> type </isNotNull>
+			<isNotNull prepend="," property="fee"> fee </isNotNull>
+			<isNotNull prepend="," property="rate"> rate </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+			<isNotNull prepend="," property="is_default"> is_default </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="createId"> createId </isNotNull>
+			<isNotNull prepend="," property="updateTime"> updateTime </isNotNull>
+			<isNotNull prepend="," property="updateId"> updateId </isNotNull>
+			<isNotNull prepend="," property="stopTime"> stopTime </isNotNull>
+			<isNotNull prepend="," property="info"> info </isNotNull>
+			<isNotNull prepend="," property="createName"> createName </isNotNull>
+			<isNotNull prepend="," property="updateName"> updateName </isNotNull>
+			<isNotNull prepend="," property="opObject"> opObject </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="trade_code"> #trade_code# </isNotNull>
+		    <isNotNull prepend="," property="name"> #name# </isNotNull>
+		    <isNotNull prepend="," property="style"> #style# </isNotNull>
+		    <isNotNull prepend="," property="startTime"> #startTime# </isNotNull>
+		    <isNotNull prepend="," property="endTime"> #endTime# </isNotNull>
+		    <isNotNull prepend="," property="type"> #type# </isNotNull>
+		    <isNotNull prepend="," property="fee"> #fee# </isNotNull>
+		    <isNotNull prepend="," property="rate"> #rate# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+		    <isNotNull prepend="," property="is_default"> #is_default# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="createId"> #createId# </isNotNull>
+		    <isNotNull prepend="," property="updateTime"> #updateTime# </isNotNull>
+		    <isNotNull prepend="," property="updateId"> #updateId# </isNotNull>
+		    <isNotNull prepend="," property="stopTime"> #stopTime# </isNotNull>
+		    <isNotNull prepend="," property="info"> #info# </isNotNull>
+		    <isNotNull prepend="," property="createName"> #createName# </isNotNull>
+		    <isNotNull prepend="," property="updateName"> #updateName# </isNotNull>
+		    <isNotNull prepend="," property="opObject"> #opObject# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHPayGuli">
+        UPDATE h_pay_guli
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="trade_code"> trade_code=#trade_code# </isNotNull>
+		    <isNotNull prepend="," property="name"> name=#name# </isNotNull>
+		    <isNotNull prepend="," property="style"> style=#style# </isNotNull>
+		    <isNotNull prepend="," property="startTime"> startTime=#startTime# </isNotNull>
+		    <isNotNull prepend="," property="endTime"> endTime=#endTime# </isNotNull>
+		    <isNotNull prepend="," property="type"> type=#type# </isNotNull>
+		    <isNotNull prepend="," property="fee"> fee=#fee# </isNotNull>
+		    <isNotNull prepend="," property="rate"> rate=#rate# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="is_default"> is_default=#is_default# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="createId"> createId=#createId# </isNotNull>
+		    <isNotNull prepend="," property="updateTime"> updateTime=#updateTime# </isNotNull>
+		    <isNotNull prepend="," property="updateId"> updateId=#updateId# </isNotNull>
+		    <isNotNull prepend="," property="stopTime"> stopTime=#stopTime# </isNotNull>
+		    <isNotNull prepend="," property="info"> info=#info# </isNotNull>
+		    <isNotNull prepend="," property="createName"> createName=#createName# </isNotNull>
+		    <isNotNull prepend="," property="updateName"> updateName=#updateName# </isNotNull>
+		    <isNotNull prepend="," property="opObject"> opObject=#opObject# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    <update id="updateHPayGuli1">
+        UPDATE h_pay_guli
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="trade_code"> trade_code=#trade_code# </isNotNull>
+		    <isNotNull prepend="," property="name"> name=#name# </isNotNull>
+		    <isNotNull prepend="," property="style"> style=#style# </isNotNull>
+		    <isNotNull prepend="," property="startTime"> startTime=#startTime# </isNotNull>
+		    <isNotNull prepend="," property="endTime"> endTime=#endTime# </isNotNull>
+		    <isNotNull prepend="," property="type"> type=#type# </isNotNull>
+		    <isNotNull prepend="," property="fee"> fee=#fee# </isNotNull>
+		    <isNull prepend="," property="fee"> fee = null </isNull>
+		    <isNotNull prepend="," property="rate"> rate=#rate# </isNotNull>
+		    <isNull prepend="," property="rate"> rate = null </isNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="is_default"> is_default=#is_default# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="createId"> createId=#createId# </isNotNull>
+		    <isNotNull prepend="," property="updateTime"> updateTime=#updateTime# </isNotNull>
+		    <isNotNull prepend="," property="updateId"> updateId=#updateId# </isNotNull>
+		    <isNotNull prepend="," property="stopTime"> stopTime=#stopTime# </isNotNull>
+		    <isNotNull prepend="," property="info"> info=#info# </isNotNull>
+		    <isNotNull prepend="," property="createName"> createName=#createName# </isNotNull>
+		    <isNotNull prepend="," property="updateName"> updateName=#updateName# </isNotNull>
+		    <isNotNull prepend="," property="opObject"> opObject=#opObject# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHPayGuli">
+        delete from h_pay_guli where id = #id#
+    </delete>
+    
+    <select id="checkDefault" resultClass="int">
+        SELECT COUNT(*) FROM h_pay_guli a where a.is_default=#is_default# and a.style=#style# and a.opObject=#opObject# 
+        <isNotNull prepend="AND" property="id"> <![CDATA[ a.id<>#id# ]]> </isNotNull>
+    </select>
+</sqlMap>

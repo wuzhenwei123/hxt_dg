@@ -1,0 +1,21 @@
+#kkpager a {
+	height: 20px;
+	cursor: pointer;
+}
+
+select option {
+	border-bottom: 1px solid #bbb;
+}
+
+.widget-body {
+	overflow-x: auto;
+}
+#exampleDTC th{
+	white-space: nowrap;
+}
+#exampleDTC td{
+	white-space: nowrap;
+}
+.listBox{
+	color:#333333;
+}

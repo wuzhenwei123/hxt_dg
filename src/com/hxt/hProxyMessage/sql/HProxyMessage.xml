@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HProxyMessage">
+	<typeAlias alias="HProxyMessage" type="com.hxt.hProxyMessage.model.HProxyMessage"/>
+	
+    <sql id="getHProxyMessageList_body">
+        SELECT a.id,a.proxyName,a.proxyPhone,a.createYime,a.contractNumber,a.contractStartTime,a.contractEndTime,a.remindStartDate,a.remindEndDate,a.bank_number,a.info,a.remark1,a.remark2,a.remark3,a.cId,a.userId,a.state,a.userNumber,a.proxyAddress,a.proxyCode,a.payBankNumber,a.payName,a.payCardStyle,a.payCard,a.payPhoneNumber,a.payMail,        
+        b.name as cName,a.sex,a.checkState,a.hetongUrl,a.chexiaoUrl,a.msg,a.bank_name,a.payAccountName,a.biangengUrl,
+        b.oneAgentOpenId,b.oneAgentName,b.twoAgentOpenID,b.twoAgentName,b.servicerId,b.servicerName,a.qsBank,b.contact_name,b.contact_phone,
+        c.adminName,c.realName
+        FROM h_proxy_message a
+        left join h_company b on a.cId = b.id
+        left join manage_admin_user c on a.userId = c.adminId
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> b.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenID"> b.twoAgentOpenID=#twoAgentOpenID# </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> b.servicerId=#servicerId# </isNotNull>
+            <isNotNull prepend="AND" property="proxyName"> a.payAccountName like concat('%',#payAccountName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="proxyName"> a.proxyName like concat('%',#proxyName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="bank_name"> a.bank_name like concat('%',#bank_name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="proxyPhone"> a.proxyPhone like concat('%',#proxyPhone#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="createYime"> a.createYime=#createYime# </isNotNull>
+            <isNotNull prepend="AND" property="contractNumber"> a.contractNumber like concat('%',#contractNumber#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="contractStartTime"> a.contractStartTime=#contractStartTime# </isNotNull>
+            <isNotNull prepend="AND" property="contractEndTime"> a.contractEndTime=#contractEndTime# </isNotNull>
+            <isNotNull prepend="AND" property="remindStartDate"> a.remindStartDate=#remindStartDate# </isNotNull>
+            <isNotNull prepend="AND" property="remindEndDate"> a.remindEndDate=#remindEndDate# </isNotNull>
+            <isNotNull prepend="AND" property="bank_number"> a.bank_number like concat('%',#bank_number#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="info"> a.info=#info# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="hetongUrl"> a.hetongUrl=#hetongUrl# </isNotNull>
+            <isNotNull prepend="AND" property="checkState"> a.checkState=#checkState# </isNotNull>
+            <isNotNull prepend="AND" property="chexiaoUrl"> a.chexiaoUrl=#chexiaoUrl# </isNotNull>
+            <isNotNull prepend="AND" property="cId"> a.cId=#cId# </isNotNull>
+            <isNotNull prepend="AND" property="biangengUrl"> a.biangengUrl=#biangengUrl# </isNotNull>
+            <isNotNull prepend="AND" property="cName"> b.name like concat('%',#cName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="userId"> a.userId=#userId# </isNotNull>
+            <isNotNull prepend="AND" property="sex"> a.sex=#sex# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="msg"> a.msg=#msg# </isNotNull>
+            <isNotNull prepend="AND" property="userNumber"> a.userNumber like concat('%',#userNumber#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="proxyAddress"> a.proxyAddress=#proxyAddress# </isNotNull>
+            <isNotNull prepend="AND" property="proxyCode"> a.proxyCode like concat('%',#proxyCode#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="payBankNumber"> a.payBankNumber like concat('%',#payBankNumber#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="payName"> a.payName like concat('%',#payName#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="payCardStyle"> a.payCardStyle=#payCardStyle# </isNotNull>
+            <isNotNull prepend="AND" property="payCard"> a.payCard like concat('%',#payCard#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="payPhoneNumber"> a.payPhoneNumber like concat('%',#payPhoneNumber#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="payMail"> a.payMail like concat('%',#payMail#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="nowDate"> <![CDATA[ a.contractStartTime<=#nowDate# and a.contractEndTime>=#nowDate# ]]> </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHProxyMessageListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHProxyMessageList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHProxyMessageList" parameterClass="HProxyMessage" resultClass="HProxyMessage">
+        SELECT * FROM (
+            <include refid="getHProxyMessageList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHProxyMessage" parameterClass="HProxyMessage" resultClass="HProxyMessage">
+       <include refid="getHProxyMessageList_body" />
+    </select>
+
+    <insert id="insertHProxyMessage">
+        INSERT INTO h_proxy_message ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="proxyName"> proxyName </isNotNull>
+			<isNotNull prepend="," property="proxyPhone"> proxyPhone </isNotNull>
+			<isNotNull prepend="," property="createYime"> createYime </isNotNull>
+			<isNotNull prepend="," property="contractNumber"> contractNumber </isNotNull>
+			<isNotNull prepend="," property="contractStartTime"> contractStartTime </isNotNull>
+			<isNotNull prepend="," property="contractEndTime"> contractEndTime </isNotNull>
+			<isNotNull prepend="," property="remindStartDate"> remindStartDate </isNotNull>
+			<isNotNull prepend="," property="remindEndDate"> remindEndDate </isNotNull>
+			<isNotNull prepend="," property="bank_number"> bank_number </isNotNull>
+			<isNotNull prepend="," property="info"> info </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+			<isNotNull prepend="," property="cId"> cId </isNotNull>
+			<isNotNull prepend="," property="userId"> userId </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+			<isNotNull prepend="," property="userNumber"> userNumber </isNotNull>
+			<isNotNull prepend="," property="proxyAddress"> proxyAddress </isNotNull>
+			<isNotNull prepend="," property="proxyCode"> proxyCode </isNotNull>
+			<isNotNull prepend="," property="payBankNumber"> payBankNumber </isNotNull>
+			<isNotNull prepend="," property="payName"> payName </isNotNull>
+			<isNotNull prepend="," property="payCardStyle"> payCardStyle </isNotNull>
+			<isNotNull prepend="," property="payCard"> payCard </isNotNull>
+			<isNotNull prepend="," property="payPhoneNumber"> payPhoneNumber </isNotNull>
+			<isNotNull prepend="," property="payMail"> payMail </isNotNull>
+			<isNotNull prepend="," property="sex"> sex </isNotNull>
+			<isNotNull prepend="," property="checkState"> checkState </isNotNull>
+			<isNotNull prepend="," property="hetongUrl"> hetongUrl </isNotNull>
+			<isNotNull prepend="," property="chexiaoUrl"> chexiaoUrl </isNotNull>
+			<isNotNull prepend="," property="msg"> msg </isNotNull>
+			<isNotNull prepend="," property="bank_name"> bank_name </isNotNull>
+			<isNotNull prepend="," property="payAccountName"> payAccountName </isNotNull>
+			<isNotNull prepend="," property="biangengUrl"> biangengUrl </isNotNull>
+			<isNotNull prepend="," property="qsBank"> qsBank </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="proxyName"> #proxyName# </isNotNull>
+		    <isNotNull prepend="," property="proxyPhone"> #proxyPhone# </isNotNull>
+		    <isNotNull prepend="," property="createYime"> #createYime# </isNotNull>
+		    <isNotNull prepend="," property="contractNumber"> #contractNumber# </isNotNull>
+		    <isNotNull prepend="," property="contractStartTime"> #contractStartTime# </isNotNull>
+		    <isNotNull prepend="," property="contractEndTime"> #contractEndTime# </isNotNull>
+		    <isNotNull prepend="," property="remindStartDate"> #remindStartDate# </isNotNull>
+		    <isNotNull prepend="," property="remindEndDate"> #remindEndDate# </isNotNull>
+		    <isNotNull prepend="," property="bank_number"> #bank_number# </isNotNull>
+		    <isNotNull prepend="," property="info"> #info# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+		    <isNotNull prepend="," property="cId"> #cId# </isNotNull>
+		    <isNotNull prepend="," property="userId"> #userId# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+		    <isNotNull prepend="," property="userNumber"> #userNumber# </isNotNull>
+		    <isNotNull prepend="," property="proxyAddress"> #proxyAddress# </isNotNull>
+		    <isNotNull prepend="," property="proxyCode"> #proxyCode# </isNotNull>
+		    <isNotNull prepend="," property="payBankNumber"> #payBankNumber# </isNotNull>
+		    <isNotNull prepend="," property="payName"> #payName# </isNotNull>
+		    <isNotNull prepend="," property="payCardStyle"> #payCardStyle# </isNotNull>
+		    <isNotNull prepend="," property="payCard"> #payCard# </isNotNull>
+		    <isNotNull prepend="," property="payPhoneNumber"> #payPhoneNumber# </isNotNull>
+		    <isNotNull prepend="," property="payMail"> #payMail# </isNotNull>
+		    <isNotNull prepend="," property="sex"> #sex# </isNotNull>
+		    <isNotNull prepend="," property="checkState"> #checkState# </isNotNull>
+		    <isNotNull prepend="," property="hetongUrl"> #hetongUrl# </isNotNull>
+		    <isNotNull prepend="," property="chexiaoUrl"> #chexiaoUrl# </isNotNull>
+		    <isNotNull prepend="," property="msg"> #msg# </isNotNull>
+		    <isNotNull prepend="," property="bank_name"> #bank_name# </isNotNull>
+		    <isNotNull prepend="," property="payAccountName"> #payAccountName# </isNotNull>
+		    <isNotNull prepend="," property="biangengUrl"> #biangengUrl# </isNotNull>
+		    <isNotNull prepend="," property="qsBank"> #qsBank# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHProxyMessage">
+        UPDATE h_proxy_message
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="proxyName"> proxyName=#proxyName# </isNotNull>
+		    <isNotNull prepend="," property="proxyPhone"> proxyPhone=#proxyPhone# </isNotNull>
+		    <isNotNull prepend="," property="createYime"> createYime=#createYime# </isNotNull>
+		    <isNotNull prepend="," property="contractNumber"> contractNumber=#contractNumber# </isNotNull>
+		    <isNotNull prepend="," property="contractStartTime"> contractStartTime=#contractStartTime# </isNotNull>
+		    <isNotNull prepend="," property="contractEndTime"> contractEndTime=#contractEndTime# </isNotNull>
+		    <isNotNull prepend="," property="remindStartDate"> remindStartDate=#remindStartDate# </isNotNull>
+		    <isNotNull prepend="," property="remindEndDate"> remindEndDate=#remindEndDate# </isNotNull>
+		    <isNotNull prepend="," property="bank_number"> bank_number=#bank_number# </isNotNull>
+		    <isNotNull prepend="," property="info"> info=#info# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+		    <isNotNull prepend="," property="cId"> cId=#cId# </isNotNull>
+		    <isNotNull prepend="," property="userId"> userId=#userId# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="userNumber"> userNumber=#userNumber# </isNotNull>
+		    <isNotNull prepend="," property="proxyAddress"> proxyAddress=#proxyAddress# </isNotNull>
+		    <isNotNull prepend="," property="proxyCode"> proxyCode=#proxyCode# </isNotNull>
+		    <isNotNull prepend="," property="payBankNumber"> payBankNumber=#payBankNumber# </isNotNull>
+		    <isNotNull prepend="," property="payName"> payName=#payName# </isNotNull>
+		    <isNotNull prepend="," property="payCardStyle"> payCardStyle=#payCardStyle# </isNotNull>
+		    <isNotNull prepend="," property="payCard"> payCard=#payCard# </isNotNull>
+		    <isNotNull prepend="," property="payPhoneNumber"> payPhoneNumber=#payPhoneNumber# </isNotNull>
+		    <isNotNull prepend="," property="payMail"> payMail=#payMail# </isNotNull>
+		    <isNotNull prepend="," property="sex"> sex=#sex# </isNotNull>
+		    <isNotNull prepend="," property="checkState"> checkState=#checkState# </isNotNull>
+		    <isNotNull prepend="," property="hetongUrl"> hetongUrl=#hetongUrl# </isNotNull>
+		    <isNotNull prepend="," property="chexiaoUrl"> chexiaoUrl=#chexiaoUrl# </isNotNull>
+		    <isNotNull prepend="," property="msg"> msg=#msg# </isNotNull>
+		    <isNotNull prepend="," property="bank_name"> bank_name=#bank_name# </isNotNull>
+		    <isNotNull prepend="," property="payAccountName"> payAccountName=#payAccountName# </isNotNull>
+		    <isNotNull prepend="," property="biangengUrl"> biangengUrl=#biangengUrl# </isNotNull>
+		    <isNotNull prepend="," property="qsBank"> qsBank=#qsBank# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHProxyMessage">
+        delete from h_proxy_message where id = #id#
+    </delete>
+    
+    <select id="checkProxyPhone" resultClass="int">
+    	select count(*) from h_proxy_message where payPhoneNumber=#payPhoneNumber# 
+    	<isNotNull prepend="AND" property="id"> <![CDATA[ id<>#id# ]]> </isNotNull>
+    </select>
+    
+    <update id="updateHProxyMessageZZ">
+        UPDATE h_proxy_message SET hetongUrl=null,chexiaoUrl=null,biangengUrl=null,userId=null 
+    	where id = #id#
+    </update>
+    
+    <update id="updateHProxyMessageBH">
+        UPDATE h_proxy_message 
+        
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="hetongUrl"> hetongUrl=null </isNotNull>
+		    <isNotNull prepend="," property="chexiaoUrl"> chexiaoUrl=null </isNotNull>
+		    <isNotNull prepend="," property="biangengUrl"> biangengUrl=null </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+</sqlMap>

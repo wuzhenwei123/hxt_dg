@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HDispatchRecordC">
+	<typeAlias alias="HDispatchRecordC" type="com.hxt.hDispatchRecordC.model.HDispatchRecordC"/>
+	
+    <sql id="getHDispatchRecordCList_body">
+        SELECT a.id,a.contact_phone,a.ammeter_no,a.totalFee,a.status,a.createTime,a.updateTime,a.content,a.remark1,a.remark2,a.remark3,a.c_id        FROM h_dispatch_record_c a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="contact_phone"> a.contact_phone=#contact_phone# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_no"> a.ammeter_no=#ammeter_no# </isNotNull>
+            <isNotNull prepend="AND" property="totalFee"> a.totalFee=#totalFee# </isNotNull>
+            <isNotNull prepend="AND" property="status"> a.status=#status# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="updateTime"> a.updateTime=#updateTime# </isNotNull>
+            <isNotNull prepend="AND" property="content"> a.content=#content# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHDispatchRecordCListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHDispatchRecordCList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHDispatchRecordCList" parameterClass="HDispatchRecordC" resultClass="HDispatchRecordC">
+        SELECT * FROM (
+            <include refid="getHDispatchRecordCList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHDispatchRecordC" parameterClass="HDispatchRecordC" resultClass="HDispatchRecordC">
+       <include refid="getHDispatchRecordCList_body" />
+    </select>
+
+    <insert id="insertHDispatchRecordC">
+        INSERT INTO h_dispatch_record_c ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="contact_phone"> contact_phone </isNotNull>
+			<isNotNull prepend="," property="ammeter_no"> ammeter_no </isNotNull>
+			<isNotNull prepend="," property="totalFee"> totalFee </isNotNull>
+			<isNotNull prepend="," property="status"> status </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="updateTime"> updateTime </isNotNull>
+			<isNotNull prepend="," property="content"> content </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+			<isNotNull prepend="," property="c_id"> c_id </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="contact_phone"> #contact_phone# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_no"> #ammeter_no# </isNotNull>
+		    <isNotNull prepend="," property="totalFee"> #totalFee# </isNotNull>
+		    <isNotNull prepend="," property="status"> #status# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="updateTime"> #updateTime# </isNotNull>
+		    <isNotNull prepend="," property="content"> #content# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+		    <isNotNull prepend="," property="c_id"> #c_id# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHDispatchRecordC">
+        UPDATE h_dispatch_record_c
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="contact_phone"> contact_phone=#contact_phone# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_no"> ammeter_no=#ammeter_no# </isNotNull>
+		    <isNotNull prepend="," property="totalFee"> totalFee=#totalFee# </isNotNull>
+		    <isNotNull prepend="," property="status"> status=#status# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="updateTime"> updateTime=#updateTime# </isNotNull>
+		    <isNotNull prepend="," property="content"> content=#content# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+		    <isNotNull prepend="," property="c_id"> c_id=#c_id# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHDispatchRecordC">
+        delete from h_dispatch_record_c where id = #id#
+    </delete>
+</sqlMap>

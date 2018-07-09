@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HRegGuliSend">
+	<typeAlias alias="HRegGuliSend" type="com.hxt.hRegGuliSend.model.HRegGuliSend"/>
+	
+    <sql id="getHRegGuliSendList_body">
+        SELECT a.id,a.sendTime,a.createTime,a.companyId,a.companyName,a.ammeter,a.agentTwoId,a.agentTwoName,a.agentId,a.agentName,a.guliId,a.fee,a.state,a.info,        
+        b.create_time as c_create_time,b.contact_phone
+        FROM h_reg_guli_send a
+        left join h_company b on a.companyId = b.id
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="sendTime"> a.sendTime=#sendTime# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="companyId"> a.companyId=#companyId# </isNotNull>
+            <isNotNull prepend="AND" property="companyName"> a.companyName=#companyName# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter"> a.ammeter=#ammeter# </isNotNull>
+            <isNotNull prepend="AND" property="agentTwoId"> a.agentTwoId=#agentTwoId# </isNotNull>
+            <isNotNull prepend="AND" property="agentTwoName"> a.agentTwoName=#agentTwoName# </isNotNull>
+            <isNotNull prepend="AND" property="agentId"> a.agentId=#agentId# </isNotNull>
+            <isNotNull prepend="AND" property="agentName"> a.agentName=#agentName# </isNotNull>
+            <isNotNull prepend="AND" property="guliId"> a.guliId=#guliId# </isNotNull>
+            <isNotNull prepend="AND" property="fee"> a.fee=#fee# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="info"> a.info=#info# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHRegGuliSendListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHRegGuliSendList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHRegGuliSendList" parameterClass="HRegGuliSend" resultClass="HRegGuliSend">
+        SELECT * FROM (
+            <include refid="getHRegGuliSendList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHRegGuliSend" parameterClass="HRegGuliSend" resultClass="HRegGuliSend">
+       <include refid="getHRegGuliSendList_body" />
+    </select>
+
+    <insert id="insertHRegGuliSend">
+        INSERT INTO h_reg_guli_send ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="sendTime"> sendTime </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="companyId"> companyId </isNotNull>
+			<isNotNull prepend="," property="companyName"> companyName </isNotNull>
+			<isNotNull prepend="," property="ammeter"> ammeter </isNotNull>
+			<isNotNull prepend="," property="agentTwoId"> agentTwoId </isNotNull>
+			<isNotNull prepend="," property="agentTwoName"> agentTwoName </isNotNull>
+			<isNotNull prepend="," property="agentId"> agentId </isNotNull>
+			<isNotNull prepend="," property="agentName"> agentName </isNotNull>
+			<isNotNull prepend="," property="guliId"> guliId </isNotNull>
+			<isNotNull prepend="," property="fee"> fee </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+			<isNotNull prepend="," property="info"> info </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="sendTime"> #sendTime# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="companyId"> #companyId# </isNotNull>
+		    <isNotNull prepend="," property="companyName"> #companyName# </isNotNull>
+		    <isNotNull prepend="," property="ammeter"> #ammeter# </isNotNull>
+		    <isNotNull prepend="," property="agentTwoId"> #agentTwoId# </isNotNull>
+		    <isNotNull prepend="," property="agentTwoName"> #agentTwoName# </isNotNull>
+		    <isNotNull prepend="," property="agentId"> #agentId# </isNotNull>
+		    <isNotNull prepend="," property="agentName"> #agentName# </isNotNull>
+		    <isNotNull prepend="," property="guliId"> #guliId# </isNotNull>
+		    <isNotNull prepend="," property="fee"> #fee# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+		    <isNotNull prepend="," property="info"> #info# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHRegGuliSend">
+        UPDATE h_reg_guli_send
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="sendTime"> sendTime=#sendTime# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="companyId"> companyId=#companyId# </isNotNull>
+		    <isNotNull prepend="," property="companyName"> companyName=#companyName# </isNotNull>
+		    <isNotNull prepend="," property="ammeter"> ammeter=#ammeter# </isNotNull>
+		    <isNotNull prepend="," property="agentTwoId"> agentTwoId=#agentTwoId# </isNotNull>
+		    <isNotNull prepend="," property="agentTwoName"> agentTwoName=#agentTwoName# </isNotNull>
+		    <isNotNull prepend="," property="agentId"> agentId=#agentId# </isNotNull>
+		    <isNotNull prepend="," property="agentName"> agentName=#agentName# </isNotNull>
+		    <isNotNull prepend="," property="guliId"> guliId=#guliId# </isNotNull>
+		    <isNotNull prepend="," property="fee"> fee=#fee# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="info"> info=#info# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHRegGuliSend">
+        delete from h_reg_guli_send where id = #id#
+    </delete>
+</sqlMap>

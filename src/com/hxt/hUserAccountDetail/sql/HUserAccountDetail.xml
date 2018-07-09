@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HUserAccountDetail">
+	<typeAlias alias="HUserAccountDetail" type="com.hxt.hUserAccountDetail.model.HUserAccountDetail"/>
+	
+    <sql id="getHUserAccountDetailList_body">
+        SELECT a.id,a.userAccountId,a.type,a.totalFee,a.realFee,a.createTime,a.operaterId,a.rate,a.orderId,a.ammeterNum,
+        a.orderDetailId,a.orderDetailMoney,a.taxRate,a.taxMoney,a.remark1,a.remark2,a.remark3,c.amount,
+<!--         b.amount,b.electric,b.oneFee,b.twoFee,b.personalFee, -->
+        c.pay_time as orderTime,
+        c.oneAgentName,c.twoAgentName,c.servicerName,c.c_name,a.style,a.pay_style,c.o_no as o_id,
+<!--         b.o_id, -->
+        d.contact_phone,d.contact_name,c.create_time as orderCreateTime,c.tick_off_time,c.pay_type
+         
+        FROM h_user_account_detail a
+<!--         left join h_sub_order b on a.orderDetailId = b.o_sub_id -->
+        left join h_pay_order c on a.orderId = c.o_id
+        left join h_company d on c.c_id = d.id
+        LEFT JOIN h_user_account e ON a.userAccountId = e.id
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="userAccountId"> a.userAccountId=#userAccountId# </isNotNull>
+            <isNotNull prepend="AND" property="type"> a.type=#type# </isNotNull>
+            <isNotNull prepend="AND" property="totalFee"> a.totalFee=#totalFee# </isNotNull>
+            <isNotNull prepend="AND" property="realFee"> a.realFee=#realFee# </isNotNull>
+            <isNotNull prepend="AND" property="startTime"> <![CDATA[ c.pay_time>=#startTime# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="endTime"> <![CDATA[ c.pay_time<=#endTime# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="operaterId"> a.operaterId=#operaterId# </isNotNull>
+            <isNotNull prepend="AND" property="rate"> a.rate=#rate# </isNotNull>
+            <isNotNull prepend="AND" property="orderId"> a.orderId=#orderId# </isNotNull>
+            <isNotNull prepend="AND" property="ammeterNum"> a.ammeterNum=#ammeterNum# </isNotNull>
+            <isNotNull prepend="AND" property="orderDetailId"> a.orderDetailId=#orderDetailId# </isNotNull>
+            <isNotNull prepend="AND" property="orderDetailMoney"> a.orderDetailMoney=#orderDetailMoney# </isNotNull>
+            <isNotNull prepend="AND" property="taxRate"> a.taxRate=#taxRate# </isNotNull>
+            <isNotNull prepend="AND" property="taxMoney"> a.taxMoney=#taxMoney# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="o_id"> c.o_no=#o_id# </isNotNull>
+            <isNotNull prepend="AND" property="c_name"> c.c_name like '%$c_name$%' </isNotNull>
+            <isNotNull prepend="AND" property="role_id"> e.role_id=#role_id# </isNotNull>
+            <isNotNull prepend="AND" property="style"> a.style=#style# </isNotNull>
+            <isNotNull prepend="AND" property="pay_style"> a.pay_style=#pay_style# </isNotNull>
+            
+            <isNotNull prepend="AND" property="startTime1"> <![CDATA[ a.createTime>=#startTime1# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="endTime1"> <![CDATA[ a.createTime<=#endTime1# ]]> </isNotNull>
+            
+            
+            <isNotNull property="queryType">
+            	<isEqual property="queryType" compareValue="1">
+            	    <isNotNull property="roleType">
+	            		<isEqual property="roleType" compareValue="1"><!-- 一级查自己 -->
+	            			<isNotNull prepend="AND" property="oneAgentOpenId"> e.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+	            			<isNull prepend="AND" property="oneAgentOpenId"> e.oneAgentOpenId='-1' </isNull>
+	            			and c.twoAgentOpenID is null 
+	            		</isEqual>
+	            		<isEqual property="roleType" compareValue="2"><!-- 二级查自己 -->
+	            			<isNotNull prepend="AND" property="twoAgentOpenID"> e.twoAgentOpenID=#twoAgentOpenID# </isNotNull>
+	            			<isNull prepend="AND" property="twoAgentOpenID"> e.twoAgentOpenID='-1' </isNull>
+	            		</isEqual>
+	            		<isEqual property="roleType" compareValue="3"><!-- 服务员查自己 -->
+	            			<isNotNull prepend="AND" property="servicerId"> e.servicerId=#servicerId# </isNotNull>
+	            			<isNull prepend="AND" property="servicerId"> e.servicerId='-1' </isNull>
+	            		</isEqual>
+            		</isNotNull>
+            		<!-- 如果查询角色为空 则以此方式返回空结果 -->
+            		<isNull property="roleType">
+            			 and e.servicerId='-1'
+            		</isNull>
+				</isEqual>
+            	<isEqual property="queryType" compareValue="2">
+            		<isNotNull property="roleType">
+	            		<isEqual property="roleType" compareValue="1"><!-- 一级查代理 -->
+	            			<isNotNull prepend="AND" property="oneAgentOpenId"> e.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+	            			<isNull prepend="AND" property="oneAgentOpenId"> c.oneAgentOpenId='-1' </isNull>
+	            			and c.twoAgentOpenID is not null 
+	            		</isEqual>
+	            		<isEqual property="roleType" compareValue="2"><!-- 二级查代理 以此方式返回空结果 -->
+	            		 	and e.twoAgentOpenID='-1'
+	            		</isEqual>
+	            		<isEqual property="roleType" compareValue="3"><!-- 服务员查代理 以此方式返回空结果 -->
+	            		and e.servicerId='-1'
+	            		</isEqual>
+            		</isNotNull>
+            		<isNull property="roleType">
+            			and e.servicerId='-1'
+            		</isNull>
+				</isEqual>
+            </isNotNull>
+            <isNull property="queryType"><!-- 查询类型为空 为查全部 -->
+ 				<isEqual property="roleType" compareValue="1"><!-- 一级代理查全部 -->
+         			<isNotNull prepend="AND" property="oneAgentOpenId"> e.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+         			<isNull prepend="AND" property="oneAgentOpenId"> e.oneAgentOpenId='-1' </isNull>
+         		</isEqual>
+         		<isEqual property="roleType" compareValue="2"><!-- 二级代理查全部  等同于查自己-->
+        		 	<isNotNull prepend="AND" property="twoAgentOpenID"> e.twoAgentOpenID=#twoAgentOpenID# </isNotNull>
+            		<isNull prepend="AND" property="twoAgentOpenID"> e.twoAgentOpenID='-1' </isNull>
+         		</isEqual>
+         		<isEqual property="roleType" compareValue="3"><!-- 服务员查全部 等同于查自己 -->
+        			<isNotNull prepend="AND" property="servicerId"> e.servicerId=#servicerId# </isNotNull>
+           			<isNull prepend="AND" property="servicerId"> e.servicerId='-1' </isNull>
+         		</isEqual>
+            </isNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHUserAccountDetailListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHUserAccountDetailList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHUserAccountDetailList" parameterClass="HUserAccountDetail" resultClass="HUserAccountDetail">
+        SELECT * FROM (
+            <include refid="getHUserAccountDetailList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+    <select id="getAllDetailFee" parameterClass="HUserAccountDetail" resultClass="HUserAccountDetail">
+        SELECT sum(amount) as allOrderFee FROM (
+            <include refid="getHUserAccountDetailList_body" />
+        ) AS myTable 
+    </select>
+    <select id="getAllDetailFee1" parameterClass="HUserAccountDetail" resultClass="HUserAccountDetail">
+        SELECT sum(orderDetailMoney) as allOrderFee FROM (
+            <include refid="getHUserAccountDetailList_body" />
+        ) AS myTable 
+    </select>
+    <select id="getAllRateMoney" parameterClass="HUserAccountDetail" resultClass="HUserAccountDetail">
+        SELECT sum(totalFee) as allRateFee FROM (
+            <include refid="getHUserAccountDetailList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHUserAccountDetail" parameterClass="HUserAccountDetail" resultClass="HUserAccountDetail">
+       <include refid="getHUserAccountDetailList_body" />
+    </select>
+
+    <insert id="insertHUserAccountDetail">
+        INSERT INTO h_user_account_detail ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="userAccountId"> userAccountId </isNotNull>
+			<isNotNull prepend="," property="type"> type </isNotNull>
+			<isNotNull prepend="," property="totalFee"> totalFee </isNotNull>
+			<isNotNull prepend="," property="realFee"> realFee </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="operaterId"> operaterId </isNotNull>
+			<isNotNull prepend="," property="rate"> rate </isNotNull>
+			<isNotNull prepend="," property="orderId"> orderId </isNotNull>
+			<isNotNull prepend="," property="ammeterNum"> ammeterNum </isNotNull>
+			<isNotNull prepend="," property="orderDetailId"> orderDetailId </isNotNull>
+			<isNotNull prepend="," property="orderDetailMoney"> orderDetailMoney </isNotNull>
+			<isNotNull prepend="," property="taxRate"> taxRate </isNotNull>
+			<isNotNull prepend="," property="taxMoney"> taxMoney </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+			<isNotNull prepend="," property="style"> style </isNotNull>
+			<isNotNull prepend="," property="pay_style"> pay_style </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="userAccountId"> #userAccountId# </isNotNull>
+		    <isNotNull prepend="," property="type"> #type# </isNotNull>
+		    <isNotNull prepend="," property="totalFee"> #totalFee# </isNotNull>
+		    <isNotNull prepend="," property="realFee"> #realFee# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="operaterId"> #operaterId# </isNotNull>
+		    <isNotNull prepend="," property="rate"> #rate# </isNotNull>
+		    <isNotNull prepend="," property="orderId"> #orderId# </isNotNull>
+		    <isNotNull prepend="," property="ammeterNum"> #ammeterNum# </isNotNull>
+		    <isNotNull prepend="," property="orderDetailId"> #orderDetailId# </isNotNull>
+		    <isNotNull prepend="," property="orderDetailMoney"> #orderDetailMoney# </isNotNull>
+		    <isNotNull prepend="," property="taxRate"> #taxRate# </isNotNull>
+		    <isNotNull prepend="," property="taxMoney"> #taxMoney# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+		    <isNotNull prepend="," property="style"> #style# </isNotNull>
+		    <isNotNull prepend="," property="pay_style"> #pay_style# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHUserAccountDetail">
+        UPDATE h_user_account_detail
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="userAccountId"> userAccountId=#userAccountId# </isNotNull>
+		    <isNotNull prepend="," property="type"> type=#type# </isNotNull>
+		    <isNotNull prepend="," property="totalFee"> totalFee=#totalFee# </isNotNull>
+		    <isNotNull prepend="," property="realFee"> realFee=#realFee# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="operaterId"> operaterId=#operaterId# </isNotNull>
+		    <isNotNull prepend="," property="rate"> rate=#rate# </isNotNull>
+		    <isNotNull prepend="," property="orderId"> orderId=#orderId# </isNotNull>
+		    <isNotNull prepend="," property="ammeterNum"> ammeterNum=#ammeterNum# </isNotNull>
+		    <isNotNull prepend="," property="orderDetailId"> orderDetailId=#orderDetailId# </isNotNull>
+		    <isNotNull prepend="," property="orderDetailMoney"> orderDetailMoney=#orderDetailMoney# </isNotNull>
+		    <isNotNull prepend="," property="taxRate"> taxRate=#taxRate# </isNotNull>
+		    <isNotNull prepend="," property="taxMoney"> taxMoney=#taxMoney# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+		    <isNotNull prepend="," property="style"> style=#style# </isNotNull>
+		    <isNotNull prepend="," property="pay_style"> pay_style=#pay_style# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHUserAccountDetail">
+        delete from h_user_account_detail where id = #id#
+    </delete>
+</sqlMap>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HReferee">
+	<typeAlias alias="HReferee" type="com.hxt.hReferee.model.HReferee"/>
+	
+    <sql id="getHRefereeList_body">
+        SELECT a.id,a.tjrId,a.beituijianId,a.ticket,a.createTime,a.remark1,a.remark2,a.remark3,a.style,a.status       FROM h_referee a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="tjrId"> a.tjrId=#tjrId# </isNotNull>
+            <isNotNull prepend="AND" property="beituijianId"> a.beituijianId=#beituijianId# </isNotNull>
+            <isNotNull prepend="AND" property="ticket"> a.ticket=#ticket# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="style"> a.style=#style# </isNotNull>
+            <isNotNull prepend="AND" property="status"> a.status=#status# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHRefereeListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHRefereeList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHRefereeList" parameterClass="HReferee" resultClass="HReferee">
+        SELECT * FROM (
+            <include refid="getHRefereeList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHReferee" parameterClass="HReferee" resultClass="HReferee">
+       <include refid="getHRefereeList_body" />
+    </select>
+
+    <insert id="insertHReferee">
+        INSERT INTO h_referee ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="tjrId"> tjrId </isNotNull>
+			<isNotNull prepend="," property="beituijianId"> beituijianId </isNotNull>
+			<isNotNull prepend="," property="ticket"> ticket </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+			<isNotNull prepend="," property="style"> style </isNotNull>
+			<isNotNull prepend="," property="status"> status </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="tjrId"> #tjrId# </isNotNull>
+		    <isNotNull prepend="," property="beituijianId"> #beituijianId# </isNotNull>
+		    <isNotNull prepend="," property="ticket"> #ticket# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+		    <isNotNull prepend="," property="style"> #style# </isNotNull>
+		    <isNotNull prepend="," property="status"> #status# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHReferee">
+        UPDATE h_referee
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="tjrId"> tjrId=#tjrId# </isNotNull>
+		    <isNotNull prepend="," property="beituijianId"> beituijianId=#beituijianId# </isNotNull>
+		    <isNotNull prepend="," property="ticket"> ticket=#ticket# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+		    <isNotNull prepend="," property="style"> style=#style# </isNotNull>
+		    <isNotNull prepend="," property="status"> status=#status# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHReferee">
+        delete from h_referee where id = #id#
+    </delete>
+</sqlMap>

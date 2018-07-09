@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HSubCompany">
+	<typeAlias alias="HSubCompany" type="com.hxt.hSubCompany.model.HSubCompany"/>
+	
+    <sql id="getHSubCompanyList_body">
+        SELECT DISTINCT(a.s_id),a.c_id,a.sub_name,a.invoice_title,a.consignee,a.consignee_phone,a.consignee_tel1,a.consignee_tel2,a.consignee_address,a.create_time,a.update_time,        
+        b.contact_name,b.contact_phone,b.name as c_name ,d.provinceName as province_name ,e.cityName as city_name,f.areaName as area_name,a.province_code,a.city_code,a.area_code,a.zip_code,
+       	b.oneAgentName as oneName,b.twoAgentName as twoName,b.servicerName
+        FROM h_sub_company a
+        left join h_company b on a.c_id = b.id
+        left join h_ammeter_info c on a.s_id = c.s_id
+        left join h_province d on d.provinceCode = a.province_code
+        left join h_city e on e.cityCode = a.city_code
+        left join h_area f on f.areaCode = a.area_code
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="s_id"> a.s_id=#s_id# </isNotNull>
+            <isNotNull prepend="AND" property="c_id"> a.c_id=#c_id# </isNotNull>
+            <isNotNull prepend="AND" property="sub_name"> a.sub_name like concat('%',#sub_name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="invoice_title"> a.invoice_title like concat('%',#invoice_title#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="consignee"> a.consignee like concat('%',#consignee#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="consignee_phone"> a.consignee_phone like concat('%',#consignee_phone#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="consignee_tel1"> a.consignee_tel1 like concat('%',#consignee_tel1#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="consignee_tel2"> a.consignee_tel2 like concat('%',#consignee_tel2#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="consignee_address"> a.consignee_address like concat('%',#consignee_address#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="create_time1"> a.create_time >= '$create_time1$' </isNotNull>
+            <isNotNull prepend="AND" property="create_time2"> a.create_time <![CDATA[<=]]> '$create_time2$' </isNotNull>
+            <isNotNull prepend="AND" property="update_time"> a.update_time=#update_time# </isNotNull>
+            <isNotNull prepend="AND" property="c_name"> b.name like concat('%',#c_name#,'%')  </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_no"> c.ammeter_no like concat('%',#ammeter_no#,'%')  </isNotNull>
+            <isNotNull prepend="AND" property="yw_id"> b.ywyId=#yw_id#  </isNotNull>
+            <isNotNull prepend="AND" property="zip_code"> a.zip_code=#zip_code#  </isNotNull>
+            <isNotNull prepend="AND" property="province_code"> a.province_code=#province_code#  </isNotNull>
+            <isNotNull prepend="AND" property="city_code"> a.city_code=#city_code#  </isNotNull>
+            <isNotNull prepend="AND" property="area_code"> a.area_code=#area_code#  </isNotNull>
+            <isNotNull prepend="AND" property="contact_phone"> b.contact_phone=#contact_phone#  </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> b.servicerId=#servicerId#  </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> b.oneAgentOpenId=#oneAgentOpenId#  </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenID"> b.twoAgentOpenID=#twoAgentOpenID#  </isNotNull>
+            <isNotNull prepend="AND" property="servicerName"> b.servicerName like concat('%',#servicerName#,'%')  </isNotNull>
+            <isNotNull prepend="AND" property="ids">
+             a.s_id in 
+				<iterate open="(" close=")" conjunction=","  property="ids">  
+		            #ids[]#  
+		        </iterate>
+			</isNotNull>
+            
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by a.create_time desc </isNotNull>
+    </sql>
+
+    <select id="getHSubCompanyListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHSubCompanyList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHSubCompanyList" parameterClass="HSubCompany" resultClass="HSubCompany">
+        SELECT * FROM (
+            <include refid="getHSubCompanyList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHSubCompany" parameterClass="HSubCompany" resultClass="HSubCompany">
+       <include refid="getHSubCompanyList_body" />
+    </select>
+
+    <insert id="insertHSubCompany">
+        INSERT INTO h_sub_company ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="c_id"> c_id </isNotNull>
+			<isNotNull prepend="," property="sub_name"> sub_name </isNotNull>
+			<isNotNull prepend="," property="invoice_title"> invoice_title </isNotNull>
+			<isNotNull prepend="," property="consignee"> consignee </isNotNull>
+			<isNotNull prepend="," property="consignee_phone"> consignee_phone </isNotNull>
+			<isNotNull prepend="," property="consignee_tel1"> consignee_tel1 </isNotNull>
+			<isNotNull prepend="," property="consignee_tel2"> consignee_tel2 </isNotNull>
+			<isNotNull prepend="," property="consignee_address"> consignee_address </isNotNull>
+			<isNotNull prepend="," property="create_time"> create_time </isNotNull>
+			<isNotNull prepend="," property="update_time"> update_time </isNotNull>
+			<isNotNull prepend="," property="zip_code"> zip_code </isNotNull>
+			<isNotNull prepend="," property="province_code"> province_code </isNotNull>
+			<isNotNull prepend="," property="city_code"> city_code </isNotNull>
+			<isNotNull prepend="," property="area_code"> area_code </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="c_id"> #c_id# </isNotNull>
+		    <isNotNull prepend="," property="sub_name"> #sub_name# </isNotNull>
+		    <isNotNull prepend="," property="invoice_title"> #invoice_title# </isNotNull>
+		    <isNotNull prepend="," property="consignee"> #consignee# </isNotNull>
+		    <isNotNull prepend="," property="consignee_phone"> #consignee_phone# </isNotNull>
+		    <isNotNull prepend="," property="consignee_tel1"> #consignee_tel1# </isNotNull>
+		    <isNotNull prepend="," property="consignee_tel2"> #consignee_tel2# </isNotNull>
+		    <isNotNull prepend="," property="consignee_address"> #consignee_address# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> #create_time# </isNotNull>
+		    <isNotNull prepend="," property="update_time"> #update_time# </isNotNull>
+		    <isNotNull prepend="," property="zip_code"> #zip_code# </isNotNull>
+		    <isNotNull prepend="," property="province_code"> #province_code# </isNotNull>
+		    <isNotNull prepend="," property="city_code"> #city_code# </isNotNull>
+		    <isNotNull prepend="," property="area_code"> #area_code# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="s_id" resultClass="int">
+			SELECT @@IDENTITY AS s_id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHSubCompany">
+        UPDATE h_sub_company
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="s_id"> s_id=#s_id# </isNotNull>
+		    <isNotNull prepend="," property="c_id"> c_id=#c_id# </isNotNull>
+		    <isNotNull prepend="," property="sub_name"> sub_name=#sub_name# </isNotNull>
+		    <isNotNull prepend="," property="invoice_title"> invoice_title=#invoice_title# </isNotNull>
+		    <isNotNull prepend="," property="consignee"> consignee=#consignee# </isNotNull>
+		    <isNotNull prepend="," property="consignee_phone"> consignee_phone=#consignee_phone# </isNotNull>
+		    <isNotNull prepend="," property="consignee_tel1"> consignee_tel1=#consignee_tel1# </isNotNull>
+		    <isNotNull prepend="," property="consignee_tel2"> consignee_tel2=#consignee_tel2# </isNotNull>
+		    <isNotNull prepend="," property="consignee_address"> consignee_address=#consignee_address# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> create_time=#create_time# </isNotNull>
+		    <isNotNull prepend="," property="update_time"> update_time=#update_time# </isNotNull>
+		    <isNotNull prepend="," property="zip_code"> zip_code=#zip_code# </isNotNull>
+		    <isNotNull prepend="," property="province_code"> province_code=#province_code# </isNotNull>
+		    <isNotNull prepend="," property="city_code"> city_code=#city_code# </isNotNull>
+		    <isNotNull prepend="," property="area_code"> area_code=#area_code# </isNotNull>
+        </dynamic>
+    	where s_id = #s_id#
+    </update>
+    
+    <delete id="removeHSubCompany">
+        delete from h_sub_company where s_id = #s_id#
+    </delete>
+</sqlMap>

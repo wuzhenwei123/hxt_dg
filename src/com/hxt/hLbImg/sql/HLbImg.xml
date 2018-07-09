@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HLbImg">
+	<typeAlias alias="HLbImg" type="com.hxt.hLbImg.model.HLbImg"/>
+	
+    <sql id="getHLbImgList_body">
+        SELECT a.id,a.img_name,a.img_path,a.link_address,a.add_user_id,a.add_time,a.status,a.sort_id,b.realName as add_user_name        FROM h_lb_img a
+        left join manage_admin_user b on a.add_user_id = b.adminId
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="img_name"> a.img_name=#img_name# </isNotNull>
+            <isNotNull prepend="AND" property="img_path"> a.img_path=#img_path# </isNotNull>
+            <isNotNull prepend="AND" property="link_address"> a.link_address=#link_address# </isNotNull>
+            <isNotNull prepend="AND" property="add_user_id"> a.add_user_id=#add_user_id# </isNotNull>
+            <isNotNull prepend="AND" property="add_time"> a.add_time=#add_time# </isNotNull>
+            <isNotNull prepend="AND" property="status"> a.status=#status# </isNotNull>
+            <isNotNull prepend="AND" property="sort_id"> a.sort_id=#sort_id# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHLbImgListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHLbImgList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHLbImgList" parameterClass="HLbImg" resultClass="HLbImg">
+        SELECT * FROM (
+            <include refid="getHLbImgList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHLbImg" parameterClass="HLbImg" resultClass="HLbImg">
+       <include refid="getHLbImgList_body" />
+    </select>
+
+    <insert id="insertHLbImg">
+        INSERT INTO h_lb_img ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="img_name"> img_name </isNotNull>
+			<isNotNull prepend="," property="img_path"> img_path </isNotNull>
+			<isNotNull prepend="," property="link_address"> link_address </isNotNull>
+			<isNotNull prepend="," property="add_user_id"> add_user_id </isNotNull>
+			<isNotNull prepend="," property="add_time"> add_time </isNotNull>
+			<isNotNull prepend="," property="status"> status </isNotNull>
+			<isNotNull prepend="," property="sort_id"> sort_id </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="img_name"> #img_name# </isNotNull>
+		    <isNotNull prepend="," property="img_path"> #img_path# </isNotNull>
+		    <isNotNull prepend="," property="link_address"> #link_address# </isNotNull>
+		    <isNotNull prepend="," property="add_user_id"> #add_user_id# </isNotNull>
+		    <isNotNull prepend="," property="add_time"> #add_time# </isNotNull>
+		    <isNotNull prepend="," property="status"> #status# </isNotNull>
+		    <isNotNull prepend="," property="sort_id"> #sort_id# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHLbImg">
+        UPDATE h_lb_img
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="img_name"> img_name=#img_name# </isNotNull>
+		    <isNotNull prepend="," property="img_path"> img_path=#img_path# </isNotNull>
+		    <isNotNull prepend="," property="link_address"> link_address=#link_address# </isNotNull>
+		    <isNotNull prepend="," property="add_user_id"> add_user_id=#add_user_id# </isNotNull>
+		    <isNotNull prepend="," property="add_time"> add_time=#add_time# </isNotNull>
+		    <isNotNull prepend="," property="status"> status=#status# </isNotNull>
+		    <isNotNull prepend="," property="sort_id"> sort_id=#sort_id# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHLbImg">
+        delete from h_lb_img where id = #id#
+    </delete>
+</sqlMap>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HRecRecord">
+	<typeAlias alias="HRecRecord" type="com.hxt.hRecRecord.model.HRecRecord"/>
+	
+    <sql id="getHRecRecordList_body">
+        SELECT a.id,a.ammeter_no,a.ammeter_name,a.ammeter_type,a.create_time,a.ammeter_address,a.ammeterinfo_type,a.rec_phone,a.contact_phone        FROM h_rec_record a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_no"> a.ammeter_no like concat('%',#ammeter_no#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_name"> a.ammeter_name like concat('%',#ammeter_name#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_type"> a.ammeter_type=#ammeter_type# </isNotNull>
+            <isNotNull prepend="AND" property="create_time"> a.create_time=#create_time# </isNotNull>
+            <isNotNull prepend="AND" property="contact_phone"> a.contact_phone=#contact_phone# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_address"> a.ammeter_address like concat('%',#ammeter_address#,'%') </isNotNull>
+            <isNotNull prepend="AND" property="ammeterinfo_type"> a.ammeterinfo_type=#ammeterinfo_type# </isNotNull>
+            <isNotNull prepend="AND" property="rec_phone"> a.rec_phone like concat('%',#rec_phone#,'%') </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHRecRecordListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHRecRecordList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHRecRecordList" parameterClass="HRecRecord" resultClass="HRecRecord">
+        SELECT * FROM (
+            <include refid="getHRecRecordList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHRecRecord" parameterClass="HRecRecord" resultClass="HRecRecord">
+       <include refid="getHRecRecordList_body" />
+    </select>
+
+    <insert id="insertHRecRecord">
+        INSERT INTO h_rec_record ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="ammeter_no"> ammeter_no </isNotNull>
+			<isNotNull prepend="," property="ammeter_name"> ammeter_name </isNotNull>
+			<isNotNull prepend="," property="ammeter_type"> ammeter_type </isNotNull>
+			<isNotNull prepend="," property="create_time"> create_time </isNotNull>
+			<isNotNull prepend="," property="ammeter_address"> ammeter_address </isNotNull>
+			<isNotNull prepend="," property="ammeterinfo_type"> ammeterinfo_type </isNotNull>
+			<isNotNull prepend="," property="rec_phone"> rec_phone </isNotNull>
+			<isNotNull prepend="," property="contact_phone"> contact_phone </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="ammeter_no"> #ammeter_no# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_name"> #ammeter_name# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_type"> #ammeter_type# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> #create_time# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_address"> #ammeter_address# </isNotNull>
+		    <isNotNull prepend="," property="ammeterinfo_type"> #ammeterinfo_type# </isNotNull>
+		    <isNotNull prepend="," property="rec_phone"> #rec_phone# </isNotNull>
+		    <isNotNull prepend="," property="contact_phone"> #contact_phone# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHRecRecord">
+        UPDATE h_rec_record
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_no"> ammeter_no=#ammeter_no# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_name"> ammeter_name=#ammeter_name# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_type"> ammeter_type=#ammeter_type# </isNotNull>
+		    <isNotNull prepend="," property="create_time"> create_time=#create_time# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_address"> ammeter_address=#ammeter_address# </isNotNull>
+		    <isNotNull prepend="," property="ammeterinfo_type"> ammeterinfo_type=#ammeterinfo_type# </isNotNull>
+		    <isNotNull prepend="," property="rec_phone"> rec_phone=#rec_phone# </isNotNull>
+		    <isNotNull prepend="," property="contact_phone"> contact_phone=#contact_phone# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHRecRecord">
+        delete from h_rec_record where id = #id#
+    </delete>
+</sqlMap>

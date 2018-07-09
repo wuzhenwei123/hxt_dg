@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HProfitRatio">
+	<typeAlias alias="HProfitRatio" type="com.hxt.hProfitRatio.model.HProfitRatio"/>
+	
+    <sql id="getHProfitRatioList_body">
+        SELECT a.id,a.name,a.manager_ratio,a.ont_agent_ratio,a.two_agent_ratio,a.personal_ratio,a.is_default,a.state        FROM h_profit_ratio a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="name"> a.name=#name# </isNotNull>
+            <isNotNull prepend="AND" property="manager_ratio"> a.manager_ratio=#manager_ratio# </isNotNull>
+            <isNotNull prepend="AND" property="ont_agent_ratio"> a.ont_agent_ratio=#ont_agent_ratio# </isNotNull>
+            <isNotNull prepend="AND" property="two_agent_ratio"> a.two_agent_ratio=#two_agent_ratio# </isNotNull>
+            <isNotNull prepend="AND" property="personal_ratio"> a.personal_ratio=#personal_ratio# </isNotNull>
+            <isNotNull prepend="AND" property="is_default"> a.is_default=#is_default# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHProfitRatioListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHProfitRatioList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHProfitRatioList" parameterClass="HProfitRatio" resultClass="HProfitRatio">
+        SELECT * FROM (
+            <include refid="getHProfitRatioList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHProfitRatio" parameterClass="HProfitRatio" resultClass="HProfitRatio">
+       <include refid="getHProfitRatioList_body" />
+    </select>
+
+    <insert id="insertHProfitRatio">
+        INSERT INTO h_profit_ratio ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="name"> name </isNotNull>
+			<isNotNull prepend="," property="manager_ratio"> manager_ratio </isNotNull>
+			<isNotNull prepend="," property="ont_agent_ratio"> ont_agent_ratio </isNotNull>
+			<isNotNull prepend="," property="two_agent_ratio"> two_agent_ratio </isNotNull>
+			<isNotNull prepend="," property="personal_ratio"> personal_ratio </isNotNull>
+			<isNotNull prepend="," property="is_default"> is_default </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="name"> #name# </isNotNull>
+		    <isNotNull prepend="," property="manager_ratio"> #manager_ratio# </isNotNull>
+		    <isNotNull prepend="," property="ont_agent_ratio"> #ont_agent_ratio# </isNotNull>
+		    <isNotNull prepend="," property="two_agent_ratio"> #two_agent_ratio# </isNotNull>
+		    <isNotNull prepend="," property="personal_ratio"> #personal_ratio# </isNotNull>
+		    <isNotNull prepend="," property="is_default"> #is_default# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHProfitRatio">
+        UPDATE h_profit_ratio
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="name"> name=#name# </isNotNull>
+		    <isNotNull prepend="," property="manager_ratio"> manager_ratio=#manager_ratio# </isNotNull>
+		    <isNotNull prepend="," property="ont_agent_ratio"> ont_agent_ratio=#ont_agent_ratio# </isNotNull>
+		    <isNotNull prepend="," property="two_agent_ratio"> two_agent_ratio=#two_agent_ratio# </isNotNull>
+		    <isNotNull prepend="," property="personal_ratio"> personal_ratio=#personal_ratio# </isNotNull>
+		    <isNotNull prepend="," property="is_default"> is_default=#is_default# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    <update id="updateAllDefaultRatio">
+        UPDATE h_profit_ratio set is_default = $is_default$
+    </update>
+    
+    <delete id="removeHProfitRatio">
+        delete from h_profit_ratio where id = #id#
+    </delete>
+</sqlMap>

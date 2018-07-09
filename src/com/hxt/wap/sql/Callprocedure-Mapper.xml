@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Wap">
+    <!-- 调用订单编号生成存储过程 -->
+    <select id="callGenerateSnNo" parameterClass="java.util.Map" resultClass="String"  >
+        {call generate_sn_no(
+        #snNamePre#,#snName#,#num#,@sn
+        )}
+    </select>
+    <!-- 返回结果集 -->
+    <!--<parameterMap id="ParameterMap" class="map">-->
+        <!--<parameter property="oNo" jdbcType="INTEGER" javaType="java.lang.Integer" mode="IN"/>-->
+    <!--</parameterMap>-->
+
+    <!--<procedure id="callGeneratePayNo" parameterMap="ParameterMap" resultClass="proxool.User">-->
+        <!--{call generate_sn_no(-->
+        <!--#snNamePre#,#snName#,#num#,@sn-->
+        <!--)}-->
+    <!--</procedure>-->
+</sqlMap>

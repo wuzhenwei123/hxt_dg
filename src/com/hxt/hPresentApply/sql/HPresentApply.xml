@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HPresentApply">
+	<typeAlias alias="HPresentApply" type="com.hxt.hPresentApply.model.HPresentApply"/>
+	
+    <sql id="getHPresentApplyList_body">
+        SELECT a.id,a.openId,a.totalFee,a.createTime,a.status,a.oneAgentOpenId,a.oneAgentName,a.twoAgentOpenId,a.twoAgentName,a.accountDetailId,a.nickName,a.batchCode,a.remark1,a.remark2,a.remark3,a.servicerId,a.servicerName,a.taxRate,a.taxFee,a.allFee,
+        c.name as personalName,c.card_no,c.bank_account as twoBank_account,d.bank_account as oneBank_account,c.style as agentTwoStyle,d.card_no as card_no_1,d.style as agentOneStyle,c.name as twoName,d.name as oneName,c.mobile1 as twoMobile1,d.mobile1 as oneMobile1,
+        c.bank_name as twoBank_name,d.bank_name as oneBank_name,a.checkTime        
+        
+        FROM h_present_apply a
+        left join h_agent_two c on a.twoAgentOpenId = c.openId
+        left join h_agent d on a.oneAgentOpenId = d.openId
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="openId"> a.openId=#openId# </isNotNull>
+            <isNotNull prepend="AND" property="totalFee"> a.totalFee=#totalFee# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="status"> a.status=#status# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> a.oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentName"> a.oneAgentName=#oneAgentName# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenId"> a.twoAgentOpenId=#twoAgentOpenId# </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentName"> a.twoAgentName=#twoAgentName# </isNotNull>
+            <isNotNull prepend="AND" property="accountDetailId"> a.accountDetailId=#accountDetailId# </isNotNull>
+            <isNotNull prepend="AND" property="nickName"> a.nickName=#nickName# </isNotNull>
+            <isNotNull prepend="AND" property="batchCode"> a.batchCode=#batchCode# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> a.servicerId=#servicerId# </isNotNull>
+            <isNotNull prepend="AND" property="servicerName"> a.servicerName=#servicerName# </isNotNull>
+            <isNotNull prepend="AND" property="taxRate"> a.taxRate=#taxRate# </isNotNull>
+            <isNotNull prepend="AND" property="taxFee"> a.taxFee=#taxFee# </isNotNull>
+            <isNotNull prepend="AND" property="allFee"> a.allFee=#allFee# </isNotNull>
+            <isNotNull prepend="AND" property="checkTime_start"> <![CDATA[ a.checkTime>=#checkTime_start# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="checkTime_end"> <![CDATA[ a.checkTime<=#checkTime_end# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="createTime_start"> <![CDATA[ a.createTime>=#createTime_start# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="createTime_end"> <![CDATA[ a.createTime<=#createTime_end# ]]> </isNotNull>
+            <isNotNull prepend="AND" property="agentTwoStyle">
+            	c.style=#agentTwoStyle#
+            </isNotNull>
+            <isNotNull  prepend="AND" property="role_id">
+ 				<isEqual property="role_id" compareValue="148">
+         			a.oneAgentOpenId is not null
+         		</isEqual>
+				<isEqual property="role_id" compareValue="149">
+         			a.twoAgentOpenId is not null
+         		</isEqual>
+         		<isEqual property="role_id" compareValue="150">
+         			a.servicerId is not null
+         		</isEqual>
+			</isNotNull>
+            <isNotNull prepend="AND" property="flag"> DATE_FORMAT(createTime,'%Y%m' ) = DATE_FORMAT(CURDATE(),'%Y%m' ) </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHPresentApplyListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHPresentApplyList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHPresentApplyList" parameterClass="HPresentApply" resultClass="HPresentApply">
+        SELECT * FROM (
+            <include refid="getHPresentApplyList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHPresentApply" parameterClass="HPresentApply" resultClass="HPresentApply">
+       <include refid="getHPresentApplyList_body" />
+    </select>
+
+    <insert id="insertHPresentApply">
+        INSERT INTO h_present_apply ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="openId"> openId </isNotNull>
+			<isNotNull prepend="," property="totalFee"> totalFee </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="status"> status </isNotNull>
+			<isNotNull prepend="," property="oneAgentOpenId"> oneAgentOpenId </isNotNull>
+			<isNotNull prepend="," property="oneAgentName"> oneAgentName </isNotNull>
+			<isNotNull prepend="," property="twoAgentOpenId"> twoAgentOpenId </isNotNull>
+			<isNotNull prepend="," property="twoAgentName"> twoAgentName </isNotNull>
+			<isNotNull prepend="," property="accountDetailId"> accountDetailId </isNotNull>
+			<isNotNull prepend="," property="nickName"> nickName </isNotNull>
+			<isNotNull prepend="," property="batchCode"> batchCode </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+			<isNotNull prepend="," property="servicerId"> servicerId </isNotNull>
+			<isNotNull prepend="," property="servicerName"> servicerName </isNotNull>
+			<isNotNull prepend="," property="taxRate"> taxRate </isNotNull>
+			<isNotNull prepend="," property="taxFee"> taxFee </isNotNull>
+			<isNotNull prepend="," property="allFee"> allFee </isNotNull>
+			<isNotNull prepend="," property="checkTime"> checkTime </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="openId"> #openId# </isNotNull>
+		    <isNotNull prepend="," property="totalFee"> #totalFee# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="status"> #status# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentOpenId"> #oneAgentOpenId# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentName"> #oneAgentName# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentOpenId"> #twoAgentOpenId# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentName"> #twoAgentName# </isNotNull>
+		    <isNotNull prepend="," property="accountDetailId"> #accountDetailId# </isNotNull>
+		    <isNotNull prepend="," property="nickName"> #nickName# </isNotNull>
+		    <isNotNull prepend="," property="batchCode"> #batchCode# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+		    <isNotNull prepend="," property="servicerId"> #servicerId# </isNotNull>
+		    <isNotNull prepend="," property="servicerName"> #servicerName# </isNotNull>
+		    <isNotNull prepend="," property="taxRate"> #taxRate# </isNotNull>
+		    <isNotNull prepend="," property="taxFee"> #taxFee# </isNotNull>
+		    <isNotNull prepend="," property="allFee"> #allFee# </isNotNull>
+		    <isNotNull prepend="," property="checkTime"> #checkTime# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHPresentApply">
+        UPDATE h_present_apply
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="openId"> openId=#openId# </isNotNull>
+		    <isNotNull prepend="," property="totalFee"> totalFee=#totalFee# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="status"> status=#status# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentOpenId"> oneAgentOpenId=#oneAgentOpenId# </isNotNull>
+		    <isNotNull prepend="," property="oneAgentName"> oneAgentName=#oneAgentName# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentOpenId"> twoAgentOpenId=#twoAgentOpenId# </isNotNull>
+		    <isNotNull prepend="," property="twoAgentName"> twoAgentName=#twoAgentName# </isNotNull>
+		    <isNotNull prepend="," property="accountDetailId"> accountDetailId=#accountDetailId# </isNotNull>
+		    <isNotNull prepend="," property="nickName"> nickName=#nickName# </isNotNull>
+		    <isNotNull prepend="," property="batchCode"> batchCode=#batchCode# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+		    <isNotNull prepend="," property="servicerId"> servicerId=#servicerId# </isNotNull>
+		    <isNotNull prepend="," property="servicerName"> servicerName=#servicerName# </isNotNull>
+		    <isNotNull prepend="," property="taxRate"> taxRate=#taxRate# </isNotNull>
+		    <isNotNull prepend="," property="taxFee"> taxFee=#taxFee# </isNotNull>
+		    <isNotNull prepend="," property="allFee"> allFee=#allFee# </isNotNull>
+		    <isNotNull prepend="," property="checkTime"> checkTime=#checkTime# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHPresentApply">
+        delete from h_present_apply where id = #id#
+    </delete>
+    
+    <update id="unBindPresentApply">
+        UPDATE h_present_apply set openId = null where openId=#openId#
+    </update>
+</sqlMap>

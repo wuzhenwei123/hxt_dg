@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HProvince">
+	<typeAlias alias="HProvince" type="com.hxt.hProvince.model.HProvince"/>
+	
+    <sql id="getHProvinceList_body">
+        SELECT a.id,a.provinceCode,a.provinceName        FROM h_province a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="provinceCode"> a.provinceCode=#provinceCode# </isNotNull>
+            <isNotNull prepend="AND" property="provinceName"> a.provinceName=#provinceName# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHProvinceListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHProvinceList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHProvinceList" parameterClass="HProvince" resultClass="HProvince">
+        SELECT * FROM (
+            <include refid="getHProvinceList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHProvince" parameterClass="HProvince" resultClass="HProvince">
+       <include refid="getHProvinceList_body" />
+    </select>
+
+    <insert id="insertHProvince">
+        INSERT INTO h_province ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="provinceCode"> provinceCode </isNotNull>
+			<isNotNull prepend="," property="provinceName"> provinceName </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="provinceCode"> #provinceCode# </isNotNull>
+		    <isNotNull prepend="," property="provinceName"> #provinceName# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHProvince">
+        UPDATE h_province
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="provinceCode"> provinceCode=#provinceCode# </isNotNull>
+		    <isNotNull prepend="," property="provinceName"> provinceName=#provinceName# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHProvince">
+        delete from h_province where id = #id#
+    </delete>
+</sqlMap>

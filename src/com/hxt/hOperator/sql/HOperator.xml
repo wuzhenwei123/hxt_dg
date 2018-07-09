@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HOperator">
+	<typeAlias alias="HOperator" type="com.hxt.hOperator.model.HOperator"/>
+	
+    <sql id="getHOperatorList_body">
+        SELECT b.adminName,c.adminName as lastAdminName,a.id,a.full_name,a.name,a.province_name,a.province_code,a.city_code,a.city_name,a.area_code,a.area_name,a.state,a.createTime,a.adminId,a.lastTime,a.lastAdminId        FROM h_operator a
+        left join manage_admin_user b on b.adminId = a.adminId
+        left join manage_admin_user c on c.adminId = a.lastAdminId
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="full_name"> a.full_name like '%$full_name$%'</isNotNull>
+            <isNotNull prepend="AND" property="name"> a.name like '%$name$%' </isNotNull>
+            <isNotNull prepend="AND" property="province_name"> a.province_name=#province_name# </isNotNull>
+            <isNotNull prepend="AND" property="province_code"> a.province_code=#province_code# </isNotNull>
+            <isNotNull prepend="AND" property="city_code"> a.city_code=#city_code# </isNotNull>
+            <isNotNull prepend="AND" property="city_name"> a.city_name=#city_name# </isNotNull>
+            <isNotNull prepend="AND" property="area_code"> a.area_code=#area_code# </isNotNull>
+            <isNotNull prepend="AND" property="area_name"> a.area_name=#area_name# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="adminId"> a.adminId=#adminId# </isNotNull>
+            <isNotNull prepend="AND" property="lastTime"> a.lastTime=#lastTime# </isNotNull>
+            <isNotNull prepend="AND" property="lastAdminId"> a.lastAdminId=#lastAdminId# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHOperatorListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHOperatorList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHOperatorList" parameterClass="HOperator" resultClass="HOperator">
+        SELECT * FROM (
+            <include refid="getHOperatorList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHOperator" parameterClass="HOperator" resultClass="HOperator">
+       <include refid="getHOperatorList_body" />
+    </select>
+
+    <insert id="insertHOperator">
+        INSERT INTO h_operator ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="full_name"> full_name </isNotNull>
+			<isNotNull prepend="," property="name"> name </isNotNull>
+			<isNotNull prepend="," property="province_name"> province_name </isNotNull>
+			<isNotNull prepend="," property="province_code"> province_code </isNotNull>
+			<isNotNull prepend="," property="city_code"> city_code </isNotNull>
+			<isNotNull prepend="," property="city_name"> city_name </isNotNull>
+			<isNotNull prepend="," property="area_code"> area_code </isNotNull>
+			<isNotNull prepend="," property="area_name"> area_name </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="adminId"> adminId </isNotNull>
+			<isNotNull prepend="," property="lastTime"> lastTime </isNotNull>
+			<isNotNull prepend="," property="lastAdminId"> lastAdminId </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="full_name"> #full_name# </isNotNull>
+		    <isNotNull prepend="," property="name"> #name# </isNotNull>
+		    <isNotNull prepend="," property="province_name"> #province_name# </isNotNull>
+		    <isNotNull prepend="," property="province_code"> #province_code# </isNotNull>
+		    <isNotNull prepend="," property="city_code"> #city_code# </isNotNull>
+		    <isNotNull prepend="," property="city_name"> #city_name# </isNotNull>
+		    <isNotNull prepend="," property="area_code"> #area_code# </isNotNull>
+		    <isNotNull prepend="," property="area_name"> #area_name# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="adminId"> #adminId# </isNotNull>
+		    <isNotNull prepend="," property="lastTime"> #lastTime# </isNotNull>
+		    <isNotNull prepend="," property="lastAdminId"> #lastAdminId# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHOperator">
+        UPDATE h_operator
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="full_name"> full_name=#full_name# </isNotNull>
+		    <isNotNull prepend="," property="name"> name=#name# </isNotNull>
+		    <isNotNull prepend="," property="province_name"> province_name=#province_name# </isNotNull>
+		    <isNotNull prepend="," property="province_code"> province_code=#province_code# </isNotNull>
+		    <isNotNull prepend="," property="city_code"> city_code=#city_code# </isNotNull>
+		    <isNotNull prepend="," property="city_name"> city_name=#city_name# </isNotNull>
+		    <isNotNull prepend="," property="area_code"> area_code=#area_code# </isNotNull>
+		    <isNotNull prepend="," property="area_name"> area_name=#area_name# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="adminId"> adminId=#adminId# </isNotNull>
+		    <isNotNull prepend="," property="lastTime"> lastTime=#lastTime# </isNotNull>
+		    <isNotNull prepend="," property="lastAdminId"> lastAdminId=#lastAdminId# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHOperator">
+        delete from h_operator where id = #id#
+    </delete>
+</sqlMap>

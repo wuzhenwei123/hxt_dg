@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HFpOrder">
+	<typeAlias alias="HFpOrder" type="com.hxt.hFpOrder.model.HFpOrder"/>
+	
+    <sql id="getHFpOrderList_body">
+        SELECT a.id,a.fpId,a.orderId,a.createTime,a.status        FROM h_fp_order a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="fpId"> a.fpId=#fpId# </isNotNull>
+            <isNotNull prepend="AND" property="orderId"> a.orderId=#orderId# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="status"> a.status=#status# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHFpOrderListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHFpOrderList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHFpOrderList" parameterClass="HFpOrder" resultClass="HFpOrder">
+        SELECT * FROM (
+            <include refid="getHFpOrderList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHFpOrder" parameterClass="HFpOrder" resultClass="HFpOrder">
+       <include refid="getHFpOrderList_body" />
+    </select>
+
+    <insert id="insertHFpOrder">
+        INSERT INTO h_fp_order ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="fpId"> fpId </isNotNull>
+			<isNotNull prepend="," property="orderId"> orderId </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="status"> status </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="fpId"> #fpId# </isNotNull>
+		    <isNotNull prepend="," property="orderId"> #orderId# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="status"> #status# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHFpOrder">
+        UPDATE h_fp_order
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="fpId"> fpId=#fpId# </isNotNull>
+		    <isNotNull prepend="," property="orderId"> orderId=#orderId# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="status"> status=#status# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHFpOrder">
+        delete from h_fp_order where id = #id#
+    </delete>
+</sqlMap>

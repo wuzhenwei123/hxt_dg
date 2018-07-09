@@ -1,0 +1,654 @@
+body{
+	position:relative;
+}
+.m_pay_ok{
+	border-bottom:1px solid #e9e9e9;
+	padding-bottom:15px;
+	overflow:hidden;
+}
+.jySearchBox.m_pay{
+	padding-left:0;
+	padding-right:0;
+}
+.m_pay_top_items{
+	padding-left:15px;
+	padding-right:15px;
+	overflow:hidden;
+	padding-bottom:10px;
+}
+.m_pay_top_item.on{
+	border-bottom:1px solid #e9e9e9;
+}
+.pay_yellow,.linePjyAllBox span font.pay_yellow,.pay_sz_tit_box .fr font.pay_yellow{
+	color:#f1521b;
+	padding-left:3px;
+	padding-right:3px;
+	overflow:hidden;
+	vertical-align:middle;
+}
+.m_pay_top_item p,.pay_ye{
+	font-size:18px;
+}
+.m_pay_top_item{
+	padding-bottom:10px;
+	padding-top:5px;
+	overflow:hidden;
+}
+.m_pay_top_item p{
+	padding-top:5px;
+}
+.m_pay_add_group{
+	padding-top:21px;
+}
+.pay_btn{
+	height:40px;
+	width:160px;
+	line-height:40px;
+	*line-height:37px;
+	text-align:center;
+	color:#ffffff;
+	font-size:14px;
+	background-color:#01a796;
+	border:0 none;
+	border-radius:3px;
+}
+.line_l{
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+	vertical-align:middle;
+}
+.m_pay_add_group span{
+	font-size:14px;
+	color:#000000;
+	vertical-align:middle;
+	margin-left:17px;
+}
+.lPay{
+	padding-top:10px;
+	padding-bottom:10px;
+}
+.jyListItemsLeft{
+	padding-top:10px;
+}
+.p_item{
+	padding-bottom:10px;
+	overflow:hidden;
+}
+.pay_ye.on{
+	text-align:left;
+	padding-top:15px;
+	border-top:1px solid #e9e9e9;
+	padding-left:15px;
+	padding-right:15px;
+	overflow:hidden;
+	font-size:16px;
+	padding-bottom:0;
+}
+.m_pay_top_item.b2b,.pay_ye.on,.titleBox.on{
+	border-bottom:0 none;
+}
+.pay_sz_tit_box{
+	border-bottom:1px solid #b9e2da;
+}
+
+.table_pay_index > tbody>tr>td{
+	border-right:1px solid #e9e9e9;
+	border-bottom:1px solid #e9e9e9;
+}
+.table_pay_index > tbody>tr>td.on{
+	border-right:0 none;
+}
+.lPay span.on{
+	margin-right:0;
+}
+.lPay.on{
+	border-top:0 none;
+}
+.pay_sz_tit_box{
+	padding-top:10px;
+	padding-bottom:10px;
+	overflow:hidden;
+	padding-right:20px;
+	padding-left:3px;
+}
+/*.pay_sz .in-checkbox{
+	vertical-align:middle;
+}
+.pay_sz .in-checkbox label{
+	background-image:url(../images/checkbox_icon.png);
+	background-position:7px 3px;
+}
+.pay_sz .in-checkbox label.checked{
+	background-position: 7px -41px;
+}*/
+.table_pay_index .jyTableBox{
+	padding-left:0;
+	padding-bottom:0;
+}
+.table_pay_index .frist_td{
+	border-right:1px solid #e9e9e9;
+	padding:0;
+}
+.pay_sz_tit_box .pay_btn,.footer_all_c .pay_btn{
+	background-color:#f1521b;
+}
+.footer_all_c .pay_btn{
+	margin-right:45px;
+}
+.pay_sz_tit_box .fr span,.footer_all_c span{
+	vertical-align:middle;
+	font-size:12px;
+	color:#666666;
+	padding-right:20px;
+	line-height:18px;
+}
+.check_box{
+	margin-top:10px;
+}
+.type_box_pay{
+	height:46px;
+	background-image:url(../images/pay/type1.png);
+	background-repeat:no-repeat;
+}
+.type_box_pay.two{
+	background-position:0 -48px;
+}
+.type_box_pay.three{
+	background-position:0 -98px;
+}
+.type_box_pay.fore{
+	background-position:0 -148px;
+}
+.pay_pay_box{
+	padding-left:37px;
+	padding-top:37px;
+	padding-bottom:22px;
+}
+.up_ht_btn{
+	background-color:#f1521b;
+	width:80px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	color:#ffffff;
+	font-size:12px;
+	border-radius:3px;
+	position:relative;
+	overflow:hidden;
+	cursor:pointer;
+}
+.up_ht_btn input{
+	position:absolute;
+	left:-100px;
+	top:-100px;
+	width:1px;
+	height:1px;
+}
+.up_btn_box{
+	padding-top:10px;
+}
+.up_ok_box{
+	text-align:center;
+	padding-top:37px;
+	padding-bottom:37px;
+	overflow:hidden;
+}
+.up_ok_box a{
+	margin-left:10px;
+	margin-right:10px;
+}
+.pay_img_box{
+	position:relative;
+	overflow:auto;
+	width:746px;
+	height:518px;
+}
+.img_loding{
+	width:68px;
+	height:68px;
+	background-image:url(../images/pay/gif/loading1.png);
+	background-position:center center;
+	background-repeat: no-repeat;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-left:-34px;
+	margin-top:-34px;
+	overflow:hidden;
+	z-index:1001;
+}
+.type_box_pay_ht{
+	background-image:url(../images/pay/type1_ht.png);
+}
+.img_loding.on{
+	display:none;
+}
+.allCheckBox{
+	position:absolute;
+	width:100%;
+	height:68px;
+	
+	left:0;
+	bottom:114px;
+	z-index:100001;
+}
+.allchBox{
+	margin:0 auto;
+	overflow:hidden;
+	height:69px;
+	padding-top:8px;
+	background:url(../images/pay/bg_bottom.png) -4px center no-repeat scroll;
+	width:1108px;
+}
+.foot_check{
+	float:left;
+	margin-left:267px;
+	width:80px;
+	height:30px;
+}
+.foot_check .in-checkbox label{
+	font-size:14px;
+	color:#333333;
+}
+.right_pay_main{
+	padding-bottom:54px;
+}
+.foot_check{
+	padding-top:11px;
+}
+.footer_all_c{
+	padding-top:11px;
+}
+.pItem{
+	width:140px;
+}
+.cearchBtn{
+	width:180px;
+	height:28px;
+	line-height:28px;
+	font-size:14px;
+	overflow:hidden;
+	
+	margin-left:0;
+}
+.jyPjBtn,.cearchBtn{
+	background-color:#01a796;
+	color:#ffffff;
+	border:0 none;
+	border-radius:3px;
+}
+.sBtnBox{
+	text-align:center;
+}
+.pay_in_tit{
+	border-bottom:1px solid #e9e9e9;
+}
+.pTitlePay{
+	text-align:center;
+	font-size:18px;
+	color:#676464;
+	padding-top:19px;
+	padding-bottom:13px;
+	overflow:hidden;
+}
+.pay_in_content_box{
+	font-size:14px;
+	color:#676464;
+	padding-top:15px;
+	text-indent:2rem;
+}
+.pay_info_title_box{
+	padding-left:47px;
+	padding-right:47px;
+	overflow:hidden;
+}
+.pay_info_bom_box{
+	height:79px;
+	background:url(../images/pay/p_b.png) 0 0 no-repeat;
+	text-align:right;
+}
+.pay_info_bom_box span,.pay_btn_info{
+	font-size:14px;
+	margin-top:18px;
+	overflow:hidden;
+}
+.pay_info_bom_box span{
+	margin-right:107px;
+	margin-top:10px;
+	line-height:41px;
+}
+.pay_btn_info{
+	margin-right:98px;
+	background-color:#f1511b;
+	color:#ffffff;
+	width:160px;
+	height:41px;
+	line-height:39px;
+	text-align:center;
+	border-radius:3px;
+}
+.pay_ht_info{
+	background-color:#fbfbfb;
+	margin:0 34px;
+	overflow:hidden;
+	padding-left:10px;
+	padding-right:10px;
+	border:1px solid #e9e9e9;
+	padding-bottom:20px;
+}
+.pay_download_box{
+	padding-top:37px;
+	padding-bottom:34px;
+	overflow:hidden;
+	text-align:right;
+	padding-left:34px;
+	padding-right:34px;
+}
+.pay_download_box span,.aDowloadBtn{
+	font-size:14px;
+	vertical-align:middle;
+}
+.pay_download_box span{
+	color:#747474;
+}
+.aDowloadBtn{
+	background-color:#f1511b;
+	color:#ffffff;
+	width:100px;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	border-radius:3px;
+}
+.up_ht_txt_box{
+	
+	
+	overflow:hidden;
+	padding-top:208px;
+}
+.up_ht_txt_box p{
+	position:relative;
+	padding-left:114px;
+	font-size:14px;
+	color:#747474;
+	overflow:hidden;
+}
+.up_ht_txt_box p span{
+	position:absolute;
+	left:0;
+	top:0;
+	height:100%;
+	color:#312f2f;
+	width:114px;
+	text-align:right;
+}
+.pay_img_box.on{
+	border:1px solid #e9e9e9;
+	background-color:#fbfbfb;
+}
+.up_ht_txt_box p.on{
+	padding-left:0;
+	text-align:center;
+}
+.up_b_box{
+	padding-top:36px;
+}
+.pay_label_item{
+	font-size:14px;
+	color:#999999;
+	vertical-align:middle;
+}
+
+.pay_label_item font{
+	vertical-align:middle;
+	margin-left:4px;
+	margin-right:4px;
+	overflow:hidden;
+	padding-top:2px;
+}
+.pay_label_item font.on{
+	color:#d72222;
+}
+.m_pay_info{
+	padding-left:160px;
+	padding-top:40px;
+}
+.m_pay_info .pay_label_item{
+	width:190px;
+}
+.m_pay_info .pItem{
+	width:300px;
+}
+.m_pay_rem{
+	position:absolute;
+	left:190px;
+	font-size:12px;
+	top:33px;
+	z-index:1;
+	color:#999999;
+}
+.pay_label_item.on{
+	color:#282525;
+}
+.red{
+	color:#d72222;
+}
+.pay_info_box{
+	margin-bottom:0;
+}
+.m_pay_top_items.on{
+	border-bottom:1px solid #e9e9e9;
+}
+.m_pay_info{
+	padding-bottom:20px;
+}
+.up_btn_box.on{
+	text-align:center;
+}
+.pay_download_box.on{
+	text-align:left;
+	padding-bottom:10px;
+}
+.pay_download_box.on span{
+	color:#312f2f;
+}
+.loading .popBox{
+	width:122px;
+	height:122px;
+	margin-left:-61px;
+	margin-top:-61px;
+	
+	
+	z-index:2147000001;
+}
+.xc_layer{
+	z-index:1;
+}
+.loading .xc_layer{
+	background-color:#000000;
+	
+	
+}
+.loading .popBox{
+	background-color:transparent;
+}
+.loading .popBox .txtBox{
+	height:121px;
+	position:relative;
+	border-radius:5px;
+}
+.loading .popBox .txtBox span{
+	background-color:#ffffff;
+	position:absolute;
+	left:0;
+	top:0;
+	height:100%;
+	width:100%;
+	z-index:0;
+}
+.loading_txt{
+	position:absolute;
+	width:100%;
+	height:25px;
+	left:0;
+	bottom:20px;
+	z-index:1;
+	color:#333333;
+	font-weight:normal;
+	text-align:center;
+	font-size:14px;
+}
+.load_icon{
+	position:absolute;
+	width:100%;
+	height:50px;
+	left:0;
+	top:22px;
+	background:url(../images/loding.gif) center center no-repeat;
+}
+.xzkhjl .popBox .ttBox{
+	height:59px;
+	border-color:#dddfdb;
+	padding:0 20px;
+	line-height:59px;
+	font-weight:normal;
+	color:#333333;
+	font-size:#333333;
+}
+.xzkhjl .popBox .ttBox .clsBtn{
+	height:16px;
+	width:16px;
+	background-image:url(../images/pay/w_close.png);
+	background-position:center center;
+}
+.xzkhjl .xzkhBox{
+	height:610px;
+	padding-left:40px;
+	padding-right:40px;
+	overflow:hidden;
+}
+.xzkhjl .popBox{
+	height:610px;
+	width:760px;
+	margin-left:-380px;
+	margin-top:-305px;
+}
+.xzkhjl .popBox .txtBox{
+	height:610px;
+	position:relative;
+	overflow:hidden;
+}
+.xzkh_input{
+	position:relative;
+	overflow:hidden;
+	width:300px;
+	vertical-align:middle;
+}
+.xzkh_input input{
+	border:1px solid #dddfdb;
+	display:block;
+	width:290px;
+	padding-left:5px;
+	padding-right:5px;
+	overflow:hidden;
+	height:36px;
+	line-height:35px;
+	overflow:hidden;
+}
+.xzkhSearchBox{
+	padding-top:20px;
+	padding-bottom:20px;
+	overflow:hidden;
+}
+.xzkhSearchBox .cearchBtn{
+	width:80px;
+	height:36px;
+	line-height:36px;
+	vertical-align:middle;
+}
+.xzkhTable tr th{
+	background-color:#f5f5f5;
+	
+	color:#666666;
+}
+.xzkhTable{
+	border-top:1px solid #f1f1f1;
+}
+.xzkhTable tr th,.xzkhTable tr td{
+	height:30px;
+/*	padding:5px;*/
+	font-size:14px;
+	border-bottom:1px solid #f1f1f1;
+}
+.xzkhTable tr td{
+	color:#000000;
+	font-weight:normal;
+}
+.in-checkbox-td{
+	position:relative;
+	font-size:0;
+}
+.in-checkbox-td .in-checkbox{
+	position:relative;
+	overflow:hidden;
+	
+	padding-top:5px;
+}
+.in-checkbox-td .custom-checkbox{
+	height:16px;
+	width:16px;
+	overflow:hidden;
+}
+.in-checkbox-td .in-checkbox input{
+	position:absolute;
+	left:-100px;
+	top:-100px;
+	width:10px;
+	height:10px;
+	*zoom:1;
+}
+.in-checkbox-td .in-checkbox label{
+	width:16px;
+	height:16px;
+	display:inline-block;
+	*display:inline;
+	background:url(../images/pay/check_icon.png) 0 -57px no-repeat;
+}
+.in-checkbox-td .in-checkbox label.checked{
+	background-position:0 0px;
+}
+.xzkhBox .pagesBox{
+	text-align:right;
+	font-weight:normal;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

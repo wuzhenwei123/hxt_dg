@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HPersonType">
+	<typeAlias alias="HPersonType" type="com.hxt.hPersonType.model.HPersonType"/>
+	
+    <sql id="getHPersonTypeList_body">
+        SELECT a.adminName,a.lastAdminName,a.id,a.name,a.state,a.createTime,a.adminId,a.lastTime,a.lastAdminId,a.remark        FROM h_person_type a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="name"> a.name like '%$name$%' </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="adminId"> a.adminId=#adminId# </isNotNull>
+            <isNotNull prepend="AND" property="lastTime"> a.lastTime=#lastTime# </isNotNull>
+            <isNotNull prepend="AND" property="lastAdminId"> a.lastAdminId=#lastAdminId# </isNotNull>
+            <isNotNull prepend="AND" property="remark"> a.remark=#remark# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHPersonTypeListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHPersonTypeList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHPersonTypeList" parameterClass="HPersonType" resultClass="HPersonType">
+        SELECT * FROM (
+            <include refid="getHPersonTypeList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHPersonType" parameterClass="HPersonType" resultClass="HPersonType">
+       <include refid="getHPersonTypeList_body" />
+    </select>
+
+    <insert id="insertHPersonType">
+        INSERT INTO h_person_type ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="name"> name </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="adminId"> adminId </isNotNull>
+			<isNotNull prepend="," property="lastTime"> lastTime </isNotNull>
+			<isNotNull prepend="," property="lastAdminId"> lastAdminId </isNotNull>
+			<isNotNull prepend="," property="remark"> remark </isNotNull>
+			<isNotNull prepend="," property="adminName"> adminName </isNotNull>
+			<isNotNull prepend="," property="lastAdminName"> lastAdminName </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="name"> #name# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="adminId"> #adminId# </isNotNull>
+		    <isNotNull prepend="," property="lastTime"> #lastTime# </isNotNull>
+		    <isNotNull prepend="," property="lastAdminId"> #lastAdminId# </isNotNull>
+		    <isNotNull prepend="," property="remark"> #remark# </isNotNull>
+		    <isNotNull prepend="," property="adminName"> #adminName# </isNotNull>
+		    <isNotNull prepend="," property="lastAdminName"> #lastAdminName# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHPersonType">
+        UPDATE h_person_type
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="name"> name=#name# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="adminId"> adminId=#adminId# </isNotNull>
+		    <isNotNull prepend="," property="lastTime"> lastTime=#lastTime# </isNotNull>
+		    <isNotNull prepend="," property="lastAdminId"> lastAdminId=#lastAdminId# </isNotNull>
+		    <isNotNull prepend="," property="remark"> remark=#remark# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHPersonType">
+        delete from h_person_type where id = #id#
+    </delete>
+</sqlMap>

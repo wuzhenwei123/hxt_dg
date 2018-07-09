@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HReviewUser">
+	<typeAlias alias="HReviewUser" type="com.hxt.hReviewUser.model.HReviewUser"/>
+	
+    <sql id="getHReviewUserList_body">
+        SELECT a.id,a.isDefault,a.state,a.userLabel,a.userName,a.sex,a.mobil,a.msgSwitch,a.createTime,a.createId,a.updateTime,a.updateId,a.remark,a.companyId,b.name as companyName
+        ,b.contact_name,b.contact_phone,b.oneAgentOpenId,b.oneAgentName,b.twoAgentOpenID,b.twoAgentName,b.servicerId,b.servicerName  
+        FROM h_review_user a
+        left join h_company b on b.id = a.companyId
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="isDefault"> a.isDefault=#isDefault# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="userLabel"> a.userLabel=#userLabel# </isNotNull>
+            <isNotNull prepend="AND" property="userName"> a.userName=#userName# </isNotNull>
+            <isNotNull prepend="AND" property="sex"> a.sex=#sex# </isNotNull>
+            <isNotNull prepend="AND" property="mobil"> a.mobil=#mobil# </isNotNull>
+            <isNotNull prepend="AND" property="msgSwitch"> a.msgSwitch=#msgSwitch# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="createId"> a.createId=#createId# </isNotNull>
+            <isNotNull prepend="AND" property="updateTime"> a.updateTime=#updateTime# </isNotNull>
+            <isNotNull prepend="AND" property="updateId"> a.updateId=#updateId# </isNotNull>
+            <isNotNull prepend="AND" property="remark"> a.remark=#remark# </isNotNull>
+            <isNotNull prepend="AND" property="companyId"> a.companyId=#companyId# </isNotNull>
+            <isNotNull prepend="AND" property="contact_phone"> b.contact_phone=#contact_phone#  </isNotNull>
+            <isNotNull prepend="AND" property="contact_name"> b.contact_name=#contact_name#  </isNotNull>
+            <isNotNull prepend="AND" property="oneAgentOpenId"> b.oneAgentOpenId=#oneAgentOpenId#  </isNotNull>
+            <isNotNull prepend="AND" property="twoAgentOpenID"> b.twoAgentOpenID=#twoAgentOpenID#  </isNotNull>
+            <isNotNull prepend="AND" property="servicerId"> b.servicerId=#servicerId#  </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHReviewUserListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHReviewUserList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHReviewUserList" parameterClass="HReviewUser" resultClass="HReviewUser">
+        SELECT * FROM (
+            <include refid="getHReviewUserList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHReviewUser" parameterClass="HReviewUser" resultClass="HReviewUser">
+       <include refid="getHReviewUserList_body" />
+    </select>
+    <select id="haveDefault" parameterClass="HReviewUser" resultClass="int">
+       select count(*) from h_review_user where isDefault = 1 and companyId = #companyId#
+    </select>
+
+    <insert id="insertHReviewUser">
+        INSERT INTO h_review_user ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="isDefault"> isDefault </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+			<isNotNull prepend="," property="userLabel"> userLabel </isNotNull>
+			<isNotNull prepend="," property="userName"> userName </isNotNull>
+			<isNotNull prepend="," property="sex"> sex </isNotNull>
+			<isNotNull prepend="," property="mobil"> mobil </isNotNull>
+			<isNotNull prepend="," property="msgSwitch"> msgSwitch </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="createId"> createId </isNotNull>
+			<isNotNull prepend="," property="updateTime"> updateTime </isNotNull>
+			<isNotNull prepend="," property="updateId"> updateId </isNotNull>
+			<isNotNull prepend="," property="remark"> remark </isNotNull>
+			<isNotNull prepend="," property="companyId"> companyId </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="isDefault"> #isDefault# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+		    <isNotNull prepend="," property="userLabel"> #userLabel# </isNotNull>
+		    <isNotNull prepend="," property="userName"> #userName# </isNotNull>
+		    <isNotNull prepend="," property="sex"> #sex# </isNotNull>
+		    <isNotNull prepend="," property="mobil"> #mobil# </isNotNull>
+		    <isNotNull prepend="," property="msgSwitch"> #msgSwitch# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="createId"> #createId# </isNotNull>
+		    <isNotNull prepend="," property="updateTime"> #updateTime# </isNotNull>
+		    <isNotNull prepend="," property="updateId"> #updateId# </isNotNull>
+		    <isNotNull prepend="," property="remark"> #remark# </isNotNull>
+		    <isNotNull prepend="," property="companyId"> #companyId# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHReviewUser">
+        UPDATE h_review_user
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="isDefault"> isDefault=#isDefault# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="userLabel"> userLabel=#userLabel# </isNotNull>
+		    <isNull prepend="," property="userLabel"> userLabel=#userLabel# </isNull>
+		    <isNotNull prepend="," property="userName"> userName=#userName# </isNotNull>
+		    <isNotNull prepend="," property="sex"> sex=#sex# </isNotNull>
+		    <isNotNull prepend="," property="mobil"> mobil=#mobil# </isNotNull>
+		    <isNotNull prepend="," property="msgSwitch"> msgSwitch=#msgSwitch# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="createId"> createId=#createId# </isNotNull>
+		    <isNotNull prepend="," property="updateTime"> updateTime=#updateTime# </isNotNull>
+		    <isNotNull prepend="," property="updateId"> updateId=#updateId# </isNotNull>
+		    <isNotNull prepend="," property="remark"> remark=#remark# </isNotNull>
+		    <isNotNull prepend="," property="companyId"> companyId=#companyId# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHReviewUser">
+        delete from h_review_user where id = #id#
+    </delete>
+</sqlMap>

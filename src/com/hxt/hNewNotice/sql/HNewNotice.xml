@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HNewNotice">
+	<typeAlias alias="HNewNotice" type="com.hxt.hNewNotice.model.HNewNotice"/>
+	
+    <sql id="getHNewNoticeList_body">
+        SELECT a.sortId,a.id,a.title,a.content,a.createTime,a.createId,a.state,a.source        FROM h_new_notice a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="title"> a.title=#title# </isNotNull>
+            <isNotNull prepend="AND" property="content"> a.content=#content# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="createId"> a.createId=#createId# </isNotNull>
+            <isNotNull prepend="AND" property="state"> a.state=#state# </isNotNull>
+            <isNotNull prepend="AND" property="source"> a.source=#source# </isNotNull>
+            <isNotNull prepend="AND" property="sortId"> a.sortId=#sortId# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHNewNoticeListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHNewNoticeList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHNewNoticeList" parameterClass="HNewNotice" resultClass="HNewNotice">
+        SELECT * FROM (
+            <include refid="getHNewNoticeList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHNewNotice" parameterClass="HNewNotice" resultClass="HNewNotice">
+       <include refid="getHNewNoticeList_body" />
+    </select>
+
+    <insert id="insertHNewNotice">
+        INSERT INTO h_new_notice ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="title"> title </isNotNull>
+			<isNotNull prepend="," property="content"> content </isNotNull>
+			<isNotNull prepend="," property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="createId"> createId </isNotNull>
+			<isNotNull prepend="," property="state"> state </isNotNull>
+			<isNotNull prepend="," property="source"> source </isNotNull>
+			<isNotNull prepend="," property="sortId"> sortId </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="title"> #title# </isNotNull>
+		    <isNotNull prepend="," property="content"> #content# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="createId"> #createId# </isNotNull>
+		    <isNotNull prepend="," property="state"> #state# </isNotNull>
+		    <isNotNull prepend="," property="source"> #source# </isNotNull>
+		    <isNotNull prepend="," property="sortId"> #sortId# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHNewNotice">
+        UPDATE h_new_notice
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="title"> title=#title# </isNotNull>
+		    <isNotNull prepend="," property="content"> content=#content# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="createId"> createId=#createId# </isNotNull>
+		    <isNotNull prepend="," property="state"> state=#state# </isNotNull>
+		    <isNotNull prepend="," property="source"> source=#source# </isNotNull>
+		    <isNotNull prepend="," property="sortId"> sortId=#sortId# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHNewNotice">
+        delete from h_new_notice where id = #id#
+    </delete>
+</sqlMap>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HArea">
+	<typeAlias alias="HArea" type="com.hxt.hArea.model.HArea"/>
+	
+    <sql id="getHAreaList_body">
+        SELECT a.id,a.areaCode,a.areaName,a.cityCode        FROM h_area a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="areaCode"> a.areaCode=#areaCode# </isNotNull>
+            <isNotNull prepend="AND" property="areaName"> a.areaName=#areaName# </isNotNull>
+            <isNotNull prepend="AND" property="cityCode"> a.cityCode=#cityCode# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHAreaListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHAreaList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHAreaList" parameterClass="HArea" resultClass="HArea">
+        SELECT * FROM (
+            <include refid="getHAreaList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHArea" parameterClass="HArea" resultClass="HArea">
+       <include refid="getHAreaList_body" />
+    </select>
+
+    <insert id="insertHArea">
+        INSERT INTO h_area ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="areaCode"> areaCode </isNotNull>
+			<isNotNull prepend="," property="areaName"> areaName </isNotNull>
+			<isNotNull prepend="," property="cityCode"> cityCode </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="areaCode"> #areaCode# </isNotNull>
+		    <isNotNull prepend="," property="areaName"> #areaName# </isNotNull>
+		    <isNotNull prepend="," property="cityCode"> #cityCode# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHArea">
+        UPDATE h_area
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="areaCode"> areaCode=#areaCode# </isNotNull>
+		    <isNotNull prepend="," property="areaName"> areaName=#areaName# </isNotNull>
+		    <isNotNull prepend="," property="cityCode"> cityCode=#cityCode# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHArea">
+        delete from h_area where id = #id#
+    </delete>
+</sqlMap>

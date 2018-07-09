@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="HAmmeterQueryLog">
+	<typeAlias alias="HAmmeterQueryLog" type="com.hxt.hAmmeterQueryLog.model.HAmmeterQueryLog"/>
+	
+    <sql id="getHAmmeterQueryLogList_body">
+        SELECT a.id,a.createTime,a.ammeterNo,a.phone,a.ip,a.ammeter_address,a.ammeter_name,a.fee,a.znFee,a.totalFee,a.remark1,a.remark2,a.remark3        FROM h_ammeter_query_log a
+        <dynamic prepend="WHERE">
+            <isNotNull prepend="AND" property="id"> a.id=#id# </isNotNull>
+            <isNotNull prepend="AND" property="createTime"> a.createTime=#createTime# </isNotNull>
+            <isNotNull prepend="AND" property="createTime1"> a.createTime >= '$createTime1$' </isNotNull>
+            <isNotNull prepend="AND" property="createTime2"> a.createTime <![CDATA[<=]]> '$createTime2$' </isNotNull>
+            <isNotNull prepend="AND" property="ammeterNo"> a.ammeterNo=#ammeterNo# </isNotNull>
+            <isNotNull prepend="AND" property="phone"> a.phone=#phone# </isNotNull>
+            <isNotNull prepend="AND" property="ip"> a.ip=#ip# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_address"> a.ammeter_address=#ammeter_address# </isNotNull>
+            <isNotNull prepend="AND" property="ammeter_name"> a.ammeter_name=#ammeter_name# </isNotNull>
+            <isNotNull prepend="AND" property="fee"> a.fee=#fee# </isNotNull>
+            <isNotNull prepend="AND" property="znFee"> a.znFee=#znFee# </isNotNull>
+            <isNotNull prepend="AND" property="totalFee"> a.totalFee=#totalFee# </isNotNull>
+            <isNotNull prepend="AND" property="remark1"> a.remark1=#remark1# </isNotNull>
+            <isNotNull prepend="AND" property="remark2"> a.remark2=#remark2# </isNotNull>
+            <isNotNull prepend="AND" property="remark3"> a.remark3=#remark3# </isNotNull>
+        </dynamic>
+        <isNotNull prepend="" property="sortColumn"> order by $sortColumn$ </isNotNull>
+    </sql>
+
+    <select id="getHAmmeterQueryLogListCount" resultClass="int">
+        SELECT COUNT(*) FROM (
+            <include refid="getHAmmeterQueryLogList_body" />
+        ) AS myTable 
+    </select>
+
+    <select id="getHAmmeterQueryLogList" parameterClass="HAmmeterQueryLog" resultClass="HAmmeterQueryLog">
+        SELECT * FROM (
+            <include refid="getHAmmeterQueryLogList_body" />
+        ) AS myTable limit #rowStart# , #rowCount# 
+    </select>
+
+    <select id="getHAmmeterQueryLog" parameterClass="HAmmeterQueryLog" resultClass="HAmmeterQueryLog">
+       <include refid="getHAmmeterQueryLogList_body" />
+    </select>
+
+    <insert id="insertHAmmeterQueryLog">
+        INSERT INTO h_ammeter_query_log ( 
+        <dynamic prepend="">
+			<isNotNull prepend="" property="createTime"> createTime </isNotNull>
+			<isNotNull prepend="," property="ammeterNo"> ammeterNo </isNotNull>
+			<isNotNull prepend="," property="phone"> phone </isNotNull>
+			<isNotNull prepend="," property="ip"> ip </isNotNull>
+			<isNotNull prepend="," property="ammeter_address"> ammeter_address </isNotNull>
+			<isNotNull prepend="," property="ammeter_name"> ammeter_name </isNotNull>
+			<isNotNull prepend="," property="fee"> fee </isNotNull>
+			<isNotNull prepend="," property="znFee"> znFee </isNotNull>
+			<isNotNull prepend="," property="totalFee"> totalFee </isNotNull>
+			<isNotNull prepend="," property="remark1"> remark1 </isNotNull>
+			<isNotNull prepend="," property="remark2"> remark2 </isNotNull>
+			<isNotNull prepend="," property="remark3"> remark3 </isNotNull>
+        </dynamic>
+        )
+        VALUES (
+        <dynamic prepend="">
+		    <isNotNull prepend="" property="createTime"> #createTime# </isNotNull>
+		    <isNotNull prepend="," property="ammeterNo"> #ammeterNo# </isNotNull>
+		    <isNotNull prepend="," property="phone"> #phone# </isNotNull>
+		    <isNotNull prepend="," property="ip"> #ip# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_address"> #ammeter_address# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_name"> #ammeter_name# </isNotNull>
+		    <isNotNull prepend="," property="fee"> #fee# </isNotNull>
+		    <isNotNull prepend="," property="znFee"> #znFee# </isNotNull>
+		    <isNotNull prepend="," property="totalFee"> #totalFee# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> #remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> #remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> #remark3# </isNotNull>
+        </dynamic>
+        )
+        <selectKey keyProperty="id" resultClass="int">
+			SELECT @@IDENTITY AS id 
+		</selectKey>
+    </insert>
+
+    <update id="updateHAmmeterQueryLog">
+        UPDATE h_ammeter_query_log
+        <dynamic prepend="SET">
+		    <isNotNull prepend="," property="id"> id=#id# </isNotNull>
+		    <isNotNull prepend="," property="createTime"> createTime=#createTime# </isNotNull>
+		    <isNotNull prepend="," property="ammeterNo"> ammeterNo=#ammeterNo# </isNotNull>
+		    <isNotNull prepend="," property="phone"> phone=#phone# </isNotNull>
+		    <isNotNull prepend="," property="ip"> ip=#ip# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_address"> ammeter_address=#ammeter_address# </isNotNull>
+		    <isNotNull prepend="," property="ammeter_name"> ammeter_name=#ammeter_name# </isNotNull>
+		    <isNotNull prepend="," property="fee"> fee=#fee# </isNotNull>
+		    <isNotNull prepend="," property="znFee"> znFee=#znFee# </isNotNull>
+		    <isNotNull prepend="," property="totalFee"> totalFee=#totalFee# </isNotNull>
+		    <isNotNull prepend="," property="remark1"> remark1=#remark1# </isNotNull>
+		    <isNotNull prepend="," property="remark2"> remark2=#remark2# </isNotNull>
+		    <isNotNull prepend="," property="remark3"> remark3=#remark3# </isNotNull>
+        </dynamic>
+    	where id = #id#
+    </update>
+    
+    <delete id="removeHAmmeterQueryLog">
+        delete from h_ammeter_query_log where id = #id#
+    </delete>
+</sqlMap>
