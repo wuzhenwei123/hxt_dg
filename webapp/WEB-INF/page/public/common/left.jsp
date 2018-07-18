@@ -11,15 +11,6 @@ request.setAttribute("PROXY_ROLEID", FileUploadConstants.PROXY_ROLEID);
        			<p ><fmt:formatDate value="${admin_user.lastLogin}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate></p>
        		</div>
        		<div style="padding-left: 40px;">
-				<p>您的网银指导人员：
-					<c:if test="${fn:length(admin_user.servicerName)>3}">
-						${fn:substring(admin_user.servicerName, 0, 3)}
-					</c:if>
-					<c:if test="${fn:length(admin_user.servicerName)<=3}">
-						${admin_user.servicerName}
-					</c:if>
-				</p>
-				<p>手机：${admin_user.servicerPhone }</p>
 				<p>服务热线：010-96199</p>
        		</div>
        </div>
