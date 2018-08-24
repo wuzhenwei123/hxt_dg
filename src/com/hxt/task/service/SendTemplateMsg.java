@@ -84,7 +84,7 @@ public class SendTemplateMsg {
 				if(listHAmmeterInfo!=null&&listHAmmeterInfo.size()>0){
 					totalAmmeterInfo = listHAmmeterInfo.size();
 					for(HAmmeterInfo info:listHAmmeterInfo){//对每个有效的电表号进行调单
-						Thread.sleep(5000);
+						Thread.sleep(10000);
 						JSONObject json = hCommonService.hXTServiceQuery(info.getAmmeter_no(), "127.0.0.1");
 						if(json.getString("totalFee")!=null){
 							Integer totalFeeStr = Integer.valueOf(json.getString("totalFeeStr"));//单位是分
