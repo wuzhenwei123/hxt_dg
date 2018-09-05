@@ -1454,18 +1454,18 @@ public class HCommonService {
 						hUserAccountDao.insertHUserAccount(agentAccount);
 					}
 					if(hPayGuliTwo.getType()==1){//按笔
-						if(hPayGuliTwo.getFee()>0){
+//						if(hPayGuliTwo.getFee()>0){
 							feeTotal2 = feeTotal2 + udpateAccount2(agentAccount, 1, hPayGuliTwo.getFee(), hPayOrder, electric1, merOrderId, null);
-						}
+//						}
 					}else{
-						if(hPayGuliTwo.getRate()>0){
+//						if(hPayGuliTwo.getRate()>0){
 							//分润比例
 							BigDecimal profitRate = new BigDecimal(hPayGuliTwo.getRate());
 							BigDecimal totalFee = new BigDecimal(hPayOrder.getAmount()).divide(new BigDecimal("100"));
 							//分润金额
 							BigDecimal subFee = totalFee.multiply(profitRate);//税前
 							feeTotal2 = feeTotal2 + udpateAccount2(agentAccount, 2, subFee.doubleValue(), hPayOrder, electric1, merOrderId, null);
-						}
+//						}
 					}
 					toTwoOpenId = agentTwoAdmin.getOpenId();
 					log.info("------------toTwoOpenId----1-------"+toTwoOpenId);
@@ -1513,18 +1513,18 @@ public class HCommonService {
 						toOpenId = agentAdmin.getOpenId();
 						log.info("------------toOpenId----1-------"+toOpenId);
 						if(hPayGuliOne.getType()==1){//按笔
-							if(hPayGuliOne.getFee()>0){
+//							if(hPayGuliOne.getFee()>0){
 								feeTotal1 = feeTotal1 + udpateAccount2(agentAccount, 1, hPayGuliOne.getFee(), hPayOrder, electric1, merOrderId, null);
-							}
+//							}
 						}else{
-							if(hPayGuliOne.getRate()>0){
+//							if(hPayGuliOne.getRate()>0){
 								//分润比例
 								BigDecimal profitRate = new BigDecimal(hPayGuliOne.getRate());
 								BigDecimal totalFee = new BigDecimal(hPayOrder.getAmount()).divide(new BigDecimal("100"));
 								//分润金额
 								BigDecimal subFee = totalFee.multiply(profitRate);//税前
 								feeTotal1 = feeTotal1 + udpateAccount2(agentAccount, 2, subFee.doubleValue(), hPayOrder, electric1, merOrderId, null);
-							}
+//							}
 						}
 					}
 				}
@@ -1567,18 +1567,18 @@ public class HCommonService {
 							hUserAccountDao.insertHUserAccount(agentAccount);
 						}
 						if(hPayGuliThree.getType()==1){//按笔
-							if(hPayGuliThree.getFee()>0){
+//							if(hPayGuliThree.getFee()>0){
 								feeTotal3 = feeTotal3 + udpateAccount2(agentAccount, 1, hPayGuliThree.getFee(), hPayOrder, electric1, merOrderId, null);
-							}
+//							}
 						}else{
-							if(hPayGuliThree.getRate()>0){
+//							if(hPayGuliThree.getRate()>0){
 								//分润比例
 								BigDecimal profitRate = new BigDecimal(hPayGuliThree.getRate());
 								BigDecimal totalFee = new BigDecimal(hPayOrder.getAmount()).divide(new BigDecimal("100"));
 								//分润金额
 								BigDecimal subFee = totalFee.multiply(profitRate);//税前
 								feeTotal3 = feeTotal3 + udpateAccount2(agentAccount, 2, subFee.doubleValue(), hPayOrder, electric1, merOrderId, null);
-							}
+//							}
 						}
 					}
 				}
