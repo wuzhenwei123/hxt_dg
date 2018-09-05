@@ -4,7 +4,7 @@
 	<typeAlias alias="HAgentTwo" type="com.hxt.hAgentTwo.model.HAgentTwo"/>
 	
     <sql id="getHAgentTwoList_body">
-        SELECT DISTINCT b.adminName as user_name,a.id,a.openId,a.name,a.licence_url,a.licence_code,a.tax_url,a.legal_person,a.card_style,a.card_no,a.sex,a.mobile1,a.mobile2,a.style,a.status,a.create_time,a.create_openId,a.check_status,a.contact_person,a.tax_code,a.bank_name,a.bank_number,a.bank_account,a.contract_number,a.contract_start_time,a.contract_end_time,a.remark1,a.remark2,a.remark3,a.agent_id,a.agent_name,a.bankId,a.subBankName,
+        SELECT DISTINCT(a.mobile1),b.adminName as user_name,a.id,a.openId,a.name,a.licence_url,a.licence_code,a.tax_url,a.legal_person,a.card_style,a.card_no,a.sex,a.mobile2,a.style,a.status,a.create_time,a.create_openId,a.check_status,a.contact_person,a.tax_code,a.bank_name,a.bank_number,a.bank_account,a.contract_number,a.contract_start_time,a.contract_end_time,a.remark1,a.remark2,a.remark3,a.agent_id,a.agent_name,a.bankId,a.subBankName,
         a.reg_gl_id,a.gl_yl_id,a.gl_yl_name,a.gl_sj_id,a.gl_sj_name
         FROM h_agent_two a
         left join manage_admin_user b on b.twoAgentOpenId = a.openId
