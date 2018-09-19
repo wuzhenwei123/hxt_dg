@@ -1595,13 +1595,13 @@ public class HCommonService {
         double f2 = bg2.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         BigDecimal bg3 = new BigDecimal(feeTotal3);
         double f3 = bg3.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        if(agent!=null&&agent.getStatus()==1&&agent.getCheck_status()==1&&agentAdmin!=null&&agentAdmin.getState()==1&&f1>0){
+        if(agent!=null&&agent.getStatus()==1&&agent.getCheck_status()==1&&agentAdmin!=null&&agentAdmin.getState()==1){
         	huseraccountService.sendCZTempltMsg(toOpenId,this.getMoney(paysum), hPayOrderQry.getO_no(), f1+"", company.getContact_name(), company.getContact_phone(), company.getId(), company.getName());
         }
-        if(agentTwo!=null&&agentTwo.getStatus()==1&&agentTwo.getCheck_status()==1&&agentTwoAdmin!=null&&agentTwoAdmin.getState()==1&&f2>0){
+        if(agentTwo!=null&&agentTwo.getStatus()==1&&agentTwo.getCheck_status()==1&&agentTwoAdmin!=null&&agentTwoAdmin.getState()==1){
         	huseraccountService.sendCZTempltMsg(toTwoOpenId,this.getMoney(paysum), hPayOrderQry.getO_no(), f2+"", company.getContact_name(), company.getContact_phone(), company.getId(), company.getName());
         }
-        if(servicer!=null&&servicer.getState()==1&&f3>0){
+        if(servicer!=null&&servicer.getState()==1){
         	huseraccountService.sendCZTempltMsg(servicer.getOpenId(),this.getMoney(paysum), hPayOrderQry.getO_no(), f3+"", company.getContact_name(), company.getContact_phone(), company.getId(), company.getName());
         }
         return hPayOrder;
